@@ -26,6 +26,9 @@ artifacts:
   - path: ToxicUnited\bin\Release\
     name: ToxicUnited-Release-$(APPVEYOR_BUILD_VERSION) 
     type: zip 
+  - path: ToxicUnited\bin\Release\*.dll
+  - path: ToxicUnited\bin\Release\*.xml
+  - path: ToxicUnited\bin\Release\*.pdb
 
 deploy:
   provider: GitHub
