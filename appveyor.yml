@@ -28,13 +28,15 @@ artifacts:
     type: zip 
 
 deploy:
+  provider: GitHub
   release: ToxicUnited-Release-v$(appveyor_build_version)
   description: 'Release description'
-  provider: GitHub
+  username: Kurdiumov
   auth_token:
     secure:  b9a8f485db5a66ba918f6b4bedab6234fa19d269  # your encrypted token from GitHub
   draft: false
   prerelease: false
   on:
-    branch: master                 # release from master branch only
     appveyor_repo_tag: true        # deploy on tag push only
+    branch: master                 # release from master branch only
+    
