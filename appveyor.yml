@@ -23,8 +23,9 @@ build:
 
   # artifacts
 artifacts: 
-  - path: output\
-    name: ToxicUnited-$(APPVEYOR_BUILD_VERSION) 
+  - path: ToxicUnited\bin\Release\
+    name: ToxicUnited-Release-$(APPVEYOR_BUILD_VERSION) 
     type: zip 
-  - path: output\ToxicUnited*.nupkg
-  - path: output\ToxicUnited*.xam
+  - path: ToxicUnited\bin\Debug\
+  name: ToxicUnited-Debug-$(APPVEYOR_BUILD_VERSION) 
+  type: zip  
