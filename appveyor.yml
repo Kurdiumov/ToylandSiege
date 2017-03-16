@@ -20,3 +20,11 @@ before_build:
 build:
   parallel: true
   project: ToxicUnited.sln
+
+  # artifacts
+artifacts: 
+  - path: output\
+    name: ToxicUnited-$(APPVEYOR_BUILD_VERSION) 
+    type: zip 
+  - path: output\ToxicUnited*.nupkg
+  - path: output\ToxicUnited*.xam
