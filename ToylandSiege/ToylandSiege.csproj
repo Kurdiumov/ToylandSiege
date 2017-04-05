@@ -9,8 +9,8 @@
     <ProjectGuid>{5991D46F-A53C-4A67-9A4D-3AB9D43C9155}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ToxicUnited</RootNamespace>
-    <AssemblyName>ToxicUnited</AssemblyName>
+    <RootNamespace>ToylandSiege</RootNamespace>
+    <AssemblyName>ToylandSiege</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>Windows</MonoGamePlatform>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -61,7 +61,11 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Game1.cs" />
+    <Compile Include="Camera.cs" />
+    <Compile Include="Level.cs" />
+    <Compile Include="TerrainObject.cs" />
+    <Compile Include="ToylandSiege.cs" />
+    <Compile Include="GameObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
