@@ -14,7 +14,6 @@ namespace ToylandSiege
         public static Level CurrentLevel;
 
 
-
         public ToylandSiege()
         {
             Graphics = new GraphicsDeviceManager(this);
@@ -23,6 +22,7 @@ namespace ToylandSiege
 
         protected override void Initialize()
         {
+            Logger.Log.Debug("Initializing");
             base.Initialize();
             CurrentLevel = new Level("Level1");
             CurrentLevel.AddGameObjectToLevel(new TerrainObject("Cube", Content.Load<Model>("MonoCube")));

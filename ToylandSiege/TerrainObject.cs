@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ToylandSiege
@@ -15,7 +10,7 @@ namespace ToylandSiege
         public TerrainObject(string Name, Model model)
         {
             this.Name = Name;
-            this._model = model;
+            _model = model;
             Initialize();
         }
 

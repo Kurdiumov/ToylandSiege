@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 
 namespace ToylandSiege
 {
@@ -15,7 +16,15 @@ namespace ToylandSiege
         static void Main()
         {
             using (var game = new ToylandSiege())
-                game.Run();
+                try
+                {
+                    game.Run();
+                    
+                }
+                catch(Exception e)
+                {
+                    Logger.Log.Error(e.ToString());
+                }
         }
     }
 #endif

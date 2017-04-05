@@ -1,14 +1,15 @@
 ﻿using System;
+using log4net;
 using Microsoft.Xna.Framework;
 
 namespace ToylandSiege
 {
-    public class Camera: GameObject
+    public class Camera : GameObject
     {
         //FirstPersonCamera
         public Vector3 CamTarget;
         public Matrix ProjectionMatrix;
-        public  Matrix ViewMatrix;
+        public Matrix ViewMatrix;
         public Matrix WorldMatrix;
 
         private static Camera _currentCamera;
@@ -44,19 +45,23 @@ namespace ToylandSiege
 
         public override void Update()
         {
-            
         }
 
         public override void Draw()
         {
-            
+
         }
 
         public static Camera GetCurrentCamera()
         {
             if (_currentCamera == null)
+            {
+                Logger.Log.Error("_currenCamera was not initialized");
                 throw new TypeInitializationException("_currenCamera was not initialized", null);
-            return _currentCamera;
+            }
+            return
+
+            _currentCamera;
         }
     }
 }
