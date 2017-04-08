@@ -25,7 +25,8 @@ namespace ToylandSiege
             Logger.Log.Debug("Initializing");
             base.Initialize();
             CurrentLevel = new Level("Level1");
-            CurrentLevel.AddGameObjectToLevel(new TerrainObject("Cube", Content.Load<Model>("MonoCube")));
+
+            CurrentLevel.RootGameObject.AddChild(new TerrainObject("Cube", Content.Load<Model>("MonoCube")));
         }
 
         protected override void LoadContent()
@@ -86,7 +87,7 @@ namespace ToylandSiege
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-           CurrentLevel.Draw();
+            CurrentLevel.Draw();
             base.Draw(gameTime);
         }
     }

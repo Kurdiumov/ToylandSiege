@@ -5,12 +5,11 @@ namespace ToylandSiege.GameObjects
 {
     public class TerrainObject: GameObject
     {
-        private readonly Model _model;
 
         public TerrainObject(string Name, Model model)
         {
             this.Name = Name;
-            _model = model;
+            Model = model;
             Initialize();
         }
 
@@ -26,7 +25,7 @@ namespace ToylandSiege.GameObjects
 
         public override void Draw()
         {
-            foreach (ModelMesh mesh in _model.Meshes)
+            foreach (ModelMesh mesh in Model.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
                 {

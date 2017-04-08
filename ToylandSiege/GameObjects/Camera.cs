@@ -6,7 +6,6 @@ namespace ToylandSiege.GameObjects
 {
     public class Camera : GameObject
     {
-        //FirstPersonCamera
         public Vector3 CamTarget;
         public Matrix ProjectionMatrix;
         public Matrix ViewMatrix;
@@ -24,7 +23,7 @@ namespace ToylandSiege.GameObjects
 
         protected override void Initialize()
         {
-            this.Type = "FirstPersonCamera";
+            Type = "FirstPersonCamera";
 
         }
 
