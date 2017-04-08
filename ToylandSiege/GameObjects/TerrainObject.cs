@@ -20,7 +20,8 @@ namespace ToylandSiege.GameObjects
 
         public override void Update()
         {
-            
+            if (!IsStatic)
+                CreateTransformationMatrix();
         }
     }
 }

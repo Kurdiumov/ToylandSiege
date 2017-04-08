@@ -40,8 +40,7 @@ namespace ToylandSiege.GameObjects
                         //effect.EnableDefaultLighting();
                         effect.AmbientLightColor = new Vector3(1f, 0, 0);
                         effect.View = Camera.GetCurrentCamera().ViewMatrix;
-                        if (!IsStatic)
-                            CreateTransformationMatrix();
+
                         effect.World = TransformationMatrix;
                         effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
                     }
@@ -122,7 +121,6 @@ namespace ToylandSiege.GameObjects
                 Matrix.CreateFromYawPitchRoll(Rotation.X, Rotation.Y, Rotation.Z) *
                 Matrix.CreateTranslation(Position);
 
-            // TODO: Should iterate throw each of parent till RootGame Object
             if (Parent != null)
                 TransformationMatrix *= Parent.TransformationMatrix;
 

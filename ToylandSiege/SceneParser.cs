@@ -54,6 +54,9 @@ namespace ToylandSiege
                     return ParseTerrainObject(currentGameObject, parent);
                 case "Camera":
                     return ParseCameraObject(currentGameObject, parent);
+                case "Unit":
+                case "Enemy":
+                    return ParseUnitObject(currentGameObject, parent);
                 default:
                     throw new InvalidEnumArgumentException("Unknown type " + Type);
             }
@@ -132,6 +135,56 @@ namespace ToylandSiege
             camera.WorldMatrix = Matrix.CreateWorld(camera.CamTarget, Vector3.Forward, Vector3.Up);
 
             return camera;
+        }
+
+        private UnitBase ParseUnitObject(JObject currentGameObject, GameObject parent = null)
+        {
+            var name = GetValue("Name", currentGameObject);
+            var model = GetValue("Model", currentGameObject);
+            var type = GetValue("Type", currentGameObject);
+            var IsEnabled = ToBool(GetValue("isEnabled", currentGameObject));
+            var health =float.Parse(GetValue("Health", currentGameObject));
+            var unitType = GetValue("UnitType", currentGameObject);
+
+            var mod = ToylandSiege.GetToylandSiege().Content.Load<Model>(model);
+
+            UnitBase unitObj;
+            if (type == "Unit")
+                unitObj = new Unit();
+            else if (type == "Enemy")
+                unitObj = new Enemy();
+            else
+                throw new ArgumentException("Unknown unit type " + type);
+
+            unitObj.Model = mod;
+            unitObj.Name = name;
+            unitObj.Type = type;
+            unitObj.IsEnabled = IsEnabled;
+            unitObj.Health = health;
+            unitObj.UnitType = unitType;
+
+            unitObj.IsStatic = true;
+            unitObj.Parent = parent;
+
+            if (ValueExist("Position", currentGameObject))
+                unitObj.Position = ParseVector3(currentGameObject.GetValue("Position"));
+
+            if (ValueExist("Rotation", currentGameObject))
+                unitObj.Rotation = ParseVector3(currentGameObject.GetValue("Rotation"));
+
+            if (ValueExist("Scale", currentGameObject))
+                unitObj.Scale = ParseVector3(currentGameObject.GetValue("Scale"));
+            unitObj.CreateTransformationMatrix();
+
+            if (ValueExist("Child", currentGameObject))
+            {
+                for (int i = 0; i < currentGameObject.GetValue("Child").Count(); i++)
+                {
+                    unitObj.AddChild(ParseGameObject(currentGameObject.GetValue("Child")[i].ToObject<JObject>(), unitObj));
+                }
+            }
+
+            return unitObj;
         }
 
         #region Helpers

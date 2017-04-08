@@ -34,9 +34,11 @@
       ]
       },
       {
-        "Name": "AnotherCube",
-        "Type": "TerrainObject",
+        "Name": "UnitCube",
+        "Type": "Unit",
         "Model": "MonoCube",
+        "Health": 100,
+        "UnitType": "BasicType",
         "isEnabled": true,
         "Position": [ 0, 0, 0 ],
         "Rotation": [0, 0, 0],

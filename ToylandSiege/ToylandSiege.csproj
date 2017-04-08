@@ -64,7 +64,10 @@
     <Compile Include="DebugUtilities.cs" />
     <Compile Include="FPSCounter.cs" />
     <Compile Include="GameObjects\Camera.cs" />
+    <Compile Include="GameObjects\Enemy.cs" />
     <Compile Include="GameObjects\RootGameObject.cs" />
+    <Compile Include="GameObjects\Unit.cs" />
+    <Compile Include="GameObjects\UnitBase.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="GameObjects\TerrainObject.cs" />
