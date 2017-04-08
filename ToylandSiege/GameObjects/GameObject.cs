@@ -9,10 +9,15 @@ namespace ToylandSiege.GameObjects
     {
         public string Name = "GameObject";
         public string Type;
-        public Vector3 Position;
-        public Matrix Rotation;
-        public Model Model;
+
+        public Vector3 Position = new Vector3(0, 0, 0);
+        public Vector3 Rotation = new Vector3(0, 0, 0);
+        public Vector3 Scale = new Vector3(1, 1, 1);
+
+        public bool IsStatic = false;
         public bool IsEnabled = true;
+
+        public Model Model;
         public GameObject Parent = null;
         public List<GameObject> Childs = new List<GameObject>();
 
@@ -21,6 +26,9 @@ namespace ToylandSiege.GameObjects
 
         public virtual void Draw()
         {
+            if (!IsEnabled)
+                return;
+
             if (Model != null)
             {
                 foreach (ModelMesh mesh in Model.Meshes)
@@ -31,7 +39,6 @@ namespace ToylandSiege.GameObjects
                         effect.AmbientLightColor = new Vector3(1f, 0, 0);
                         effect.View = Camera.GetCurrentCamera().ViewMatrix;
                         effect.World = Transform();
-                        //TODO: Add rotation and scalling here
                         effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
                     }
                     mesh.Draw();
@@ -107,11 +114,16 @@ namespace ToylandSiege.GameObjects
 
         protected Matrix Transform()
         {
-            Matrix m = Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up);
+            Matrix m = Matrix.CreateScale(Scale) *
+                Matrix.CreateFromYawPitchRoll(Rotation.X, Rotation.Y, Rotation.Z) *
+                Matrix.CreateTranslation(Position);
+
 
             // TODO: Should iterate throw each of parent till RootGame Object
-            if(Parent != null)
-                m = m * Matrix.CreateWorld(Parent.Position, Vector3.Forward, Vector3.Up);
+            if (Parent != null)
+                m = m * Matrix.CreateScale(Parent.Scale) * 
+                    Matrix.CreateFromYawPitchRoll(Parent.Rotation.X, Parent.Rotation.Y, Parent.Rotation.Z) *
+                    Matrix.CreateTranslation(Parent.Position);
 
             return m;
         }

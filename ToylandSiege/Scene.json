@@ -8,14 +8,18 @@
         "Type": "TerrainObject",
         "Model": "MonoCube",
         "isEnabled": true,
-        "Position": [ 4, 0, 0 ],
+        "Position": [ 4, 4, 0 ],
+        "Rotation": [90, 0, 0],
+        "Scale": [1,1,1],
         "Child": [
         {
           "Name": "InnerCube",
           "Type": "TerrainObject",
           "Model": "MonoCube",
           "isEnabled": true,
-          "Position": [ 0, -4, 0 ]
+          "Position": [ 0, -4, 0 ],
+          "Rotation": [0, 90, 0],
+          "Scale": [0.5,0.5,0.5],
         },
       ]
       },
@@ -25,6 +29,8 @@
         "Model": "MonoCube",
         "isEnabled": true,
         "Position": [ 0, 0, 0 ],
+        "Rotation": [0, 0, 0],
+        "Scale": [1,1,1],
       },
       {
         "Name": "FirsPersonCamera",

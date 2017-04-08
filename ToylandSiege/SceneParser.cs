@@ -68,12 +68,20 @@ namespace ToylandSiege
             var mod = ToylandSiege.GetToylandSiege().Content.Load<Model>(model);
             var terrainObj = new TerrainObject(name, mod);
             terrainObj.IsEnabled = IsEnabled;
+            terrainObj.IsStatic = true;
             terrainObj.Type = GetValue("Type", currentGameObject);
+            
 
             if (ValueExist("Position", currentGameObject))
                 terrainObj.Position = ParseVector3(currentGameObject.GetValue("Position"));
 
-            if(ValueExist("Child", currentGameObject))
+            if (ValueExist("Rotation", currentGameObject))
+                terrainObj.Rotation = ParseVector3(currentGameObject.GetValue("Rotation"));
+
+            if (ValueExist("Scale", currentGameObject))
+                terrainObj.Scale = ParseVector3(currentGameObject.GetValue("Scale"));
+
+            if (ValueExist("Child", currentGameObject))
             {  for (int i = 0; i < currentGameObject.GetValue("Child").Count(); i++)
                 {
                     terrainObj.AddChild(ParseGameObject(currentGameObject.GetValue("Child")[i].ToObject<JObject>()));    
@@ -147,7 +155,6 @@ namespace ToylandSiege
             }
             throw new ArgumentException("Arguments count should equal 3");
         }
-
 
         private string GetValue(string value, JObject obj)
         {
