@@ -2,7 +2,7 @@
 using log4net;
 using Microsoft.Xna.Framework;
 
-namespace ToylandSiege
+namespace ToylandSiege.GameObjects
 {
     public class Camera : GameObject
     {

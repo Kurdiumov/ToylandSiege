@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ToylandSiege
+namespace ToylandSiege.GameObjects
 {
     public class TerrainObject: GameObject
     {

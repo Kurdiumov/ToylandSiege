@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace ToylandSiege
+namespace ToylandSiege.GameObjects
 {
     public abstract class GameObject
     {
