@@ -8,7 +8,7 @@ namespace ToylandSiege
     public class Level
     {
         public string Name;
-        public GameObject RootGameObject = new RootGameObject();
+        public GameObject RootGameObject = null;
 
         private static Level _currenLevel;
 

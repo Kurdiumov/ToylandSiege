@@ -1,0 +1,44 @@
+﻿{
+  "Level1": {
+    "Name": "RootGameObject",
+    "Type": "RootGameObject",
+    "Child": [
+      {
+        "Name": "Cube",
+        "Type": "TerrainObject",
+        "Model": "MonoCube",
+        "isEnabled": true,
+        "Position": [ 4, 0, 0 ],
+        "Child": [
+        {
+          "Name": "InnerCube",
+          "Type": "TerrainObject",
+          "Model": "MonoCube",
+          "isEnabled": true,
+          "Position": [ 0, -4, 0 ]
+        },
+      ]
+      },
+      {
+        "Name": "AnotherCube",
+        "Type": "TerrainObject",
+        "Model": "MonoCube",
+        "isEnabled": true,
+        "Position": [ 0, 0, 0 ],
+      },
+      {
+        "Name": "FirsPersonCamera",
+        "Type": "Camera",
+        "Model": null,
+        "CurrentCamera":  true, 
+        "isEnabled": true,  
+        "CameraTarget": [ 0, 0, 0 ],
+        "Position": [ 0, 0, 15 ],        
+        "Angle": 45,
+        "NearPlaneDistance": 1,
+        "FarPlaneDistance": 1000,
+        "ViewMatrix": [ 0, -1, 0 ]
+      }
+    ]
+  }
+}

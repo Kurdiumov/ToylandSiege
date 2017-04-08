@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -17,7 +18,30 @@ namespace ToylandSiege.GameObjects
 
         protected abstract void Initialize();
         public abstract void Update();
-        public abstract void Draw();
+
+        public virtual void Draw()
+        {
+            if (Model != null)
+            {
+                foreach (ModelMesh mesh in Model.Meshes)
+                {
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        //effect.EnableDefaultLighting();
+                        effect.AmbientLightColor = new Vector3(1f, 0, 0);
+                        effect.View = Camera.GetCurrentCamera().ViewMatrix;
+                        effect.World = Transform();
+                        //TODO: Add rotation and scalling here
+                        effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
+                    }
+                    mesh.Draw();
+                    foreach (var child in Childs)
+                    {
+                        child.Draw();
+                    }
+                }
+            }
+        }
 
         public void AddChild(GameObject obj)
         {
@@ -76,9 +100,20 @@ namespace ToylandSiege.GameObjects
 
         public override string ToString()
         {
-            if(Parent == null)
+            if (Parent == null)
                 return "Name: " + this.Name + ", Type:" + this.Type;
             return "Name: " + this.Name + ", Type: " + this.Type + ", Parent: " + Parent.Name;
+        }
+
+        protected Matrix Transform()
+        {
+            Matrix m = Matrix.CreateWorld(Position, Vector3.Forward, Vector3.Up);
+
+            // TODO: Should iterate throw each of parent till RootGame Object
+            if(Parent != null)
+                m = m * Matrix.CreateWorld(Parent.Position, Vector3.Forward, Vector3.Up);
+
+            return m;
         }
     }
 }

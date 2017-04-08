@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ToylandSiege.GameObjects;
@@ -12,10 +14,10 @@ namespace ToylandSiege
     {
         public static GraphicsDeviceManager Graphics;
         public static Level CurrentLevel;
-
-
+        private static ToylandSiege _ts;
         public ToylandSiege()
         {
+            _ts = this;
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
@@ -26,12 +28,9 @@ namespace ToylandSiege
             base.Initialize();
             CurrentLevel = new Level("Level1");
 
-            CurrentLevel.RootGameObject.AddChild(new TerrainObject("Cube", Content.Load<Model>("MonoCube")));
-            
-            //Set up camera 
-            var camera = new Camera("FirsPersonCamera");
-            CurrentLevel.RootGameObject.AddChild(camera);
-            Camera.SetCurrentCamera(camera);
+            SceneParser parser = new SceneParser();
+            CurrentLevel.RootGameObject = parser.Parse("Level1");
+
 
             DebugUtilities.ShowAllGameObjects(CurrentLevel.RootGameObject);
         }
@@ -96,6 +95,14 @@ namespace ToylandSiege
 
             CurrentLevel.Draw();
             base.Draw(gameTime);
+        }
+
+        //Used in scene parser
+        public static ToylandSiege GetToylandSiege()
+        {
+            if(_ts == null)
+                throw new NullReferenceException("Toyland siege is not created");
+            return _ts;
         }
     }
 }

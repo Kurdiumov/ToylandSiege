@@ -16,7 +16,6 @@ namespace ToylandSiege.GameObjects
         public Camera(string Name)
         {
             this.Name = Name;
-            CreateFirstPersonCamera();
             Initialize();
         }
 
@@ -27,24 +26,8 @@ namespace ToylandSiege.GameObjects
 
         protected override void Initialize()
         {
-            Type = "FirstPersonCamera";
-
         }
 
-        protected void CreateFirstPersonCamera()
-        {
-            //Setup FirstPersonCamera
-            CamTarget = new Vector3(0f, 0f, 0f);
-            Position = new Vector3(0f, 0f, 5);
-            ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(
-                               MathHelper.ToRadians(45f), ToylandSiege.Graphics.
-                               GraphicsDevice.Viewport.AspectRatio,
-                1f, 1000f);
-            ViewMatrix = Matrix.CreateLookAt(Position, CamTarget,
-                         new Vector3(0f, 1f, 0f));// Y up
-            WorldMatrix = Matrix.CreateWorld(CamTarget, Vector3.
-                          Forward, Vector3.Up);
-        }
 
         public override void Update()
         {

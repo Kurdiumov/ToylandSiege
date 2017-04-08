@@ -22,21 +22,5 @@ namespace ToylandSiege.GameObjects
         {
             
         }
-
-        public override void Draw()
-        {
-            foreach (ModelMesh mesh in Model.Meshes)
-            {
-                foreach (BasicEffect effect in mesh.Effects)
-                {
-                    //effect.EnableDefaultLighting();
-                    effect.AmbientLightColor = new Vector3(1f, 0, 0);
-                    effect.View = Camera.GetCurrentCamera().ViewMatrix;
-                    effect.World = Camera.GetCurrentCamera().WorldMatrix;
-                    effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
-                }
-                mesh.Draw();
-            }
-        }
     }
 }
