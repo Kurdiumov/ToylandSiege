@@ -44,22 +44,22 @@ namespace ToylandSiege
             return RootObject;
         }
 
-        private GameObject ParseGameObject(JObject currentGameObject)
+        private GameObject ParseGameObject(JObject currentGameObject, GameObject parent = null)
         {
             string Type = GetValue("Type", currentGameObject);
 
             switch (Type)
             {
                 case "TerrainObject":
-                    return ParseTerrainObject(currentGameObject);
+                    return ParseTerrainObject(currentGameObject, parent);
                 case "Camera":
-                    return ParseCameraObject(currentGameObject);
+                    return ParseCameraObject(currentGameObject, parent);
                 default:
                     throw new InvalidEnumArgumentException("Unknown type " + Type);
             }
         }
 
-        private TerrainObject ParseTerrainObject(JObject currentGameObject)
+        private TerrainObject ParseTerrainObject(JObject currentGameObject, GameObject parent = null)
         {
             var name = GetValue("Name", currentGameObject);
             var model = GetValue("Model", currentGameObject);
@@ -70,7 +70,7 @@ namespace ToylandSiege
             terrainObj.IsEnabled = IsEnabled;
             terrainObj.IsStatic = true;
             terrainObj.Type = GetValue("Type", currentGameObject);
-            
+            terrainObj.Parent = parent;
 
             if (ValueExist("Position", currentGameObject))
                 terrainObj.Position = ParseVector3(currentGameObject.GetValue("Position"));
@@ -80,18 +80,19 @@ namespace ToylandSiege
 
             if (ValueExist("Scale", currentGameObject))
                 terrainObj.Scale = ParseVector3(currentGameObject.GetValue("Scale"));
+            terrainObj.CreateTransformationMatrix();
 
             if (ValueExist("Child", currentGameObject))
             {  for (int i = 0; i < currentGameObject.GetValue("Child").Count(); i++)
                 {
-                    terrainObj.AddChild(ParseGameObject(currentGameObject.GetValue("Child")[i].ToObject<JObject>()));    
+                    terrainObj.AddChild(ParseGameObject(currentGameObject.GetValue("Child")[i].ToObject<JObject>(), terrainObj));    
                 }
             }
-
+            
             return terrainObj;
         }
 
-        private Camera ParseCameraObject(JObject currentGameObject)
+        private Camera ParseCameraObject(JObject currentGameObject, GameObject parent = null)
         {
             var name = GetValue("Name", currentGameObject);
             var camera = new Camera(name);

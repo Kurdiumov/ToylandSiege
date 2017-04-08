@@ -21,6 +21,8 @@ namespace ToylandSiege.GameObjects
         public GameObject Parent = null;
         public List<GameObject> Childs = new List<GameObject>();
 
+        protected Matrix TransformationMatrix;
+
         protected abstract void Initialize();
         public abstract void Update();
 
@@ -38,7 +40,9 @@ namespace ToylandSiege.GameObjects
                         //effect.EnableDefaultLighting();
                         effect.AmbientLightColor = new Vector3(1f, 0, 0);
                         effect.View = Camera.GetCurrentCamera().ViewMatrix;
-                        effect.World = Transform();
+                        if (!IsStatic)
+                            CreateTransformationMatrix();
+                        effect.World = TransformationMatrix;
                         effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
                     }
                     mesh.Draw();
@@ -112,20 +116,17 @@ namespace ToylandSiege.GameObjects
             return "Name: " + this.Name + ", Type: " + this.Type + ", Parent: " + Parent.Name;
         }
 
-        protected Matrix Transform()
+        public  Matrix CreateTransformationMatrix()
         {
-            Matrix m = Matrix.CreateScale(Scale) *
+            TransformationMatrix = Matrix.CreateScale(Scale) *
                 Matrix.CreateFromYawPitchRoll(Rotation.X, Rotation.Y, Rotation.Z) *
                 Matrix.CreateTranslation(Position);
 
-
             // TODO: Should iterate throw each of parent till RootGame Object
             if (Parent != null)
-                m = m * Matrix.CreateScale(Parent.Scale) * 
-                    Matrix.CreateFromYawPitchRoll(Parent.Rotation.X, Parent.Rotation.Y, Parent.Rotation.Z) *
-                    Matrix.CreateTranslation(Parent.Position);
+                TransformationMatrix *= Parent.TransformationMatrix;
 
-            return m;
+            return TransformationMatrix;
         }
     }
 }
