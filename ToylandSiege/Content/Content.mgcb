@@ -44,3 +44,10 @@
 /processorParam:TextureFormat=Color
 /build:MonoCubeTexture.png
 
+#begin FPS.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:FPS.spritefont
+

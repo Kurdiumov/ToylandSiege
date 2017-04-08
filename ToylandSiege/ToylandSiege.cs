@@ -14,7 +14,13 @@ namespace ToylandSiege
     {
         public static GraphicsDeviceManager Graphics;
         public static Level CurrentLevel;
+        public bool FpsEnabled = true;
+
         private static ToylandSiege _ts;
+        private readonly FPSCounter _frameCounter = new FPSCounter();
+        private SpriteFont _spriteFont;
+        private SpriteBatch _spriteBatch;
+
         public ToylandSiege()
         {
             _ts = this;
@@ -30,14 +36,14 @@ namespace ToylandSiege
 
             SceneParser parser = new SceneParser();
             CurrentLevel.RootGameObject = parser.Parse("Level1");
-
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             DebugUtilities.ShowAllGameObjects(CurrentLevel.RootGameObject);
         }
 
         protected override void LoadContent()
         {
-
+            _spriteFont = Content.Load<SpriteFont>("FPS");
         }
 
         protected override void UnloadContent()
@@ -93,6 +99,16 @@ namespace ToylandSiege
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            if (FpsEnabled)
+            {
+                _frameCounter.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+                var fps = string.Format("FPS: {0}", _frameCounter.AverageFramesPerSecond);
+
+                _spriteBatch.Begin();
+                _spriteBatch.DrawString(_spriteFont, fps, new Vector2(10, 10), Color.Black);
+                _spriteBatch.End();
+            }
+
             CurrentLevel.Draw();
             base.Draw(gameTime);
         }
@@ -100,7 +116,7 @@ namespace ToylandSiege
         //Used in scene parser
         public static ToylandSiege GetToylandSiege()
         {
-            if(_ts == null)
+            if (_ts == null)
                 throw new NullReferenceException("Toyland siege is not created");
             return _ts;
         }

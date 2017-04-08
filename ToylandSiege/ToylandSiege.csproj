@@ -62,6 +62,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DebugUtilities.cs" />
+    <Compile Include="FPSCounter.cs" />
     <Compile Include="GameObjects\Camera.cs" />
     <Compile Include="GameObjects\RootGameObject.cs" />
     <Compile Include="Level.cs" />
