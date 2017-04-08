@@ -27,6 +27,13 @@ namespace ToylandSiege
             CurrentLevel = new Level("Level1");
 
             CurrentLevel.RootGameObject.AddChild(new TerrainObject("Cube", Content.Load<Model>("MonoCube")));
+            
+            //Set up camera 
+            var camera = new Camera("FirsPersonCamera");
+            CurrentLevel.RootGameObject.AddChild(camera);
+            Camera.SetCurrentCamera(camera);
+
+            DebugUtilities.ShowAllGameObjects(CurrentLevel.RootGameObject);
         }
 
         protected override void LoadContent()
@@ -76,7 +83,7 @@ namespace ToylandSiege
             }
 
 
-            Camera.GetCurrentCamera().ViewMatrix = Matrix.CreateLookAt(CurrentLevel.FirstPersonCamera.Position, CurrentLevel.FirstPersonCamera.CamTarget,
+            Camera.GetCurrentCamera().ViewMatrix = Matrix.CreateLookAt(Camera.GetCurrentCamera().Position, Camera.GetCurrentCamera().CamTarget,
                          Vector3.Up);
 
             CurrentLevel.Update();

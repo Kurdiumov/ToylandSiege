@@ -8,7 +8,6 @@ namespace ToylandSiege
     public class Level
     {
         public string Name;
-        public Camera FirstPersonCamera;
         public GameObject RootGameObject = new RootGameObject();
 
         private static Level _currenLevel;
@@ -16,7 +15,6 @@ namespace ToylandSiege
         public Level(string Name)
         {
             this.Name = Name;
-            FirstPersonCamera = new Camera("FirstPersonCamera");
             _currenLevel = this;
         }
 
@@ -29,15 +27,15 @@ namespace ToylandSiege
 
         public void Update()
         {
-            FirstPersonCamera.Update();
-
+            Camera.GetCurrentCamera().Update();
+            
             foreach (var child  in RootGameObject.Childs)
                 child.Update();
         }
 
         public void Draw()
         {
-            FirstPersonCamera.Draw();
+            Camera.GetCurrentCamera().Draw();
 
             foreach (var child in RootGameObject.Childs)
                 child.Draw();

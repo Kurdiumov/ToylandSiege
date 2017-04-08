@@ -61,6 +61,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DebugUtilities.cs" />
     <Compile Include="GameObjects\Camera.cs" />
     <Compile Include="GameObjects\RootGameObject.cs" />
     <Compile Include="Level.cs" />

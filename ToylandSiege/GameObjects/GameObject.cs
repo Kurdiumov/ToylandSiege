@@ -12,7 +12,7 @@ namespace ToylandSiege.GameObjects
         public Matrix Rotation;
         public Model Model;
         public bool IsEnabled = true;
-
+        public GameObject Parent = null;
         public List<GameObject> Childs = new List<GameObject>();
 
         protected abstract void Initialize();
@@ -22,6 +22,7 @@ namespace ToylandSiege.GameObjects
         public void AddChild(GameObject obj)
         {
             Childs.Add(obj);
+            obj.Parent = this;
             Logger.Log.Debug("GameObject " + obj.Name + " added to " + Name + " GameObject type: " + Type);
         }
 
@@ -71,6 +72,13 @@ namespace ToylandSiege.GameObjects
             if (FoundedItems.Count != 0)
                 return FoundedItems;
             return null;
+        }
+
+        public override string ToString()
+        {
+            if(Parent == null)
+                return "Name: " + this.Name + ", Type:" + this.Type;
+            return "Name: " + this.Name + ", Type: " + this.Type + ", Parent: " + Parent.Name;
         }
     }
 }

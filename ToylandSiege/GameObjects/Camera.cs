@@ -17,8 +17,12 @@ namespace ToylandSiege.GameObjects
         {
             this.Name = Name;
             CreateFirstPersonCamera();
-            _currentCamera = this;
             Initialize();
+        }
+
+        public static void SetCurrentCamera(Camera cam)
+        {
+            _currentCamera = cam;
         }
 
         protected override void Initialize()
