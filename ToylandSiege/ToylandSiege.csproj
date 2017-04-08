@@ -68,6 +68,8 @@
     <Compile Include="GameObjects\RootGameObject.cs" />
     <Compile Include="GameObjects\Unit.cs" />
     <Compile Include="GameObjects\UnitBase.cs" />
+    <Compile Include="GameState.cs" />
+    <Compile Include="InputHelper.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="GameObjects\TerrainObject.cs" />

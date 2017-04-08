@@ -35,7 +35,7 @@ namespace ToylandSiege.GameObjects
 
         public override void Draw()
         {
-
+            this.ViewMatrix = Matrix.CreateLookAt(Position, CamTarget, Vector3.Up);
         }
 
         public static Camera GetCurrentCamera()

@@ -7,9 +7,6 @@ using ToylandSiege.GameObjects;
 
 namespace ToylandSiege
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
     public class ToylandSiege : Game
     {
         public static GraphicsDeviceManager Graphics;
@@ -20,6 +17,8 @@ namespace ToylandSiege
         private readonly FPSCounter _frameCounter = new FPSCounter();
         private SpriteFont _spriteFont;
         private SpriteBatch _spriteBatch;
+        private GameState _gameState;
+        private InputHelper _inputHelper;
 
         public ToylandSiege()
         {
@@ -39,6 +38,10 @@ namespace ToylandSiege
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             DebugUtilities.ShowAllGameObjects(CurrentLevel.RootGameObject);
+
+            //TODO: Read properties from configuration file 
+            _gameState  = new GameState(State.GodMode);
+            _inputHelper = new InputHelper();
         }
 
         protected override void LoadContent()
@@ -52,45 +55,11 @@ namespace ToylandSiege
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back ==
-                ButtonState.Pressed || Keyboard.GetState().IsKeyDown(
-                Keys.Escape))
-                Exit();
+            _inputHelper.Update(_gameState);
 
-            //TODO: Create class InputHelper
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                Camera.GetCurrentCamera().Position.X -= 0.1f;
-                Camera.GetCurrentCamera().CamTarget.X -= 0.1f;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
-            {
-                Camera.GetCurrentCamera().Position.X += 0.1f;
-                Camera.GetCurrentCamera().CamTarget.X += 0.1f;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Up))
-            {
-                Camera.GetCurrentCamera().Position.Y += 0.1f;
-                Camera.GetCurrentCamera().CamTarget.Y += 0.1f;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Down))
-            {
-                Camera.GetCurrentCamera().Position.Y -= 0.1f;
-                Camera.GetCurrentCamera().CamTarget.Y -= 0.1f;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.OemPlus))
-            {
-                Camera.GetCurrentCamera().Position.Z += 0.1f;
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.OemMinus))
-            {
-                Camera.GetCurrentCamera().Position.Z -= 0.1f;
-            }
-
-
-            Camera.GetCurrentCamera().ViewMatrix = Matrix.CreateLookAt(Camera.GetCurrentCamera().Position, Camera.GetCurrentCamera().CamTarget,
-                         Vector3.Up);
-
+            if (_gameState.GetCurrentGameState() == State.Paused)
+                return;
+            
             CurrentLevel.Update();
             base.Update(gameTime);
         }
@@ -113,7 +82,7 @@ namespace ToylandSiege
             base.Draw(gameTime);
         }
 
-        //Used in scene parser
+        //Used in scene parser and in inputHelper
         public static ToylandSiege GetToylandSiege()
         {
             if (_ts == null)

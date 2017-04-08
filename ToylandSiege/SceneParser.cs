@@ -16,10 +16,6 @@ namespace ToylandSiege
     {
         private readonly string _filePath = "Scene.json";
 
-        public SceneParser()
-        {
-        }
-
         public GameObject Parse(string LevelName)
         {
             Logger.Log.Debug("Parsing " + LevelName + " from " + _filePath + " file");

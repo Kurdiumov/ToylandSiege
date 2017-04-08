@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace ToylandSiege.GameObjects
 {
@@ -15,8 +16,10 @@ namespace ToylandSiege.GameObjects
 
         public override void Update()
         {
-            //throw new NotImplementedException();
             CreateTransformationMatrix();
+
+            //TODO: Remove line belowe. Used to check drawing and update methods
+            this.Rotation += new Vector3(0.01f, 0, 0);
         }
     }
 }
