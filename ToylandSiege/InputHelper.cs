@@ -9,6 +9,14 @@ namespace ToylandSiege
 {
     public class InputHelper
     {
+        MouseState PrevMouseState;
+
+        public InputHelper()
+        {
+            Mouse.SetPosition(ToylandSiege.GetToylandSiege().Window.ClientBounds.Width / 2, ToylandSiege.GetToylandSiege().Window.ClientBounds.Height / 2);
+            PrevMouseState = Mouse.GetState();
+        }
+
         public void Update(GameState gameState)
         {
             switch (gameState.GetCurrentGameState())
@@ -40,35 +48,49 @@ namespace ToylandSiege
 
         private void UpdateGodMod(GameState gameState)
         {
-            //TODO: Create class InputHelper
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            if (Keyboard.GetState().IsKeyDown(Keys.Left) || Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                Camera.GetCurrentCamera().Position.X -= 0.1f;
-                Camera.GetCurrentCamera().CamTarget.X -= 0.1f;
+                Camera.GetCurrentCamera().Position += Vector3.Cross(Camera.GetCurrentCamera().Up, Camera.GetCurrentCamera().Direction) * Camera.GetCurrentCamera().Speed;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            if (Keyboard.GetState().IsKeyDown(Keys.Right) || Keyboard.GetState().IsKeyDown(Keys.D))
             {
-                Camera.GetCurrentCamera().Position.X += 0.1f;
-                Camera.GetCurrentCamera().CamTarget.X += 0.1f;
+                Camera.GetCurrentCamera().Position -= Vector3.Cross(Camera.GetCurrentCamera().Up, Camera.GetCurrentCamera().Direction) * Camera.GetCurrentCamera().Speed;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            if (Keyboard.GetState().IsKeyDown(Keys.Up) || Keyboard.GetState().IsKeyDown(Keys.W))
             {
-                Camera.GetCurrentCamera().Position.Y += 0.1f;
-                Camera.GetCurrentCamera().CamTarget.Y += 0.1f;
+                Camera.GetCurrentCamera().Position += Camera.GetCurrentCamera().Direction *
+                                                      Camera.GetCurrentCamera().Speed;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            if (Keyboard.GetState().IsKeyDown(Keys.Down) || Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                Camera.GetCurrentCamera().Position.Y -= 0.1f;
-                Camera.GetCurrentCamera().CamTarget.Y -= 0.1f;
+
+                Camera.GetCurrentCamera().Position -= Camera.GetCurrentCamera().Direction *
+                                      Camera.GetCurrentCamera().Speed;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.OemPlus))
+
+            if (Mouse.GetState() != PrevMouseState)
             {
-                Camera.GetCurrentCamera().Position.Z += 0.1f;
+                
+                Camera.GetCurrentCamera().Direction = Vector3.Transform(
+                    Camera.GetCurrentCamera().Direction,
+                    Matrix.CreateFromAxisAngle(Camera.GetCurrentCamera().Up,
+                        (-MathHelper.PiOver4 / 150) * (Mouse.GetState().X - PrevMouseState.X)));
+
+
+                Camera.GetCurrentCamera().Direction = Vector3.Transform(
+                    Camera.GetCurrentCamera().Direction,
+                    Matrix.CreateFromAxisAngle(
+                        Vector3.Cross(Camera.GetCurrentCamera().Up, Camera.GetCurrentCamera().Direction),
+                        (MathHelper.PiOver4 / 100) * (Mouse.GetState().Y - PrevMouseState.Y)));
+                Camera.GetCurrentCamera().Up = Vector3.Transform(Camera.GetCurrentCamera().Up,
+                    Matrix.CreateFromAxisAngle(
+                        Vector3.Cross(Camera.GetCurrentCamera().Up, Camera.GetCurrentCamera().Direction),
+                        (MathHelper.PiOver4 / 100) * (Mouse.GetState().Y - PrevMouseState.Y)));
+
+                // Reset PrevMouseState
+                PrevMouseState = Mouse.GetState();
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.OemMinus))
-            {
-                Camera.GetCurrentCamera().Position.Z -= 0.1f;
-            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.P))
             {
                 gameState.SetNewGameState(State.Paused);

@@ -42,6 +42,8 @@ namespace ToylandSiege
             //TODO: Read properties from configuration file 
             _gameState  = new GameState(State.GodMode);
             _inputHelper = new InputHelper();
+
+
         }
 
         protected override void LoadContent()

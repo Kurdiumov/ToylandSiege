@@ -104,14 +104,23 @@ namespace ToylandSiege
 
             camera.IsEnabled = ToBool(GetValue("isEnabled", currentGameObject));
 
-            //Camera target
-            if (ValueExist("CameraTarget", currentGameObject))
-                camera.CamTarget = ParseVector3(currentGameObject.GetValue("CameraTarget"));
 
             //Camera position
             if (ValueExist("Position", currentGameObject))
                 camera.Position = ParseVector3(currentGameObject.GetValue("Position"));
-            
+
+            //Camera Direction
+            if (ValueExist("Direction", currentGameObject))
+                camera.Direction = ParseVector3(currentGameObject.GetValue("Direction"));
+
+            //Camera Up Vector
+            if (ValueExist("Up", currentGameObject))
+                camera.Up = ParseVector3(currentGameObject.GetValue("UpVector"));
+
+            //Camera Speed
+            if (ValueExist("Speed", currentGameObject))
+                camera.Speed = float.Parse(GetValue("Speed", currentGameObject ));
+
             //Projection Matrix
             float NearDistance = float.Parse(GetValue("NearPlaneDistance", currentGameObject));
             float FarDistance = float.Parse(GetValue("FarPlaneDistance", currentGameObject));
@@ -120,15 +129,6 @@ namespace ToylandSiege
             camera.ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(Angle),
                 ToylandSiege.GetToylandSiege().GraphicsDevice.Viewport.AspectRatio, NearDistance, FarDistance);
 
-            //View matrix
-            if (ValueExist("ViewMatrix", currentGameObject))
-            {
-                camera.ViewMatrix = Matrix.CreateLookAt(camera.Position, camera.CamTarget,
-                    ParseVector3(currentGameObject.GetValue("ViewMatrix")));
-            }
-
-            //WorldMatrix
-            camera.WorldMatrix = Matrix.CreateWorld(camera.CamTarget, Vector3.Forward, Vector3.Up);
 
             return camera;
         }

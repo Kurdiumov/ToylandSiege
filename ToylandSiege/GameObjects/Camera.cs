@@ -1,15 +1,19 @@
 ﻿using System;
 using log4net;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace ToylandSiege.GameObjects
 {
     public class Camera : GameObject
-    {
-        public Vector3 CamTarget;
+    {  
         public Matrix ProjectionMatrix;
         public Matrix ViewMatrix;
-        public Matrix WorldMatrix;
+
+        public Vector3 Direction = Vector3.Forward;
+        public Vector3 Up = Vector3.Up;
+
+        public float Speed = 0.3F;
 
         private static Camera _currentCamera;
 
@@ -26,16 +30,23 @@ namespace ToylandSiege.GameObjects
 
         protected override void Initialize()
         {
+            Direction.Normalize();
         }
 
 
         public override void Update()
         {
+            CreateLookAt();
+        }
+
+        private void CreateLookAt()
+        {
+            ViewMatrix = Matrix.CreateLookAt(Position, Position + Direction, Up);
         }
 
         public override void Draw()
         {
-            this.ViewMatrix = Matrix.CreateLookAt(Position, CamTarget, Vector3.Up);
+
         }
 
         public static Camera GetCurrentCamera()

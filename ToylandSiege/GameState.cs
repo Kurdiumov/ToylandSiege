@@ -9,8 +9,6 @@ namespace ToylandSiege
     public enum State { GodMode, FirstPerson, Strategic, Paused, Menu }
     public class GameState
     {
-
-
         public GameState(State state = State.GodMode)
         {
             _state = state;

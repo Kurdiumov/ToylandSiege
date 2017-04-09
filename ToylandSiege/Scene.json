@@ -45,17 +45,18 @@
         "Scale": [1,1,1],
       },
       {
-        "Name": "FirsPersonCamera",
+        "Name": "GodModeCamera",
         "Type": "Camera",
         "Model": null,
         "CurrentCamera":  true, 
+        "UpVector": [0,1,0],
+        "Direction": [0,0,-1],
         "isEnabled": true,  
-        "CameraTarget": [ 0, 0, 0 ],
         "Position": [ 0, 0, 15 ],        
         "Angle": 45,
         "NearPlaneDistance": 1,
         "FarPlaneDistance": 1000,
-        "ViewMatrix": [ 0, -1, 0 ]
+        "Speed": 0.5,
       }
     ]
   }
