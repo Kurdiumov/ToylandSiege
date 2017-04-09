@@ -21,7 +21,7 @@ namespace ToylandSiege.GameObjects
         public GameObject Parent = null;
         public List<GameObject> Childs = new List<GameObject>();
 
-        protected Matrix TransformationMatrix;
+        public Matrix TransformationMatrix;
 
         protected abstract void Initialize();
         public abstract void Update();
@@ -30,9 +30,6 @@ namespace ToylandSiege.GameObjects
         {
             if (!IsEnabled)
                 return;
-
-
-
 
             if (Model != null)
             {
@@ -128,6 +125,17 @@ namespace ToylandSiege.GameObjects
                 TransformationMatrix *= Parent.TransformationMatrix;
 
             return TransformationMatrix;
+        }
+
+        public List<GameObject> GetAllChilds(GameObject obj)
+        {
+            List<GameObject> childs = new List<GameObject>();
+            foreach (var child in obj.Childs)
+            {
+                childs.Add(child);
+                childs = childs.Concat(GetAllChilds(child)).ToList();
+            }
+            return childs;
         }
     }
 }

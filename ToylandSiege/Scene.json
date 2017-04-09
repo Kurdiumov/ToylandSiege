@@ -40,9 +40,20 @@
         "Health": 100,
         "UnitType": "BasicType",
         "isEnabled": true,
-        "Position": [ 0, 0, 0 ],
+        "Position": [ 0, 0, 10 ],
         "Rotation": [0, 0, 0],
         "Scale": [1,1,1],
+      },
+      {
+        "Name": "EnemyCube",
+        "Type": "Enemy",
+        "Model": "MonoCube",
+        "Health": 100,
+        "UnitType": "BasicType",
+        "isEnabled": true,
+        "Position": [ 5, 0, 10 ],
+        "Rotation": [0, 0, 0],
+        "Scale": [0.7,0.7,0.7],
       },
       {
         "Name": "GodModeCamera",
@@ -56,7 +67,7 @@
         "Angle": 45,
         "NearPlaneDistance": 1,
         "FarPlaneDistance": 1000,
-        "Speed": 0.5,
+        "Speed": 0.3,
       }
     ]
   }

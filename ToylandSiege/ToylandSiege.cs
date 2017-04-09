@@ -49,8 +49,10 @@ namespace ToylandSiege
             DebugUtilities.ShowAllGameObjects(CurrentLevel.RootGameObject);
             FpsEnabled = _configurationManager.FPSEnabled;
 
+            IsMouseVisible = _configurationManager.MouseVisible;
             _gameState  = new GameState(_configurationManager.GameState);
             _inputHelper = new InputHelper(_configurationManager);
+
         }
 
         protected override void LoadContent()

@@ -13,6 +13,8 @@ namespace ToylandSiege
         public  State GameState = State.FirstPerson;
         public bool IsFullScreen;
         public bool FPSEnabled;
+        public bool MouseVisible;
+        public bool PickingEnabled;
 
         public int HeightResolution = 600;
         public int WidthResolution = 800;
@@ -36,6 +38,8 @@ namespace ToylandSiege
             IsFullScreenEnabled();
             GetResolution();
             IsFPSEnabled();
+            IsMouseVisible();
+            IsPickingEnabled();
         }
 
         public bool IsGodModeEnabled()
@@ -124,5 +128,32 @@ namespace ToylandSiege
 
             return FPSEnabled;
         }
+
+        public bool IsMouseVisible()
+        {
+            if (JSONHelper.ValueExist("MouseVisible", Configuration))
+                MouseVisible = JSONHelper.ToBool(JSONHelper.GetValue("MouseVisible", Configuration));
+
+            if (MouseVisible)
+                Logger.Log.Debug("Mouse visibility Enabled");
+            else
+                Logger.Log.Debug("Mouse visibility Disabled");
+
+            return FPSEnabled;
+        }
+
+        public bool IsPickingEnabled()
+        {
+            if (JSONHelper.ValueExist("RayPickingEnabled", Configuration))
+                PickingEnabled = JSONHelper.ToBool(JSONHelper.GetValue("RayPickingEnabled", Configuration));
+
+            if (PickingEnabled)
+                Logger.Log.Debug("Picking Enabled");
+            else
+                Logger.Log.Debug("Picking Disabled");
+
+            return FPSEnabled;
+        }
+        
     }
 }
