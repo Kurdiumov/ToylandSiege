@@ -12,7 +12,8 @@ namespace ToylandSiege
         public bool GodModeEnabled;
         public  State GameState = State.FirstPerson;
         public bool IsFullScreen;
-        
+        public bool FPSEnabled;
+
         public int HeightResolution = 600;
         public int WidthResolution = 800;
 
@@ -34,6 +35,7 @@ namespace ToylandSiege
             GetGameState();
             IsFullScreenEnabled();
             GetResolution();
+            IsFPSEnabled();
         }
 
         public bool IsGodModeEnabled()
@@ -108,6 +110,19 @@ namespace ToylandSiege
                 WidthResolution = Int32.Parse(JSONHelper.GetValue("WidthResolution", Configuration));
 
             Logger.Log.Debug("Setting resolution " + WidthResolution + " x " + HeightResolution);
+        }
+
+        public bool IsFPSEnabled()
+        {
+            if (JSONHelper.ValueExist("FPSEnabled", Configuration))
+                FPSEnabled = JSONHelper.ToBool(JSONHelper.GetValue("FPSEnabled", Configuration));
+
+            if (FPSEnabled)
+                Logger.Log.Debug("FPS Enabled");
+            else
+                Logger.Log.Debug("FPS Disabled");
+
+            return FPSEnabled;
         }
     }
 }

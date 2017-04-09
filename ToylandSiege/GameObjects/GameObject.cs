@@ -31,6 +31,9 @@ namespace ToylandSiege.GameObjects
             if (!IsEnabled)
                 return;
 
+
+
+
             if (Model != null)
             {
                 foreach (ModelMesh mesh in Model.Meshes)

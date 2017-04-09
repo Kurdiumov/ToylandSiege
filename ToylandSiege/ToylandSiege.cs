@@ -11,7 +11,7 @@ namespace ToylandSiege
     {
         public static GraphicsDeviceManager Graphics;
         public static Level CurrentLevel;
-        public bool FpsEnabled = true;
+        public bool FpsEnabled = false;
 
         private static ToylandSiege _ts;
         private readonly FPSCounter _frameCounter = new FPSCounter();
@@ -47,7 +47,7 @@ namespace ToylandSiege
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             DebugUtilities.ShowAllGameObjects(CurrentLevel.RootGameObject);
-
+            FpsEnabled = _configurationManager.FPSEnabled;
 
             _gameState  = new GameState(_configurationManager.GameState);
             _inputHelper = new InputHelper(_configurationManager);
@@ -86,6 +86,10 @@ namespace ToylandSiege
                 _spriteBatch.DrawString(_spriteFont, fps, new Vector2(10, 10), Color.Black);
                 _spriteBatch.End();
             }
+
+            GraphicsDevice.BlendState = BlendState.Opaque;
+            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
 
             CurrentLevel.Draw();
             base.Draw(gameTime);

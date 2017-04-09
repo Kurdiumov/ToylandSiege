@@ -8,7 +8,7 @@
         "Type": "TerrainObject",
         "Model": "MonoCube",
         "isEnabled": true,
-        "Position": [ 4, 4, 0 ],
+        "Position": [0, 0, 5 ],
         "Rotation": [0, 0, 0],
         "Scale": [1,1,1],
         "Child": [
