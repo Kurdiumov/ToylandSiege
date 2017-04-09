@@ -25,6 +25,14 @@ namespace ToylandSiege
         {
             _ts = this;
             Graphics = new GraphicsDeviceManager(this);
+
+            _configurationManager = new ConfigurationManager();
+            if (_configurationManager.IsFullScreen)
+                Graphics.IsFullScreen = true;
+
+            Graphics.PreferredBackBufferHeight = _configurationManager.HeightResolution;
+            Graphics.PreferredBackBufferWidth = _configurationManager.WidthResolution;
+
             Content.RootDirectory = "Content";
         }
 
@@ -39,10 +47,6 @@ namespace ToylandSiege
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             DebugUtilities.ShowAllGameObjects(CurrentLevel.RootGameObject);
-
-            //TODO: Read properties from configuration file 
-
-            _configurationManager = new ConfigurationManager();
 
 
             _gameState  = new GameState(_configurationManager.GameState);

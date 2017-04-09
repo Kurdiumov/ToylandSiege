@@ -53,8 +53,6 @@ namespace ToylandSiege
 
         private void UpdateGodMod(GameState gameState)
         {
-
-
             if (Keyboard.GetState().IsKeyDown(Keys.Left) || Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 Camera.GetCurrentCamera().Position += Vector3.Cross(Camera.GetCurrentCamera().Up, Camera.GetCurrentCamera().Direction) * Camera.GetCurrentCamera().Speed;

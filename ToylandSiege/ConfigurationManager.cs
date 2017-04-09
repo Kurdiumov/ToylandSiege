@@ -11,6 +11,10 @@ namespace ToylandSiege
 
         public bool GodModeEnabled;
         public  State GameState = State.FirstPerson;
+        public bool IsFullScreen;
+        
+        public int HeightResolution = 600;
+        public int WidthResolution = 800;
 
         public ConfigurationManager()
         {
@@ -28,6 +32,8 @@ namespace ToylandSiege
         {
             IsGodModeEnabled();
             GetGameState();
+            IsFullScreenEnabled();
+            GetResolution();
         }
 
         public bool IsGodModeEnabled()
@@ -40,6 +46,19 @@ namespace ToylandSiege
             else
                 Logger.Log.Debug("GodMode Disabled");
             
+            return GodModeEnabled;
+        }
+
+        public bool IsFullScreenEnabled()
+        {
+            if (JSONHelper.ValueExist("IsFullScreen", Configuration))
+                IsFullScreen = JSONHelper.ToBool(JSONHelper.GetValue("IsFullScreen", Configuration));
+
+            if (IsFullScreen)
+                Logger.Log.Debug("FullScreen Enabled");
+            else
+                Logger.Log.Debug("FullScreen Disabled");
+
             return GodModeEnabled;
         }
 
@@ -78,6 +97,17 @@ namespace ToylandSiege
                     throw new ArgumentException("Not supported game state " + state);
             }
             return GameState;
+        }
+
+        private void GetResolution()
+        {
+            if (JSONHelper.ValueExist("HeightResolution", Configuration))
+                HeightResolution = Int32.Parse(JSONHelper.GetValue("HeightResolution", Configuration));
+
+            if (JSONHelper.ValueExist("WidthResolution", Configuration))
+                WidthResolution = Int32.Parse(JSONHelper.GetValue("WidthResolution", Configuration));
+
+            Logger.Log.Debug("Setting resolution " + WidthResolution + " x " + HeightResolution);
         }
     }
 }
