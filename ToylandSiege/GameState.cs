@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ToylandSiege
+﻿namespace ToylandSiege
 {
     public enum State { GodMode, FirstPerson, Strategic, Paused, Menu }
     public class GameState

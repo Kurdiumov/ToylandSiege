@@ -19,6 +19,7 @@ namespace ToylandSiege
         private SpriteBatch _spriteBatch;
         private GameState _gameState;
         private InputHelper _inputHelper;
+        private ConfigurationManager _configurationManager;
 
         public ToylandSiege()
         {
@@ -40,10 +41,12 @@ namespace ToylandSiege
             DebugUtilities.ShowAllGameObjects(CurrentLevel.RootGameObject);
 
             //TODO: Read properties from configuration file 
-            _gameState  = new GameState(State.GodMode);
-            _inputHelper = new InputHelper();
+
+            _configurationManager = new ConfigurationManager();
 
 
+            _gameState  = new GameState(_configurationManager.GameState);
+            _inputHelper = new InputHelper(_configurationManager);
         }
 
         protected override void LoadContent()

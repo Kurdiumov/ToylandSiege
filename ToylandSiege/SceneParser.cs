@@ -42,7 +42,7 @@ namespace ToylandSiege
 
         private GameObject ParseGameObject(JObject currentGameObject, GameObject parent = null)
         {
-            string Type = GetValue("Type", currentGameObject);
+            string Type = JSONHelper.GetValue("Type", currentGameObject);
 
             switch (Type)
             {
@@ -60,28 +60,28 @@ namespace ToylandSiege
 
         private TerrainObject ParseTerrainObject(JObject currentGameObject, GameObject parent = null)
         {
-            var name = GetValue("Name", currentGameObject);
-            var model = GetValue("Model", currentGameObject);
-            var IsEnabled = ToBool(GetValue("isEnabled", currentGameObject));
+            var name = JSONHelper.GetValue("Name", currentGameObject);
+            var model = JSONHelper.GetValue("Model", currentGameObject);
+            var IsEnabled = JSONHelper.ToBool(JSONHelper.GetValue("isEnabled", currentGameObject));
 
             var mod = ToylandSiege.GetToylandSiege().Content.Load<Model>(model);
             var terrainObj = new TerrainObject(name, mod);
             terrainObj.IsEnabled = IsEnabled;
             terrainObj.IsStatic = true;
-            terrainObj.Type = GetValue("Type", currentGameObject);
+            terrainObj.Type = JSONHelper.GetValue("Type", currentGameObject);
             terrainObj.Parent = parent;
 
-            if (ValueExist("Position", currentGameObject))
-                terrainObj.Position = ParseVector3(currentGameObject.GetValue("Position"));
+            if (JSONHelper.ValueExist("Position", currentGameObject))
+                terrainObj.Position = JSONHelper.ParseVector3(currentGameObject.GetValue("Position"));
 
-            if (ValueExist("Rotation", currentGameObject))
-                terrainObj.Rotation = ParseVector3(currentGameObject.GetValue("Rotation"));
+            if (JSONHelper.ValueExist("Rotation", currentGameObject))
+                terrainObj.Rotation = JSONHelper.ParseVector3(currentGameObject.GetValue("Rotation"));
 
-            if (ValueExist("Scale", currentGameObject))
-                terrainObj.Scale = ParseVector3(currentGameObject.GetValue("Scale"));
+            if (JSONHelper.ValueExist("Scale", currentGameObject))
+                terrainObj.Scale = JSONHelper.ParseVector3(currentGameObject.GetValue("Scale"));
             terrainObj.CreateTransformationMatrix();
 
-            if (ValueExist("Child", currentGameObject))
+            if (JSONHelper.ValueExist("Child", currentGameObject))
             {  for (int i = 0; i < currentGameObject.GetValue("Child").Count(); i++)
                 {
                     terrainObj.AddChild(ParseGameObject(currentGameObject.GetValue("Child")[i].ToObject<JObject>(), terrainObj));    
@@ -93,38 +93,38 @@ namespace ToylandSiege
 
         private Camera ParseCameraObject(JObject currentGameObject, GameObject parent = null)
         {
-            var name = GetValue("Name", currentGameObject);
+            var name = JSONHelper.GetValue("Name", currentGameObject);
             var camera = new Camera(name);
 
-            camera.Type  = GetValue("Type", currentGameObject);
+            camera.Type  = JSONHelper.GetValue("Type", currentGameObject);
             camera.Model = null;
 
-            if (ToBool(GetValue("CurrentCamera", currentGameObject)))
+            if (JSONHelper.ToBool(JSONHelper.GetValue("CurrentCamera", currentGameObject)))
                 Camera.SetCurrentCamera(camera);
 
-            camera.IsEnabled = ToBool(GetValue("isEnabled", currentGameObject));
+            camera.IsEnabled = JSONHelper.ToBool(JSONHelper.GetValue("isEnabled", currentGameObject));
 
 
             //Camera position
-            if (ValueExist("Position", currentGameObject))
-                camera.Position = ParseVector3(currentGameObject.GetValue("Position"));
+            if (JSONHelper.ValueExist("Position", currentGameObject))
+                camera.Position = JSONHelper.ParseVector3(currentGameObject.GetValue("Position"));
 
             //Camera Direction
-            if (ValueExist("Direction", currentGameObject))
-                camera.Direction = ParseVector3(currentGameObject.GetValue("Direction"));
+            if (JSONHelper.ValueExist("Direction", currentGameObject))
+                camera.Direction = JSONHelper.ParseVector3(currentGameObject.GetValue("Direction"));
 
             //Camera Up Vector
-            if (ValueExist("Up", currentGameObject))
-                camera.Up = ParseVector3(currentGameObject.GetValue("UpVector"));
+            if (JSONHelper.ValueExist("Up", currentGameObject))
+                camera.Up = JSONHelper.ParseVector3(currentGameObject.GetValue("UpVector"));
 
             //Camera Speed
-            if (ValueExist("Speed", currentGameObject))
-                camera.Speed = float.Parse(GetValue("Speed", currentGameObject ));
+            if (JSONHelper.ValueExist("Speed", currentGameObject))
+                camera.Speed = float.Parse(JSONHelper.GetValue("Speed", currentGameObject ));
 
             //Projection Matrix
-            float NearDistance = float.Parse(GetValue("NearPlaneDistance", currentGameObject));
-            float FarDistance = float.Parse(GetValue("FarPlaneDistance", currentGameObject));
-            float Angle = float.Parse(GetValue("Angle", currentGameObject));
+            float NearDistance = float.Parse(JSONHelper.GetValue("NearPlaneDistance", currentGameObject));
+            float FarDistance = float.Parse(JSONHelper.GetValue("FarPlaneDistance", currentGameObject));
+            float Angle = float.Parse(JSONHelper.GetValue("Angle", currentGameObject));
 
             camera.ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(Angle),
                 ToylandSiege.GetToylandSiege().GraphicsDevice.Viewport.AspectRatio, NearDistance, FarDistance);
@@ -135,12 +135,12 @@ namespace ToylandSiege
 
         private UnitBase ParseUnitObject(JObject currentGameObject, GameObject parent = null)
         {
-            var name = GetValue("Name", currentGameObject);
-            var model = GetValue("Model", currentGameObject);
-            var type = GetValue("Type", currentGameObject);
-            var IsEnabled = ToBool(GetValue("isEnabled", currentGameObject));
-            var health =float.Parse(GetValue("Health", currentGameObject));
-            var unitType = GetValue("UnitType", currentGameObject);
+            var name = JSONHelper.GetValue("Name", currentGameObject);
+            var model = JSONHelper.GetValue("Model", currentGameObject);
+            var type = JSONHelper.GetValue("Type", currentGameObject);
+            var IsEnabled = JSONHelper.ToBool(JSONHelper.GetValue("isEnabled", currentGameObject));
+            var health =float.Parse(JSONHelper.GetValue("Health", currentGameObject));
+            var unitType = JSONHelper.GetValue("UnitType", currentGameObject);
 
             var mod = ToylandSiege.GetToylandSiege().Content.Load<Model>(model);
 
@@ -162,17 +162,17 @@ namespace ToylandSiege
             unitObj.IsStatic = true;
             unitObj.Parent = parent;
 
-            if (ValueExist("Position", currentGameObject))
-                unitObj.Position = ParseVector3(currentGameObject.GetValue("Position"));
+            if (JSONHelper.ValueExist("Position", currentGameObject))
+                unitObj.Position = JSONHelper.ParseVector3(currentGameObject.GetValue("Position"));
 
-            if (ValueExist("Rotation", currentGameObject))
-                unitObj.Rotation = ParseVector3(currentGameObject.GetValue("Rotation"));
+            if (JSONHelper.ValueExist("Rotation", currentGameObject))
+                unitObj.Rotation = JSONHelper.ParseVector3(currentGameObject.GetValue("Rotation"));
 
-            if (ValueExist("Scale", currentGameObject))
-                unitObj.Scale = ParseVector3(currentGameObject.GetValue("Scale"));
+            if (JSONHelper.ValueExist("Scale", currentGameObject))
+                unitObj.Scale = JSONHelper.ParseVector3(currentGameObject.GetValue("Scale"));
             unitObj.CreateTransformationMatrix();
 
-            if (ValueExist("Child", currentGameObject))
+            if (JSONHelper.ValueExist("Child", currentGameObject))
             {
                 for (int i = 0; i < currentGameObject.GetValue("Child").Count(); i++)
                 {
@@ -182,56 +182,5 @@ namespace ToylandSiege
 
             return unitObj;
         }
-
-        #region Helpers
-
-        private Vector3 ParseVector3(JToken currentObject)
-        {
-            List<float> arr = new List<float>();
-            foreach (var item in currentObject)
-            {
-
-                float result = 0;
-                if (!float.TryParse(item.ToString(), out result))
-                {
-                    Logger.Log.Error("Error while parsing " + currentObject.ToString() + " (" + item.ToString() + ") Replacing value with 0");
-                }
-                arr.Add(result);
-            }
-
-            if (arr.Count == 3)
-            {
-                return new Vector3(arr[0], arr[1], arr[2]);
-            }
-            throw new ArgumentException("Arguments count should equal 3");
-        }
-
-        private string GetValue(string value, JObject obj)
-        {
-            if (ValueExist(value, obj))
-                return obj.GetValue(value).ToString();
-            throw new ArgumentException("Value " + value + " does not exist in current context. " + obj.ToString());
-        }
-
-        private bool ValueExist(string value, JObject obj)
-        {
-            try
-            {
-                var exists = !String.IsNullOrEmpty(obj.GetValue(value).ToString());
-                return true;
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
-        }
-
-        private bool ToBool(string value)
-        {
-            if (value == "True")
-                return true;
-            return false;
-        }
-        #endregion
     }
 }

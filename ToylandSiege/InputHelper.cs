@@ -9,12 +9,14 @@ namespace ToylandSiege
 {
     public class InputHelper
     {
-        MouseState PrevMouseState;
+        private MouseState PrevMouseState;
+        private readonly ConfigurationManager _configurationManager;
 
-        public InputHelper()
+        public InputHelper(ConfigurationManager configurationManager)
         {
             Mouse.SetPosition(ToylandSiege.GetToylandSiege().Window.ClientBounds.Width / 2, ToylandSiege.GetToylandSiege().Window.ClientBounds.Height / 2);
             PrevMouseState = Mouse.GetState();
+            _configurationManager = configurationManager;
         }
 
         public void Update(GameState gameState)
@@ -22,7 +24,10 @@ namespace ToylandSiege
             switch (gameState.GetCurrentGameState())
             {
                 case State.GodMode:
-                    UpdateGodMod(gameState);
+                    if(_configurationManager.GodModeEnabled)
+                        UpdateGodMod(gameState);
+                    else
+                        UpdateFirstPerson(gameState);
                     break;
                 case State.FirstPerson:
                     UpdateFirstPerson(gameState);
@@ -48,6 +53,8 @@ namespace ToylandSiege
 
         private void UpdateGodMod(GameState gameState)
         {
+
+
             if (Keyboard.GetState().IsKeyDown(Keys.Left) || Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 Camera.GetCurrentCamera().Position += Vector3.Cross(Camera.GetCurrentCamera().Up, Camera.GetCurrentCamera().Direction) * Camera.GetCurrentCamera().Speed;
