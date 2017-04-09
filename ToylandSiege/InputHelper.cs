@@ -68,14 +68,12 @@ namespace ToylandSiege
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Down) || Keyboard.GetState().IsKeyDown(Keys.S))
             {
-
                 Camera.GetCurrentCamera().Position -= Camera.GetCurrentCamera().Direction *
                                       Camera.GetCurrentCamera().Speed;
             }
 
             if (Mouse.GetState() != PrevMouseState)
             {
-                
                 Camera.GetCurrentCamera().Direction = Vector3.Transform(
                     Camera.GetCurrentCamera().Direction,
                     Matrix.CreateFromAxisAngle(Camera.GetCurrentCamera().Up,
@@ -84,10 +82,6 @@ namespace ToylandSiege
 
                 Camera.GetCurrentCamera().Direction = Vector3.Transform(
                     Camera.GetCurrentCamera().Direction,
-                    Matrix.CreateFromAxisAngle(
-                        Vector3.Cross(Camera.GetCurrentCamera().Up, Camera.GetCurrentCamera().Direction),
-                        (MathHelper.PiOver4 / 100) * (Mouse.GetState().Y - PrevMouseState.Y)));
-                Camera.GetCurrentCamera().Up = Vector3.Transform(Camera.GetCurrentCamera().Up,
                     Matrix.CreateFromAxisAngle(
                         Vector3.Cross(Camera.GetCurrentCamera().Up, Camera.GetCurrentCamera().Direction),
                         (MathHelper.PiOver4 / 100) * (Mouse.GetState().Y - PrevMouseState.Y)));
