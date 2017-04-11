@@ -103,6 +103,7 @@ namespace ToylandSiege
                 Camera.SetCurrentCamera(camera);
 
             camera.IsEnabled = JSONHelper.ToBool(JSONHelper.GetValue("isEnabled", currentGameObject));
+            camera.IsCollidable = false;
 
 
             //Camera position
@@ -159,7 +160,7 @@ namespace ToylandSiege
             unitObj.Health = health;
             unitObj.UnitType = unitType;
 
-            unitObj.IsStatic = true;
+            unitObj.IsStatic = false;
             unitObj.Parent = parent;
 
             if (JSONHelper.ValueExist("Position", currentGameObject))

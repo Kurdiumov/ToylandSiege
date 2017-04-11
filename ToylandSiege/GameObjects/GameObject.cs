@@ -15,6 +15,7 @@ namespace ToylandSiege.GameObjects
         public Vector3 Scale = new Vector3(1, 1, 1);
 
         public bool IsStatic = false;
+        public bool IsCollidable = true;
         public bool IsEnabled = true;
 
         public Model Model;
@@ -136,6 +137,29 @@ namespace ToylandSiege.GameObjects
                 childs = childs.Concat(GetAllChilds(child)).ToList();
             }
             return childs;
+        }
+
+        public BoundingSphere CreateBoundingSphereForModel()
+        {
+            Matrix[] boneTransforms = new Matrix[this.Model.Bones.Count];
+            this.Model.CopyAbsoluteBoneTransformsTo(boneTransforms);
+
+            BoundingSphere boundingSphere = new BoundingSphere();
+            BoundingSphere meshSphere;
+
+            for (int i = 0; i < this.Model.Meshes.Count; i++)
+            {
+                meshSphere = this.Model.Meshes[i].BoundingSphere.Transform(boneTransforms[i]);
+                boundingSphere = BoundingSphere.CreateMerged(boundingSphere, meshSphere);
+            }
+            //TODO: Should recalculate matrix here?
+            return boundingSphere.Transform(this.TransformationMatrix);
+        }
+
+        public void HandleCollisionWith(GameObject obj2)
+        {
+            obj2.IsStatic = true;
+            this.IsStatic = true;
         }
     }
 }

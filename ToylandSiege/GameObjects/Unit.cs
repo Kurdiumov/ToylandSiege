@@ -19,7 +19,8 @@ namespace ToylandSiege.GameObjects
             CreateTransformationMatrix();
 
             //TODO: Remove line belowe. Used to check drawing and update methods
-            this.Rotation += new Vector3(0.01f, 0, 0);
+            if (!this.IsStatic)
+                this.Rotation += new Vector3(0.01f, 0, 0);
         }
     }
 }
