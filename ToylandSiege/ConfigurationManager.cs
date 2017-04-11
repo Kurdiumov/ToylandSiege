@@ -15,6 +15,7 @@ namespace ToylandSiege
         public bool FPSEnabled;
         public bool MouseVisible;
         public bool PickingEnabled;
+        public bool LigthningEnabled;
 
         public int HeightResolution = 600;
         public int WidthResolution = 800;
@@ -40,6 +41,7 @@ namespace ToylandSiege
             IsFPSEnabled();
             IsMouseVisible();
             IsPickingEnabled();
+            IsLightningEnabled();
         }
 
         public bool IsGodModeEnabled()
@@ -154,6 +156,21 @@ namespace ToylandSiege
 
             return FPSEnabled;
         }
-        
+
+
+        public bool IsLightningEnabled()
+        {
+            if (JSONHelper.ValueExist("LightningEnabled", Configuration))
+                LigthningEnabled = JSONHelper.ToBool(JSONHelper.GetValue("LightningEnabled", Configuration));
+
+            if (LigthningEnabled)
+                Logger.Log.Debug("Lightning Enabled");
+            else
+                Logger.Log.Debug("Lightning Disabled");
+
+            return LigthningEnabled;
+        }
+
     }
+    
 }

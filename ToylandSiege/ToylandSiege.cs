@@ -21,19 +21,19 @@ namespace ToylandSiege
         private SpriteBatch _spriteBatch;
         private GameState _gameState;
         private InputHelper _inputHelper;
-        private ConfigurationManager _configurationManager;
+        public  ConfigurationManager configurationManager;
 
         public ToylandSiege()
         {
             _ts = this;
             Graphics = new GraphicsDeviceManager(this);
 
-            _configurationManager = new ConfigurationManager();
-            if (_configurationManager.IsFullScreen)
+            configurationManager = new ConfigurationManager();
+            if (configurationManager.IsFullScreen)
                 Graphics.IsFullScreen = true;
 
-            Graphics.PreferredBackBufferHeight = _configurationManager.HeightResolution;
-            Graphics.PreferredBackBufferWidth = _configurationManager.WidthResolution;
+            Graphics.PreferredBackBufferHeight = configurationManager.HeightResolution;
+            Graphics.PreferredBackBufferWidth = configurationManager.WidthResolution;
 
             Content.RootDirectory = "Content";
         }
@@ -49,11 +49,11 @@ namespace ToylandSiege
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             DebugUtilities.ShowAllGameObjects(CurrentLevel.RootGameObject);
-            FpsEnabled = _configurationManager.FPSEnabled;
+            FpsEnabled = configurationManager.FPSEnabled;
 
-            IsMouseVisible = _configurationManager.MouseVisible;
-            _gameState  = new GameState(_configurationManager.GameState);
-            _inputHelper = new InputHelper(_configurationManager);
+            IsMouseVisible = configurationManager.MouseVisible;
+            _gameState  = new GameState(configurationManager.GameState);
+            _inputHelper = new InputHelper(configurationManager);
 
         }
 

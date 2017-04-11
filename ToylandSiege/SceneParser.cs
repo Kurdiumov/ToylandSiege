@@ -53,6 +53,8 @@ namespace ToylandSiege
                 case "Unit":
                 case "Enemy":
                     return ParseUnitObject(currentGameObject, parent);
+                case "Group":
+                    return ParseGroupObject(currentGameObject, parent);
                 default:
                     throw new InvalidEnumArgumentException("Unknown type " + Type);
             }
@@ -63,6 +65,7 @@ namespace ToylandSiege
             var name = JSONHelper.GetValue("Name", currentGameObject);
             var model = JSONHelper.GetValue("Model", currentGameObject);
             var IsEnabled = JSONHelper.ToBool(JSONHelper.GetValue("isEnabled", currentGameObject));
+
 
             var mod = ToylandSiege.GetToylandSiege().Content.Load<Model>(model);
             var terrainObj = new TerrainObject(name, mod);
@@ -183,5 +186,39 @@ namespace ToylandSiege
 
             return unitObj;
         }
+
+        private Group ParseGroupObject(JObject currentGameObject, GameObject parent = null)
+        {
+            var name = JSONHelper.GetValue("Name", currentGameObject);
+            var IsEnabled = JSONHelper.ToBool(JSONHelper.GetValue("isEnabled", currentGameObject));
+
+
+            var terrainObj = new Group(name);
+            terrainObj.IsEnabled = IsEnabled;
+            terrainObj.IsStatic = true;
+            terrainObj.Type = JSONHelper.GetValue("Type", currentGameObject);
+            terrainObj.Parent = parent;
+             
+            if (JSONHelper.ValueExist("Position", currentGameObject))
+                terrainObj.Position = JSONHelper.ParseVector3(currentGameObject.GetValue("Position"));
+
+            if (JSONHelper.ValueExist("Rotation", currentGameObject))
+                terrainObj.Rotation = JSONHelper.ParseVector3(currentGameObject.GetValue("Rotation"));
+
+            if (JSONHelper.ValueExist("Scale", currentGameObject))
+                terrainObj.Scale = JSONHelper.ParseVector3(currentGameObject.GetValue("Scale"));
+            terrainObj.CreateTransformationMatrix();
+
+            if (JSONHelper.ValueExist("Child", currentGameObject))
+            {
+                for (int i = 0; i < currentGameObject.GetValue("Child").Count(); i++)
+                {
+                    terrainObj.AddChild(ParseGameObject(currentGameObject.GetValue("Child")[i].ToObject<JObject>(), terrainObj));
+                }
+            }
+
+            return terrainObj;
+        }
+
     }
 }

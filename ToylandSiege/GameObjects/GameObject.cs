@@ -28,7 +28,7 @@ namespace ToylandSiege.GameObjects
         public abstract void Update();
 
         public virtual void Draw()
-        {
+            {
             if (!IsEnabled)
                 return;
 
@@ -38,19 +38,20 @@ namespace ToylandSiege.GameObjects
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
-                        //effect.EnableDefaultLighting();
-                        effect.AmbientLightColor = new Vector3(1f, 0, 0);
+                        if(ToylandSiege.GetToylandSiege().configurationManager.LigthningEnabled)
+                            effect.EnableDefaultLighting();
+                        effect.AmbientLightColor = new Vector3(0, 0.3f, 0.3f);
                         effect.View = Camera.GetCurrentCamera().ViewMatrix;
 
                         effect.World = TransformationMatrix;
                         effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
                     }
                     mesh.Draw();
-                    foreach (var child in Childs)
-                    {
-                        child.Draw();
-                    }
                 }
+            }
+            foreach (var child in Childs)
+            {
+                child.Draw();
             }
         }
 
