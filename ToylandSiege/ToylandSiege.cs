@@ -89,7 +89,7 @@ namespace ToylandSiege
         {
             List<GameObject> dynamicObjects = new List<GameObject>();
 
-            foreach (var obj in CurrentLevel.RootGameObject.Childs)
+            foreach (var obj in CurrentLevel.RootGameObject.Childs.Values)
             {
                 if (obj.IsEnabled && !obj.IsStatic && obj.IsCollidable)
                     dynamicObjects.Add(obj);

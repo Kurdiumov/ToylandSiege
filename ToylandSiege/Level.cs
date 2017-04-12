@@ -29,7 +29,7 @@ namespace ToylandSiege
         {
             Camera.GetCurrentCamera().Update();
             
-            foreach (var child  in RootGameObject.Childs)
+            foreach (var child  in RootGameObject.Childs.Values)
                 child.Update();
         }
 
@@ -37,7 +37,7 @@ namespace ToylandSiege
         {
             Camera.GetCurrentCamera().Draw();
 
-            foreach (var child in RootGameObject.Childs)
+            foreach (var child in RootGameObject.Childs.Values)
                 child.Draw();
         }
     }
