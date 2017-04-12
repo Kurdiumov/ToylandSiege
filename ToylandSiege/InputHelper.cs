@@ -13,6 +13,8 @@ namespace ToylandSiege
         private MouseState PrevMouseState;
         private readonly ConfigurationManager _configurationManager;
 
+        public bool aim = false;
+
         public InputHelper(ConfigurationManager configurationManager)
         {
             Mouse.SetPosition(ToylandSiege.GetToylandSiege().Window.ClientBounds.Width / 2, ToylandSiege.GetToylandSiege().Window.ClientBounds.Height / 2);
@@ -52,6 +54,30 @@ namespace ToylandSiege
                 ToylandSiege.GetToylandSiege().Exit();
         }
 
+        private void RotateCamera()
+        {
+            if (Mouse.GetState() != PrevMouseState)
+            {
+                Camera.GetCurrentCamera().Direction = Vector3.Transform(
+                     Camera.GetCurrentCamera().Direction,
+                     Matrix.CreateFromAxisAngle(Camera.GetCurrentCamera().Up,
+                         (-MathHelper.PiOver4 / 150) * (Mouse.GetState().X - PrevMouseState.X)));
+
+
+                Camera.GetCurrentCamera().Direction = Vector3.Transform(
+                    Camera.GetCurrentCamera().Direction,
+                    Matrix.CreateFromAxisAngle(
+                        Vector3.Cross(Camera.GetCurrentCamera().Up, Camera.GetCurrentCamera().Direction),
+                        (MathHelper.PiOver4 / 100) * (Mouse.GetState().Y - PrevMouseState.Y)));
+                
+
+                // Reset PrevMouseState
+                Mouse.SetPosition(ToylandSiege.GetToylandSiege().Window.ClientBounds.Width / 2, ToylandSiege.GetToylandSiege().Window.ClientBounds.Height / 2);
+                PrevMouseState = Mouse.GetState();
+
+            }
+        }
+
         private void UpdateGodMod(GameState gameState)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Left) || Keyboard.GetState().IsKeyDown(Keys.A))
@@ -72,6 +98,10 @@ namespace ToylandSiege
                 Camera.GetCurrentCamera().Position -= Camera.GetCurrentCamera().Direction *
                                       Camera.GetCurrentCamera().Speed;
             }
+            if (Keyboard.GetState().IsKeyDown(Keys.Down) || Keyboard.GetState().IsKeyDown(Keys.M))
+            {
+                throw new NotFiniteNumberException();
+            }
             if (Mouse.GetState().LeftButton == ButtonState.Pressed && _configurationManager.PickingEnabled)
             {
                 var PickedObject = PickObject();
@@ -89,24 +119,7 @@ namespace ToylandSiege
                 }
             }
 
-            if (Mouse.GetState() != PrevMouseState)
-            {
-                Camera.GetCurrentCamera().Direction = Vector3.Transform(
-                     Camera.GetCurrentCamera().Direction,
-                     Matrix.CreateFromAxisAngle(Camera.GetCurrentCamera().Up,
-                         (-MathHelper.PiOver4 / 150) * (Mouse.GetState().X - PrevMouseState.X)));
-
-
-                Camera.GetCurrentCamera().Direction = Vector3.Transform(
-                    Camera.GetCurrentCamera().Direction,
-                    Matrix.CreateFromAxisAngle(
-                        Vector3.Cross(Camera.GetCurrentCamera().Up, Camera.GetCurrentCamera().Direction),
-                        (MathHelper.PiOver4 / 100) * (Mouse.GetState().Y - PrevMouseState.Y)));
-
-                // Reset PrevMouseState
-                PrevMouseState = Mouse.GetState();
-
-            }
+            RotateCamera();
 
             if (Keyboard.GetState().IsKeyDown(Keys.P))
             {
@@ -116,7 +129,25 @@ namespace ToylandSiege
 
         private void UpdateFirstPerson(GameState gameState)
         {
-            throw new NotImplementedException();
+            RotateCamera();
+            if (Keyboard.GetState().IsKeyDown(Keys.P))
+            {
+                gameState.SetNewGameState(State.Paused);
+            }
+
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                Logger.Log.Debug("Strzal");
+            }
+
+            if (Mouse.GetState().RightButton == ButtonState.Pressed && !aim)
+            {
+                AimMode();
+            }
+            if(aim && Mouse.GetState().RightButton == ButtonState.Released)
+            {
+                
+            }
         }
 
         private void UpdateStrategic(GameState gameState)
@@ -135,6 +166,10 @@ namespace ToylandSiege
         private void UpdateMenu(GameState gameState)
         {
             throw new NotImplementedException();
+        }
+
+        private void AimMode()
+        {
         }
 
         private GameObject PickObject()
