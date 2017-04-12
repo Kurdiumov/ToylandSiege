@@ -11,15 +11,17 @@ namespace ToylandSiege
 {
     public class InputHelper
     {
-        private MouseState PrevMouseState;
-        private readonly ConfigurationManager _configurationManager;
 
+        private readonly ConfigurationManager _configurationManager;
         public bool aim = false;
+
+        private KeyboardState _previousKeyboardState = Keyboard.GetState();
+        private MouseState _previousMouseState = Mouse.GetState();
 
         public InputHelper(ConfigurationManager configurationManager)
         {
             Mouse.SetPosition(ToylandSiege.GetToylandSiege().Window.ClientBounds.Width / 2, ToylandSiege.GetToylandSiege().Window.ClientBounds.Height / 2);
-            PrevMouseState = Mouse.GetState();
+            _previousMouseState = Mouse.GetState();
             _configurationManager = configurationManager;
         }
 
@@ -53,29 +55,30 @@ namespace ToylandSiege
                 ButtonState.Pressed || Keyboard.GetState().IsKeyDown(
                 Keys.Escape))
                 ToylandSiege.GetToylandSiege().Exit();
+
+            _previousKeyboardState = Keyboard.GetState();
+            _previousMouseState = Mouse.GetState();
         }
 
         private void RotateCamera()
         {
-            if (Mouse.GetState() != PrevMouseState)
+            if (Mouse.GetState() != _previousMouseState)
             {
                 Camera.GetCurrentCamera().Direction = Vector3.Transform(
                      Camera.GetCurrentCamera().Direction,
                      Matrix.CreateFromAxisAngle(Camera.GetCurrentCamera().Up,
-                         (-MathHelper.PiOver4 / 150) * (Mouse.GetState().X - PrevMouseState.X)));
+                         (-MathHelper.PiOver4 / 150) * (Mouse.GetState().X - _previousMouseState.X)));
 
 
                 Camera.GetCurrentCamera().Direction = Vector3.Transform(
                     Camera.GetCurrentCamera().Direction,
                     Matrix.CreateFromAxisAngle(
                         Vector3.Cross(Camera.GetCurrentCamera().Up, Camera.GetCurrentCamera().Direction),
-                        (MathHelper.PiOver4 / 100) * (Mouse.GetState().Y - PrevMouseState.Y)));
-                
+                        (MathHelper.PiOver4 / 100) * (Mouse.GetState().Y - _previousMouseState.Y)));
+
 
                 // Reset PrevMouseState
                 Mouse.SetPosition(ToylandSiege.GetToylandSiege().Window.ClientBounds.Width / 2, ToylandSiege.GetToylandSiege().Window.ClientBounds.Height / 2);
-                PrevMouseState = Mouse.GetState();
-
             }
         }
 
@@ -99,16 +102,11 @@ namespace ToylandSiege
                 Camera.GetCurrentCamera().Position -= Camera.GetCurrentCamera().Direction *
                                       Camera.GetCurrentCamera().Speed;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Tab))
+            if (IsSimpleKeyPress(Keys.Tab))
             {
                 Camera.SwitchToNextCamera();
             }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Down) || Keyboard.GetState().IsKeyDown(Keys.M))
-            {
-                throw new NotFiniteNumberException();
-            }
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed && _configurationManager.PickingEnabled)
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed && IsSimpleClick() && _configurationManager.PickingEnabled)
             {
                 var PickedObject = PickObject();
 
@@ -128,7 +126,7 @@ namespace ToylandSiege
 
             RotateCamera();
 
-            if (Keyboard.GetState().IsKeyDown(Keys.P))
+            if (IsSimpleKeyPress(Keys.P))
             {
                 gameState.SetNewGameState(State.Paused);
             }
@@ -137,23 +135,23 @@ namespace ToylandSiege
         private void UpdateFirstPerson(GameState gameState)
         {
             RotateCamera();
-            if (Keyboard.GetState().IsKeyDown(Keys.P))
+            if (IsSimpleKeyPress(Keys.P))
             {
                 gameState.SetNewGameState(State.Paused);
             }
 
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed && IsSimpleClick())
             {
-                Logger.Log.Debug("Strzal");
+                Logger.Log.Debug("Shoot");
             }
 
-            if (Mouse.GetState().RightButton == ButtonState.Pressed && !aim)
+            if (Mouse.GetState().RightButton == ButtonState.Pressed && IsSimpleClick() && !aim)
             {
                 AimMode();
             }
-            if(aim && Mouse.GetState().RightButton == ButtonState.Released)
+            if (aim && Mouse.GetState().RightButton == ButtonState.Released && IsSimpleClick())
             {
-                
+
             }
         }
 
@@ -164,7 +162,7 @@ namespace ToylandSiege
 
         private void UpdatePaused(GameState gameState)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.P))
+            if (IsSimpleKeyPress(Keys.P))
             {
                 gameState.SetNewGameState(gameState.GetPreviousGameState());
             }
@@ -212,8 +210,6 @@ namespace ToylandSiege
             return closestObject;
         }
 
-        
-
         private Ray CalculateRay(Vector2 mouseLocation, Matrix view, Matrix projection, Viewport viewport)
         {
             Vector3 nearPoint = viewport.Unproject(new Vector3(mouseLocation.X,
@@ -232,6 +228,21 @@ namespace ToylandSiege
             direction.Normalize();
 
             return new Ray(nearPoint, direction);
+        }
+
+        private bool IsSimpleKeyPress(Keys key)
+        {
+            return Keyboard.GetState().IsKeyDown(key) && !_previousKeyboardState.IsKeyDown(key);
+        }
+
+        private bool IsSimpleClick()
+        {
+            return Mouse.GetState().LeftButton != _previousMouseState.LeftButton ||
+                   Mouse.GetState().RightButton != _previousMouseState.RightButton ||
+                   Mouse.GetState().MiddleButton != _previousMouseState.MiddleButton ||
+                   Mouse.GetState().XButton1 != _previousMouseState.XButton1 ||
+                   Mouse.GetState().XButton2 != _previousMouseState.XButton2 ||
+                   Mouse.GetState().ScrollWheelValue != _previousMouseState.ScrollWheelValue;
         }
     }
 }
