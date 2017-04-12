@@ -21,7 +21,7 @@ namespace ToylandSiege.GameObjects
 
         public Model Model;
         public GameObject Parent = null;
-        public List<GameObject> Childs = new List<GameObject>();
+        public Dictionary<string, GameObject> Childs = new Dictionary<string, GameObject>();
 
         public Matrix TransformationMatrix;
 
@@ -55,7 +55,7 @@ namespace ToylandSiege.GameObjects
                     mesh.Draw();
                 }
             }
-            foreach (var child in Childs)
+            foreach (var child in Childs.Values)
             {
                 child.Draw();
             }
@@ -63,58 +63,33 @@ namespace ToylandSiege.GameObjects
 
         public void AddChild(GameObject obj)
         {
-            Childs.Add(obj);
+            Childs.Add(obj.Name, obj);
             obj.Parent = this;
             Logger.Log.Debug("GameObject " + obj.Name + " added to " + Name + " GameObject type: " + Type);
         }
 
-        public void RemoveChild(GameObject obj)
+        public bool RemoveChild(GameObject obj)
         {
-            if (Childs.Remove(obj))
+            if (RemoveChild(obj.Name))
+            {
                 Logger.Log.Debug("GameObject " + obj.Name + " removed from " + Name + " GameObject type: " + Type);
-            else
-                Logger.Log.Debug("Cant remove GameObject " + obj.Name + " from " + Name + " GameObject type: " + Type);
-
+                return true;
+            }
+            Logger.Log.Debug("Cant remove GameObject " + obj.Name + " from " + Name + " GameObject type: " + Type);
+            return false;
         }
+    
 
         public bool RemoveChild(string name)
         {
-            bool removed = false;
-            for (int i = 0; i < Childs.Count; i++)
-                if (Childs[i].Name == name)
-                {
-                    Childs.RemoveAt(i);
-                    Logger.Log.Debug("GameObject " + Childs[i].Name + " removed from scene");
-                    i--;
-
-                    removed = true;
-                }
-            return removed;
+            if (Childs.Remove(name))
+            {
+                Logger.Log.Debug("GameObject " + name + " removed from scene");
+                return true;
+            }
+            return false;
         }
-
-        public GameObject FindGameObjectInLevelByName(string name)
-        {
-            //TODO: Implement reccursive search
-            foreach (var item in Childs)
-                if (item.Name == name)
-                    return item;
-            return null;
-        }
-
-        public List<GameObject> FindGameObjectsInLevelByName(string name)
-        {
-            //TODO: Implement reccursive search
-            List<GameObject> FoundedItems = new List<GameObject>();
-
-            foreach (var item in Childs)
-                if (item.Name == name)
-                    FoundedItems.Add(item);
-
-
-            if (FoundedItems.Count != 0)
-                return FoundedItems;
-            return null;
-        }
+    
 
         public override string ToString()
         {
@@ -138,7 +113,7 @@ namespace ToylandSiege.GameObjects
         public List<GameObject> GetAllChilds(GameObject obj)
         {
             List<GameObject> childs = new List<GameObject>();
-            foreach (var child in obj.Childs)
+            foreach (var child in obj.Childs.Values)
             {
                 childs.Add(child);
                 childs = childs.Concat(GetAllChilds(child)).ToList();

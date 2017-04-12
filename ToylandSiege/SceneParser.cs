@@ -118,7 +118,7 @@ namespace ToylandSiege
                 camera.Direction = JSONHelper.ParseVector3(currentGameObject.GetValue("Direction"));
 
             //Camera Up Vector
-            if (JSONHelper.ValueExist("Up", currentGameObject))
+            if (JSONHelper.ValueExist("UpVector", currentGameObject))
                 camera.Up = JSONHelper.ParseVector3(currentGameObject.GetValue("UpVector"));
 
             //Camera Speed

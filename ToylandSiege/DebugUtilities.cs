@@ -11,7 +11,7 @@ namespace ToylandSiege
                 output += "\t";
 
             System.Diagnostics.Debug.Print(output + rootObject);
-            foreach (var child in rootObject.Childs)
+            foreach (var child in rootObject.Childs.Values)
             {
                 ShowAllGameObjects(child, tabulation+1);
             }

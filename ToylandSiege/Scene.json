@@ -35,8 +35,8 @@
                      -100
                   ],
                   "Rotation":[
-                     1.55,
-                     -1.57,
+                     0,
+                     0,
                      0
                   ],
                   "Scale":[
@@ -80,7 +80,7 @@
                   ],
                   "Rotation":[
                      0,
-                     -1.55,
+                     0,
                      0
                   ],
                   "Scale":[
@@ -101,7 +101,7 @@
                   ],
                   "Rotation":[
                      0,
-                     -1.55,
+                     0,
                      0
                   ],
                   "Scale":[
@@ -247,6 +247,32 @@
                18
             ],
             "Angle":45,
+            "NearPlaneDistance":1,
+            "FarPlaneDistance":1000,
+            "Speed":0.3
+         },
+         {
+            "Name":"StrategicCamera",
+            "Type":"Camera",
+            "Model":null,
+            "CurrentCamera":true,
+            "UpVector":[
+               0,
+               1,
+               0
+            ],
+            "Direction":[
+               0,
+               -1,
+               -1
+            ],
+            "isEnabled":false,
+            "Position":[
+               0,
+               25,
+               15
+            ],
+            "Angle":60,
             "NearPlaneDistance":1,
             "FarPlaneDistance":1000,
             "Speed":0.3
