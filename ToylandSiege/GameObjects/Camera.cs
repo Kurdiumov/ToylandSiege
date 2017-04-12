@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using log4net;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -16,10 +18,13 @@ namespace ToylandSiege.GameObjects
         public float Speed = 0.3F;
 
         private static Camera _currentCamera;
+        private static Dictionary<string, Camera> AvailableCameras = new Dictionary<string, Camera>();
+
 
         public Camera(string Name)
         {
             this.Name = Name;
+            AvailableCameras.Add(Name, this);
             Initialize();
         }
 
@@ -59,6 +64,24 @@ namespace ToylandSiege.GameObjects
             return
 
             _currentCamera;
+        }
+
+        public static void SwitchToNextCamera()
+                {
+            if (AvailableCameras.Count <= 1)
+                return;
+
+            int index = 0;
+
+            for (; index < AvailableCameras.Count; index++)
+                if (AvailableCameras.ElementAt(index).Value == Camera.GetCurrentCamera())
+                {
+                    index++;
+                    break;
+                }
+            if (AvailableCameras.Count <= index)
+                index = 0;
+            Camera.SetCurrentCamera(AvailableCameras.ElementAt(index).Value);
         }
     }
 }

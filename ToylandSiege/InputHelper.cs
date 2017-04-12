@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -98,6 +99,11 @@ namespace ToylandSiege
                 Camera.GetCurrentCamera().Position -= Camera.GetCurrentCamera().Direction *
                                       Camera.GetCurrentCamera().Speed;
             }
+            if (Keyboard.GetState().IsKeyDown(Keys.Tab))
+            {
+                Camera.SwitchToNextCamera();
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.Down) || Keyboard.GetState().IsKeyDown(Keys.M))
             {
                 throw new NotFiniteNumberException();
