@@ -184,6 +184,10 @@ namespace ToylandSiege
                 }
             }
 
+            // TODO: Load from a config file?
+            unitObj.BType = GameObject.BoundingType.Sphere;
+            unitObj.CreateBoundingSphereForModel();
+
             return unitObj;
         }
 

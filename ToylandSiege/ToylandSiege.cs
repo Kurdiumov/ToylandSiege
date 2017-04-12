@@ -27,6 +27,7 @@ namespace ToylandSiege
         {
             _ts = this;
             Graphics = new GraphicsDeviceManager(this);
+            
 
             configurationManager = new ConfigurationManager();
             if (configurationManager.IsFullScreen)
@@ -66,45 +67,6 @@ namespace ToylandSiege
         {
         }
 
-        protected bool CheckCollision(GameObject obj1, GameObject obj2)
-        {
-            if (!obj1.IsEnabled || !obj1.IsCollidable)
-                return false;
-            if (!obj2.IsEnabled || !obj2.IsCollidable)
-                return false;
-
-            BoundingSphere bs1 = obj1.CreateBoundingSphereForModel();
-            BoundingSphere bs2 = obj2.CreateBoundingSphereForModel();
-
-            if (bs1.Intersects(bs2))
-            {
-                obj1.HandleCollisionWith(obj2);
-                obj2.HandleCollisionWith(obj1);
-                return true;
-            }
-            return false;
-        }
-
-        protected void CalculateCollisions()
-        {
-            List<GameObject> dynamicObjects = new List<GameObject>();
-
-            foreach (var obj in CurrentLevel.RootGameObject.Childs)
-            {
-                if (obj.IsEnabled && !obj.IsStatic && obj.IsCollidable)
-                    dynamicObjects.Add(obj);
-            }
-
-            int currIndex = 0;
-
-            foreach (var obj1 in dynamicObjects)
-            {
-                foreach (var obj2 in dynamicObjects.Skip(currIndex+1))
-                    CheckCollision(obj1, obj2);
-                currIndex++;
-            }
-        }
-
         protected override void Update(GameTime gameTime)
         {
             _inputHelper.Update(_gameState);
@@ -112,7 +74,7 @@ namespace ToylandSiege
             if (_gameState.GetCurrentGameState() == State.Paused)
                 return;
 
-            CalculateCollisions(); //TODO: Ensure if is in good order?
+            CollisionHelper.CalculateCollisions(); //TODO: Ensure if is in good order?
             CurrentLevel.Update();
             base.Update(gameTime);
         }

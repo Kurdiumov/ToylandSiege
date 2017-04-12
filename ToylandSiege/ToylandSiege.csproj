@@ -61,6 +61,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CollisionHelper.cs" />
     <Compile Include="ConfigurationManager.cs" />
     <Compile Include="DebugUtilities.cs" />
     <Compile Include="FPSCounter.cs" />

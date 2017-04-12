@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace ToylandSiege.GameObjects
 {
@@ -23,6 +24,11 @@ namespace ToylandSiege.GameObjects
         public List<GameObject> Childs = new List<GameObject>();
 
         public Matrix TransformationMatrix;
+
+        public enum BoundingType { Box, Sphere };
+        public BoundingType BType;
+        public BoundingSphere BSphere;
+        public BoundingBox BBox;
 
         protected abstract void Initialize();
         public abstract void Update();
@@ -140,7 +146,7 @@ namespace ToylandSiege.GameObjects
             return childs;
         }
 
-        public BoundingSphere CreateBoundingSphereForModel()
+        public void CreateBoundingSphereForModel()
         {
             Matrix[] boneTransforms = new Matrix[this.Model.Bones.Count];
             this.Model.CopyAbsoluteBoneTransformsTo(boneTransforms);
@@ -154,10 +160,82 @@ namespace ToylandSiege.GameObjects
                 boundingSphere = BoundingSphere.CreateMerged(boundingSphere, meshSphere);
             }
             //TODO: Should recalculate matrix here?
-            return boundingSphere.Transform(this.TransformationMatrix);
+            this.BSphere = boundingSphere.Transform(this.TransformationMatrix);
+            this.BType = BoundingType.Sphere;
         }
 
-        public void HandleCollisionWith(GameObject obj2)
+        public void CreateBoundingBoxForModel()
+        {
+            // Create variables to keep min and max xyz values for the model
+            Vector3 modelMax = new Vector3(float.MinValue, float.MinValue, float.MinValue);
+            Vector3 modelMin = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
+
+            foreach (ModelMesh mesh in this.Model.Meshes)
+            {
+                //Create variables to hold min and max xyz values for the mesh
+                Vector3 meshMax = new Vector3(float.MinValue, float.MinValue, float.MinValue);
+                Vector3 meshMin = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
+
+                // There may be multiple parts in a mesh (different materials etc.) so loop through each
+                foreach (ModelMeshPart part in mesh.MeshParts)
+                {
+                    // The stride is how big, in bytes, one vertex is in the vertex buffer
+                    int stride = part.VertexBuffer.VertexDeclaration.VertexStride;
+
+                    byte[] vertexData = new byte[stride * part.NumVertices];
+                    part.VertexBuffer.GetData(part.VertexOffset * stride, vertexData, 0, part.NumVertices, 1);
+
+                    // Find minimum and maximum xyz values for this mesh part
+                    // We know the position will always be the first 3 float values of the vertex data
+                    Vector3 vertPosition = new Vector3();
+                    for (int ndx = 0; ndx < vertexData.Length; ndx += stride)
+                    {
+                        vertPosition.X = BitConverter.ToSingle(vertexData, ndx);
+                        vertPosition.Y = BitConverter.ToSingle(vertexData, ndx + sizeof(float));
+                        vertPosition.Z = BitConverter.ToSingle(vertexData, ndx + sizeof(float) * 2);
+
+                        // update our running values from this vertex
+                        meshMin = Vector3.Min(meshMin, vertPosition);
+                        meshMax = Vector3.Max(meshMax, vertPosition);
+                    }
+                }
+
+                // transform by mesh bone transforms
+                meshMin = Vector3.Transform(meshMin, this.Model.Bones[mesh.ParentBone.Index].Transform);
+                meshMax = Vector3.Transform(meshMax, this.Model.Bones[mesh.ParentBone.Index].Transform);
+
+                // Expand model extents by the ones from this mesh
+                modelMin = Vector3.Min(modelMin, meshMin);
+                modelMax = Vector3.Max(modelMax, meshMax);
+            }
+
+            // Create and return the model bounding box
+            this.BBox = new BoundingBox(modelMin, modelMax);
+            this.BType = BoundingType.Box;
+        }
+
+        public void UpdateBoundary()
+        {
+            if (this.BType == BoundingType.Box)
+            {
+                Vector3 min = this.BBox.Min;
+                Vector3 max = this.BBox.Max;
+                Vector3 center = new Vector3((min.X + max.X) / 2, (min.Y + max.Y) / 2, (min.Z + max.Z) / 2);
+                Vector3 translation = this.TransformationMatrix.Translation - center;
+
+                min += translation;
+                max += translation;
+                this.BBox = new BoundingBox(min, max);
+            }
+            else
+            {
+                Vector3 center = this.BSphere.Center;
+                Vector3 translation = this.TransformationMatrix.Translation - center;
+                this.BSphere.Center = center + translation;
+            }
+        }
+
+        public virtual void HandleCollisionWith(GameObject obj2)
         {
             obj2.IsStatic = true;
             this.IsStatic = true;

@@ -20,6 +20,7 @@ namespace ToylandSiege.GameObjects
         public Camera(string Name)
         {
             this.Name = Name;
+            CreateLookAt();
             Initialize();
         }
 
