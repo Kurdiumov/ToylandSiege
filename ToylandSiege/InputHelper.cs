@@ -116,6 +116,7 @@ namespace ToylandSiege
                 {
                     Logger.Log.Debug("Object picked: " + PickedObject.ToString());
                     System.Diagnostics.Debug.Print("Object picked: " + PickedObject.ToString());
+                    PickedObject.Parent.RemoveChild(PickedObject);
                 }
                 else
                 {

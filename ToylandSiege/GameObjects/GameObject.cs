@@ -70,18 +70,19 @@ namespace ToylandSiege.GameObjects
 
         public bool RemoveChild(GameObject obj)
         {
+            //TODO: should check all childs recursively
             if (RemoveChild(obj.Name))
             {
                 Logger.Log.Debug("GameObject " + obj.Name + " removed from " + Name + " GameObject type: " + Type);
                 return true;
             }
-            Logger.Log.Debug("Cant remove GameObject " + obj.Name + " from " + Name + " GameObject type: " + Type);
             return false;
         }
     
 
         public bool RemoveChild(string name)
         {
+            //TODO: should check all childs recursively
             if (Childs.Remove(name))
             {
                 Logger.Log.Debug("GameObject " + name + " removed from scene");

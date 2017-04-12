@@ -67,7 +67,7 @@ namespace ToylandSiege
             else
                 Logger.Log.Debug("FullScreen Disabled");
 
-            return GodModeEnabled;
+            return IsFullScreen;
         }
 
         public State GetGameState()
@@ -141,7 +141,7 @@ namespace ToylandSiege
             else
                 Logger.Log.Debug("Mouse visibility Disabled");
 
-            return FPSEnabled;
+            return MouseVisible;
         }
 
         public bool IsPickingEnabled()
