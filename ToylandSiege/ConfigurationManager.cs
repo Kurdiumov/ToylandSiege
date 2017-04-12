@@ -6,7 +6,7 @@ namespace ToylandSiege
 {
     public class ConfigurationManager
     {
-        public readonly string PathToConfigFile = "application.config";
+        public readonly string PathToConfigFile = "application.config.json";
         private readonly JObject Configuration;
 
         public bool GodModeEnabled;
