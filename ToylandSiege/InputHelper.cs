@@ -78,7 +78,7 @@ namespace ToylandSiege
 
 
                 // Reset PrevMouseState
-                    Mouse.SetPosition(ToylandSiege.GetToylandSiege().Window.ClientBounds.Width / 2, ToylandSiege.GetToylandSiege().Window.ClientBounds.Height / 2);
+                Mouse.SetPosition(ToylandSiege.GetToylandSiege().Window.ClientBounds.Width / 2, ToylandSiege.GetToylandSiege().Window.ClientBounds.Height / 2);
             }
         }
 
@@ -139,21 +139,17 @@ namespace ToylandSiege
             {
                 gameState.SetNewGameState(State.Paused);
             }
-            
+
             if (Mouse.GetState().RightButton == ButtonState.Pressed)
             {
-                if(!aim)
-                {
+                if (!aim)
                     Camera.GetCurrentCamera().Zoom = 2;
-                }
+
                 aim = true;
             }
-            else
+            else if (aim)
             {
-                if(aim)
-                {
-                    Camera.GetCurrentCamera().Zoom = 1;
-                }
+                Camera.GetCurrentCamera().Zoom = 1;
                 aim = false;
             }
             if (Mouse.GetState().LeftButton == ButtonState.Pressed && IsSimpleClick() && aim)
@@ -163,14 +159,6 @@ namespace ToylandSiege
                 if (PickedObject != null)
                 {
                     Logger.Log.Debug("Shot picked: " + PickedObject.ToString());
-                    System.Diagnostics.Debug.Print("Shot picked: " + PickedObject.ToString());
-                    PickedObject.Parent.RemoveChild(PickedObject);
-                }
-                else
-                {
-                    Logger.Log.Debug("Pudlo");
-                    System.Diagnostics.Debug.Print("Pudlo");
-
                 }
             }
         }

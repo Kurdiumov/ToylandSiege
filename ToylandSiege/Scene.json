@@ -229,7 +229,7 @@
             "Name":"GodModeCamera",
             "Type":"Camera",
             "Model":null,
-            "CurrentCamera":true,
+            "CurrentCamera":false,
             "UpVector":[
                0,
                1,
@@ -255,7 +255,7 @@
             "Name":"StrategicCamera",
             "Type":"Camera",
             "Model":null,
-            "CurrentCamera":true,
+            "CurrentCamera":false,
             "UpVector":[
                0,
                1,
@@ -271,6 +271,32 @@
                0,
                25,
                15
+            ],
+            "Angle":60,
+            "NearPlaneDistance":1,
+            "FarPlaneDistance":1000,
+            "Speed":0.3
+         },
+         {
+            "Name":"FirsPersonCamera",
+            "Type":"Camera",
+            "Model":null,
+            "CurrentCamera":true,
+            "UpVector":[
+               0,
+               1,
+               0
+            ],
+            "Direction":[
+               0,
+               -1,
+               -1
+            ],
+            "isEnabled":false,
+            "Position":[
+               0,
+               10,
+               17
             ],
             "Angle":60,
             "NearPlaneDistance":1,
