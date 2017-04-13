@@ -78,7 +78,7 @@ namespace ToylandSiege
 
 
                 // Reset PrevMouseState
-                Mouse.SetPosition(ToylandSiege.GetToylandSiege().Window.ClientBounds.Width / 2, ToylandSiege.GetToylandSiege().Window.ClientBounds.Height / 2);
+                    Mouse.SetPosition(ToylandSiege.GetToylandSiege().Window.ClientBounds.Width / 2, ToylandSiege.GetToylandSiege().Window.ClientBounds.Height / 2);
             }
         }
 
@@ -139,19 +139,39 @@ namespace ToylandSiege
             {
                 gameState.SetNewGameState(State.Paused);
             }
-
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed && IsSimpleClick())
+            
+            if (Mouse.GetState().RightButton == ButtonState.Pressed)
             {
-                Logger.Log.Debug("Shoot");
+                if(!aim)
+                {
+                    Camera.GetCurrentCamera().Zoom = 2;
+                }
+                aim = true;
             }
-
-            if (Mouse.GetState().RightButton == ButtonState.Pressed && IsSimpleClick() && !aim)
+            else
             {
-                AimMode();
+                if(aim)
+                {
+                    Camera.GetCurrentCamera().Zoom = 1;
+                }
+                aim = false;
             }
-            if (aim && Mouse.GetState().RightButton == ButtonState.Released && IsSimpleClick())
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed && IsSimpleClick() && aim)
             {
+                Logger.Log.Debug("Shot");
+                var PickedObject = PickObject();
+                if (PickedObject != null)
+                {
+                    Logger.Log.Debug("Shot picked: " + PickedObject.ToString());
+                    System.Diagnostics.Debug.Print("Shot picked: " + PickedObject.ToString());
+                    PickedObject.Parent.RemoveChild(PickedObject);
+                }
+                else
+                {
+                    Logger.Log.Debug("Pudlo");
+                    System.Diagnostics.Debug.Print("Pudlo");
 
+                }
             }
         }
 
@@ -171,10 +191,6 @@ namespace ToylandSiege
         private void UpdateMenu(GameState gameState)
         {
             throw new NotImplementedException();
-        }
-
-        private void AimMode()
-        {
         }
 
         private GameObject PickObject()

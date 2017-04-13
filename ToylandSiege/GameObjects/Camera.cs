@@ -15,6 +15,7 @@ namespace ToylandSiege.GameObjects
         public Vector3 Direction = Vector3.Forward;
         public Vector3 Up = Vector3.Up;
 
+        public int Zoom = 1;
         public float Speed = 0.3F;
 
         private static Camera _currentCamera;
@@ -47,7 +48,7 @@ namespace ToylandSiege.GameObjects
 
         private void CreateLookAt()
         {
-            ViewMatrix = Matrix.CreateLookAt(Position, Position + Direction, Up);
+            ViewMatrix = Matrix.CreateScale(Zoom) * Matrix.CreateLookAt(Position, Position + Direction, Up);
         }
 
         public override void Draw()
@@ -84,5 +85,6 @@ namespace ToylandSiege.GameObjects
                 index = 0;
             Camera.SetCurrentCamera(AvailableCameras.ElementAt(index).Value);
         }
+
     }
 }
