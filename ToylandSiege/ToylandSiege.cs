@@ -18,16 +18,17 @@ namespace ToylandSiege
         private static ToylandSiege _ts;
         private readonly FPSCounter _frameCounter = new FPSCounter();
         private SpriteFont _spriteFont;
+        private SpriteFont _spritePausedFont;
         private SpriteBatch _spriteBatch;
         private GameState _gameState;
         private InputHelper _inputHelper;
-        public  ConfigurationManager configurationManager;
+        public ConfigurationManager configurationManager;
 
         public ToylandSiege()
         {
             _ts = this;
             Graphics = new GraphicsDeviceManager(this);
-            
+
 
             configurationManager = new ConfigurationManager();
             if (configurationManager.IsFullScreen)
@@ -53,7 +54,7 @@ namespace ToylandSiege
             FpsEnabled = configurationManager.FPSEnabled;
 
             IsMouseVisible = configurationManager.MouseVisible;
-            _gameState  = new GameState(configurationManager.GameState);
+            _gameState = new GameState(configurationManager.GameState);
             _inputHelper = new InputHelper(configurationManager);
 
         }
@@ -61,6 +62,7 @@ namespace ToylandSiege
         protected override void LoadContent()
         {
             _spriteFont = Content.Load<SpriteFont>("FPS");
+            _spritePausedFont = Content.Load<SpriteFont>("PausedSpriteFont");
         }
 
         protected override void UnloadContent()
@@ -83,6 +85,13 @@ namespace ToylandSiege
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            GraphicsDevice.BlendState = BlendState.Opaque;
+            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
+
+            CurrentLevel.Draw();
+            base.Draw(gameTime);
+
             if (FpsEnabled)
             {
                 _frameCounter.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
@@ -91,14 +100,18 @@ namespace ToylandSiege
                 _spriteBatch.Begin();
                 _spriteBatch.DrawString(_spriteFont, fps, new Vector2(10, 10), Color.Black);
                 _spriteBatch.End();
+
             }
-
-            GraphicsDevice.BlendState = BlendState.Opaque;
-            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
-
-            CurrentLevel.Draw();
-            base.Draw(gameTime);
+            if (_gameState.GetCurrentGameState() == State.Paused)
+            {
+                _spriteBatch.Begin();
+                string TextToDraw = "Game Paused";
+                _spriteBatch.DrawString(_spritePausedFont, TextToDraw, 
+                    new Vector2(GraphicsDevice.Viewport.Bounds.Width / 2, 
+                    GraphicsDevice.Viewport.Bounds.Height / 2) - _spritePausedFont.MeasureString(TextToDraw) / 2, 
+                    Color.Red);
+                _spriteBatch.End();
+            }
         }
 
         //Used in scene parser and in inputHelper
