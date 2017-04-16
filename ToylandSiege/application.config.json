@@ -1,7 +1,7 @@
 ﻿{
    "config":{
       "GodModeEnabled":true,
-      "GameState": "FirstPerson",
+      "GameState": "GodMode",
       "IsFullScreen": true,
       "HeightResolution": 1080,
       "WidthResolution": 1920,

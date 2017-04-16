@@ -37,7 +37,7 @@ namespace ToylandSiege.GameObjects
                     board.Add(new List<Field>(_numberOfRows));
                 else
                     board.Add(new List<Field>(_numberOfRows - 1));
-                ++FieldCount;
+                
             }
         }
 
@@ -58,6 +58,7 @@ namespace ToylandSiege.GameObjects
                     };
                     board[column].Add(field);
                     index++;
+                    ++FieldCount;
                 }
             }
         }
@@ -90,6 +91,24 @@ namespace ToylandSiege.GameObjects
             foreach (var row in board)
                 foreach (var item in row)
                     item.Draw();
+        }
+
+        public Field GetByIndex(int index)
+        {
+            if (IsInRange(index))
+            {
+                Logger.Log.Error("Index out of Range");
+                return null;
+            }
+
+            int column = 0;
+            for (; index >= board[column].Count; index -= board[column].Count, column++);
+            return board[column][index];
+        }
+
+        public bool IsInRange(int index)
+        {
+            return (index < 0 || index >= FieldCount);
         }
     }
 }

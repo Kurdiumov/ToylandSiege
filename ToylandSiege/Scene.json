@@ -305,7 +305,7 @@
          },
          {
           //Should be at root level!
-            "Name":"BoardSetting",
+            "Name":"Board",
             "Type":"BoardSetting",
             "Model":"Field",
             "Rows": 15,
