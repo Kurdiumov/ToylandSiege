@@ -143,13 +143,14 @@ namespace ToylandSiege
             if (Mouse.GetState().RightButton == ButtonState.Pressed)
             {
                 if (!aim)
-                    Camera.GetCurrentCamera().Zoom = 2;
-
+                {
+                    Camera.GetCurrentCamera().Zoom(true);
+                }
                 aim = true;
             }
             else if (aim)
             {
-                Camera.GetCurrentCamera().Zoom = 1;
+                Camera.GetCurrentCamera().Zoom(false);
                 aim = false;
             }
             if (Mouse.GetState().LeftButton == ButtonState.Pressed && IsSimpleClick() && aim)

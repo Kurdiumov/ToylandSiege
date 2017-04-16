@@ -133,6 +133,9 @@ namespace ToylandSiege
             camera.ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(Angle),
                 ToylandSiege.GetToylandSiege().GraphicsDevice.Viewport.AspectRatio, NearDistance, FarDistance);
 
+            camera.NearDistance = NearDistance;
+            camera.FarDistance = FarDistance;
+            camera.Angle = Angle;
 
             return camera;
         }

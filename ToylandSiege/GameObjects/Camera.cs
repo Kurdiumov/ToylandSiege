@@ -15,7 +15,11 @@ namespace ToylandSiege.GameObjects
         public Vector3 Direction = Vector3.Forward;
         public Vector3 Up = Vector3.Up;
 
-        public int Zoom = 1;
+        public float Angle;
+        public float NearDistance;
+        public float FarDistance;
+
+        private float _zoomstrength = 2.0f;
         public float Speed = 0.3F;
 
         private static Camera _currentCamera;
@@ -48,7 +52,7 @@ namespace ToylandSiege.GameObjects
 
         private void CreateLookAt()
         {
-            ViewMatrix = Matrix.CreateScale(Zoom) * Matrix.CreateLookAt(Position, Position + Direction, Up);
+            ViewMatrix = Matrix.CreateLookAt(Position, Position + Direction, Up);
         }
 
         public override void Draw()
@@ -84,6 +88,15 @@ namespace ToylandSiege.GameObjects
             if (AvailableCameras.Count <= index)
                 index = 0;
             Camera.SetCurrentCamera(AvailableCameras.ElementAt(index).Value);
+        }
+        public void Zoom(bool zoom)
+        {
+            if(zoom)
+                ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(Angle/_zoomstrength),
+                    ToylandSiege.GetToylandSiege().GraphicsDevice.Viewport.AspectRatio, NearDistance, FarDistance);
+            else
+                ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(Angle),
+                    ToylandSiege.GetToylandSiege().GraphicsDevice.Viewport.AspectRatio, NearDistance, FarDistance);
         }
 
     }
