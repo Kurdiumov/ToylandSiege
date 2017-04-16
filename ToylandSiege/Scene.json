@@ -19,9 +19,9 @@
                0
             ],
             "Scale":[
-               0.1,
-               0.1,
-               0.1
+               0.2,
+               0.2,
+               0.2
             ],
             "Child":[
                {
@@ -32,7 +32,7 @@
                   "Position":[
                      0,
                      0,
-                     -100
+                     -160
                   ],
                   "Rotation":[
                      0,
@@ -40,9 +40,9 @@
                      0
                   ],
                   "Scale":[
-                     1,
-                     1,
-                     1
+                     1.2,
+                     1.2,
+                     1.2
                   ],
                   "Child":[
                      {
@@ -76,7 +76,7 @@
                   "Position":[
                      60,
                      0,
-                     -30
+                     -80
                   ],
                   "Rotation":[
                      0,
@@ -229,7 +229,7 @@
             "Name":"GodModeCamera",
             "Type":"Camera",
             "Model":null,
-            "CurrentCamera":false,
+            "CurrentCamera":true,
             "UpVector":[
                0,
                1,
@@ -243,13 +243,13 @@
             "isEnabled":true,
             "Position":[
                0,
-               8,
-               18
+               18,
+               32
             ],
             "Angle":45,
             "NearPlaneDistance":1,
             "FarPlaneDistance":1000,
-            "Speed":0.3
+            "Speed":0.6
          },
          {
             "Name":"StrategicCamera",
@@ -269,8 +269,8 @@
             "isEnabled":false,
             "Position":[
                0,
-               25,
-               15
+               50,
+               26
             ],
             "Angle":60,
             "NearPlaneDistance":1,
@@ -281,7 +281,7 @@
             "Name":"FirsPersonCamera",
             "Type":"Camera",
             "Model":null,
-            "CurrentCamera":true,
+            "CurrentCamera":false,
             "UpVector":[
                0,
                1,
@@ -295,13 +295,39 @@
             "isEnabled":false,
             "Position":[
                0,
-               10,
-               17
+               18,
+               32
             ],
             "Angle":60,
             "NearPlaneDistance":1,
             "FarPlaneDistance":1000,
             "Speed":0.3
+         },
+         {
+          //Should be at root level!
+            "Name":"BoardSetting",
+            "Type":"BoardSetting",
+            "Model":"Field",
+            "Rows": 15,
+            "Columns": 15,
+            "FieldName": "Field",
+            "FieldModel": "Field",
+            "Step": 5,
+            "Position":[
+               0,
+               0.25,
+               5
+            ],
+            "StartingPosition":[
+              -35,
+               0,
+               10
+            ],
+            "Scale":[
+              0.95,
+              0.95,
+              0.95
+            ]
          }
       ]
    }

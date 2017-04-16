@@ -34,7 +34,7 @@ namespace ToylandSiege.GameObjects
         public abstract void Update();
 
         public virtual void Draw()
-            {
+        {
             if (!IsEnabled)
                 return;
 
@@ -44,7 +44,7 @@ namespace ToylandSiege.GameObjects
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
-                        if(ToylandSiege.GetToylandSiege().configurationManager.LigthningEnabled)
+                        if (ToylandSiege.GetToylandSiege().configurationManager.LigthningEnabled)
                             effect.EnableDefaultLighting();
                         effect.AmbientLightColor = new Vector3(0, 0.3f, 0.3f);
                         effect.View = Camera.GetCurrentCamera().ViewMatrix;
@@ -78,7 +78,7 @@ namespace ToylandSiege.GameObjects
             }
             return false;
         }
-    
+
 
         public bool RemoveChild(string name)
         {
@@ -90,7 +90,7 @@ namespace ToylandSiege.GameObjects
             }
             return false;
         }
-    
+
 
         public override string ToString()
         {
@@ -99,7 +99,7 @@ namespace ToylandSiege.GameObjects
             return "Name: " + this.Name + ", Type: " + this.Type + ", Parent: " + Parent.Name;
         }
 
-        public  Matrix CreateTransformationMatrix()
+        public Matrix CreateTransformationMatrix()
         {
             TransformationMatrix = Matrix.CreateScale(Scale) *
                 Matrix.CreateFromYawPitchRoll(Rotation.X, Rotation.Y, Rotation.Z) *

@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ToylandSiege.GameObjects;
 
@@ -28,7 +29,6 @@ namespace ToylandSiege
 
             RootObject.Name = LevelObject.GetValue("Name").ToString();
             RootObject.Type = LevelObject.GetValue("Type").ToString();
-
 
 
             for (int i = 0; i < LevelObject.GetValue("Child").Count(); i++)
@@ -55,6 +55,8 @@ namespace ToylandSiege
                     return ParseUnitObject(currentGameObject, parent);
                 case "Group":
                     return ParseGroupObject(currentGameObject, parent);
+                case "BoardSetting":
+                    return ParseBoardSettings(currentGameObject);
                 default:
                     throw new InvalidEnumArgumentException("Unknown type " + Type);
             }
@@ -85,12 +87,13 @@ namespace ToylandSiege
             terrainObj.CreateTransformationMatrix();
 
             if (JSONHelper.ValueExist("Child", currentGameObject))
-            {  for (int i = 0; i < currentGameObject.GetValue("Child").Count(); i++)
+            {
+                for (int i = 0; i < currentGameObject.GetValue("Child").Count(); i++)
                 {
-                    terrainObj.AddChild(ParseGameObject(currentGameObject.GetValue("Child")[i].ToObject<JObject>(), terrainObj));    
+                    terrainObj.AddChild(ParseGameObject(currentGameObject.GetValue("Child")[i].ToObject<JObject>(), terrainObj));
                 }
             }
-            
+
             return terrainObj;
         }
 
@@ -99,7 +102,7 @@ namespace ToylandSiege
             var name = JSONHelper.GetValue("Name", currentGameObject);
             var camera = new Camera(name);
 
-            camera.Type  = JSONHelper.GetValue("Type", currentGameObject);
+            camera.Type = JSONHelper.GetValue("Type", currentGameObject);
             camera.Model = null;
 
             if (JSONHelper.ToBool(JSONHelper.GetValue("CurrentCamera", currentGameObject)))
@@ -123,7 +126,7 @@ namespace ToylandSiege
 
             //Camera Speed
             if (JSONHelper.ValueExist("Speed", currentGameObject))
-                camera.Speed = float.Parse(JSONHelper.GetValue("Speed", currentGameObject ));
+                camera.Speed = float.Parse(JSONHelper.GetValue("Speed", currentGameObject));
 
             //Projection Matrix
             float NearDistance = float.Parse(JSONHelper.GetValue("NearPlaneDistance", currentGameObject));
@@ -146,7 +149,7 @@ namespace ToylandSiege
             var model = JSONHelper.GetValue("Model", currentGameObject);
             var type = JSONHelper.GetValue("Type", currentGameObject);
             var IsEnabled = JSONHelper.ToBool(JSONHelper.GetValue("isEnabled", currentGameObject));
-            var health =float.Parse(JSONHelper.GetValue("Health", currentGameObject));
+            var health = float.Parse(JSONHelper.GetValue("Health", currentGameObject));
             var unitType = JSONHelper.GetValue("UnitType", currentGameObject);
 
             var mod = ToylandSiege.GetToylandSiege().Content.Load<Model>(model);
@@ -205,7 +208,7 @@ namespace ToylandSiege
             terrainObj.IsStatic = true;
             terrainObj.Type = JSONHelper.GetValue("Type", currentGameObject);
             terrainObj.Parent = parent;
-             
+
             if (JSONHelper.ValueExist("Position", currentGameObject))
                 terrainObj.Position = JSONHelper.ParseVector3(currentGameObject.GetValue("Position"));
 
@@ -227,5 +230,32 @@ namespace ToylandSiege
             return terrainObj;
         }
 
+        private Board ParseBoardSettings(JObject currentGameObject)
+        {
+            var name = JSONHelper.GetValue("Name", currentGameObject);
+            var rows = Int32.Parse(JSONHelper.GetValue("Rows", currentGameObject));
+            var columns = Int32.Parse(JSONHelper.GetValue("Columns", currentGameObject));
+
+            var fieldName = JSONHelper.GetValue("FieldName", currentGameObject);
+            var fieldModel = JSONHelper.GetValue("FieldModel", currentGameObject);
+            var position = JSONHelper.ParseVector3(currentGameObject.GetValue("Position"));
+            var startingPosition = JSONHelper.ParseVector3(currentGameObject.GetValue("StartingPosition"));
+            var scale = JSONHelper.ParseVector3(currentGameObject.GetValue("Scale"));
+            var step = float.Parse(JSONHelper.GetValue("Step", currentGameObject));
+
+            var board = new Board(name, rows, columns)
+            {
+                Type = JSONHelper.GetValue("Type", currentGameObject),
+                Model = null,
+                FieldName = fieldName,
+                Position = position,
+                StartingPosition = position + startingPosition,
+                FieldModel = fieldModel,
+                Scale = scale,
+                Step =  step,
+            };
+            board.CreateFields();
+            return board;
+        }
     }
 }
