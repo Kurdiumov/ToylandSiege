@@ -52,7 +52,16 @@ namespace ToylandSiege.GameObjects
                     var field = new Field(FieldName + index, index, CalculatePosition(column, row, index), Scale)
                     {
                         Model = ToylandSiege.GetToylandSiege().Content.Load<Model>(FieldModel),
-                    }; ;
+                    };
+
+
+                    //Setting starting and finishing fields
+                    if (column == 0)
+                        field.StartingTile = true;
+                    else if (column == _numberOfColumns - 1)
+                        field.FinishingTile = true;
+
+
                     Childs["Row" + column].AddChild(field);
                     index++;
                     ++FieldCount;

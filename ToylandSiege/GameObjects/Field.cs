@@ -6,6 +6,8 @@ namespace ToylandSiege.GameObjects
     public class Field : GameObject
     {
         public readonly int Index;
+        public bool StartingTile = false;
+        public bool FinishingTile = false;
         public Unit unit;
 
         public Field(string name, int index, Vector3 position, Vector3 scale)
@@ -14,6 +16,7 @@ namespace ToylandSiege.GameObjects
             Index = index;
             Position = position;
             Scale = scale;
+            Type = "Field";
             Initialize();
         }
 

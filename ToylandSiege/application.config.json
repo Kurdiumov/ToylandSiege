@@ -6,7 +6,7 @@
       "HeightResolution": 1080,
       "WidthResolution": 1920,
       "FPSEnabled": true,
-      "MouseVisible": false,
+      "MouseVisible": true,
       "RayPickingEnabled": true,
       "LightningEnabled": true,
    }

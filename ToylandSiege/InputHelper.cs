@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -118,10 +119,16 @@ namespace ToylandSiege
                     //TODO: Remove this
                     //Just for debbuging needs
                     if (PickedObject is Field)
-                        ((Unit) Level.GetCurrentLevel().RootGameObject.Childs["UnitCube"]).MoveToField((Field) PickedObject);
+                    {
+                        Field field = PickedObject as Field;
+                        Unit unit = ((Unit)Level.GetCurrentLevel().RootGameObject.Childs["UnitCube"]);
+                        if (field.StartingTile && unit.Field == null)
+                            unit.PlaceToField(field);
+                        else
+                            unit.TargetFields.Add(field);
+                    }
                     else
-                        PickedObject.Parent.RemoveChild(PickedObject);
-                }
+                        PickedObject.Parent.RemoveChild(PickedObject);}
                 else
                 {
                     Logger.Log.Debug("Object picked: NULL");
