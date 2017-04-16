@@ -23,6 +23,11 @@ namespace ToylandSiege.GameObjects
         {
             if (!IsStatic)
                 CreateTransformationMatrix();
+
+            foreach (var child in Childs.Values)
+            {
+                child.Update();
+            }
         }
     }
 }

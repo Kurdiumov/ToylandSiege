@@ -65,7 +65,8 @@ namespace ToylandSiege.GameObjects
         {
             Childs.Add(obj.Name, obj);
             obj.Parent = this;
-            Logger.Log.Debug("GameObject " + obj.Name + " added to " + Name + " GameObject type: " + Type);
+            if(!(obj is Field)) // For better performance. Dont want to write to log 70+ objects
+                Logger.Log.Debug("GameObject " + obj.Name + " added to " + Name + " GameObject type: " + Type);
         }
 
         public bool RemoveChild(GameObject obj)

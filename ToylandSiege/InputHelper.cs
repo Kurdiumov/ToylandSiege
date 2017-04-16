@@ -114,7 +114,13 @@ namespace ToylandSiege
                 {
                     Logger.Log.Debug("Object picked: " + PickedObject.ToString());
                     System.Diagnostics.Debug.Print("Object picked: " + PickedObject.ToString());
-                    PickedObject.Parent.RemoveChild(PickedObject);
+
+                    //TODO: Remove this
+                    //Just for debbuging needs
+                    if (PickedObject is Field)
+                        ((Unit) Level.GetCurrentLevel().RootGameObject.Childs["UnitCube"]).MoveToField((Field) PickedObject);
+                    else
+                        PickedObject.Parent.RemoveChild(PickedObject);
                 }
                 else
                 {

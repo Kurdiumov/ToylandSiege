@@ -1,14 +1,15 @@
-﻿
-using System.Collections.Generic;
-using System.Web.UI.WebControls;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ToylandSiege.GameObjects
 {
     public class Board : GameObject
     {
-        public List<List<Field>> board;
+        /// <summary>
+        /// THIS CLASS SHOULD BE REWRITEN IN REE TIME!!!!
+        /// WAS TOO DRUNK WHILE WRITTING IT
+        /// DONT TRY TO UNDERSTAND IT
+        /// </summary>
         public string FieldName;
         public Vector3 StartingPosition;
         public string FieldModel;
@@ -30,14 +31,10 @@ namespace ToylandSiege.GameObjects
         protected override void Initialize()
         {
             //Initializing board
-            board = new List<List<Field>>();
+            CreateTransformationMatrix();
             for (int i = 0; i < _numberOfColumns; i++)
             {
-                if (i % 2 == 0)
-                    board.Add(new List<Field>(_numberOfRows));
-                else
-                    board.Add(new List<Field>(_numberOfRows - 1));
-                
+                AddChild(new Group("Row" + i));
             }
         }
 
@@ -55,8 +52,8 @@ namespace ToylandSiege.GameObjects
                     var field = new Field(FieldName + index, index, CalculatePosition(column, row, index), Scale)
                     {
                         Model = ToylandSiege.GetToylandSiege().Content.Load<Model>(FieldModel),
-                    };
-                    board[column].Add(field);
+                    }; ;
+                    Childs["Row" + column].AddChild(field);
                     index++;
                     ++FieldCount;
                 }
@@ -67,30 +64,23 @@ namespace ToylandSiege.GameObjects
         {
             float x = StartingPosition.X;
             float y = StartingPosition.Y;
-            float z = StartingPosition.Z - (column) * (Step-0.5f);
+            float z = StartingPosition.Z - (column) * (Step - 0.5f);
 
-            if(column%2 == 0)
+            if (column % 2 == 0)
                 x = x + (row * Step);
-           else
-                x = (x + Step/2) + (row * Step);
+            else
+                x = (x + Step / 2) + (row * Step);
 
-            return new Vector3(x, y ,z);
+            return new Vector3(x, y, z);
         }
 
         public override void Update()
         {
             //Should only do it in Strategic or FirstPersonModes
-            foreach (var row in board)
-                foreach (var item in row)
-                    item.Update();
-        }
-
-        public override void Draw()
-        {
-            //Should only do it in Strategic or FirstPersonModes
-            foreach (var row in board)
-                foreach (var item in row)
-                    item.Draw();
+            foreach (var child in Childs.Values)
+            {
+                child.Update();
+            }
         }
 
         public Field GetByIndex(int index)
@@ -101,9 +91,10 @@ namespace ToylandSiege.GameObjects
                 return null;
             }
 
+            int field = index;
             int column = 0;
-            for (; index >= board[column].Count; index -= board[column].Count, column++);
-            return board[column][index];
+            for (; index >= Childs["Row" + column].Childs.Count; index -= Childs["Row" + column].Childs.Count, column++);
+            return Childs["Row" + column].Childs["Field" + field] as Field;
         }
 
         public bool IsInRange(int index)
