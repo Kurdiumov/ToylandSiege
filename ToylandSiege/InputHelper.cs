@@ -113,37 +113,14 @@ namespace ToylandSiege
 
                 if (PickedObject != null)
                 {
-                    Logger.Log.Debug("Object picked: " + PickedObject.ToString());
+                    //Logger.Log.Debug("Object picked: " + PickedObject.ToString());
                     System.Diagnostics.Debug.Print("Object picked: " + PickedObject.ToString());
 
-                    //TODO: Remove this
-                    //Just for debbuging needs
+                    //Unit movement
                     if (PickedObject is Field)
                     {
-                        Field field = PickedObject as Field;
                         Unit unit = ((Unit)Level.GetCurrentLevel().RootGameObject.Childs["UnitCube"]);
-                        if (field.StartingTile && unit.Field == null)
-                            unit.PlaceToField(field);
-                        else if (unit.Field != null)
-                        {
-                            if (unit.TargetFields.Count > 0)
-                            {
-                                if (
-                                    ((Board) field.Parent.Parent).GetNearestFields(unit.TargetFields.Last())
-                                    .Contains(field))
-                                {
-                                    unit.TargetFields.Add(field);
-                                }
-                            }
-                            else
-                            {
-                                if (
-                                    ((Board)field.Parent.Parent).GetNearestFields(unit.Field)
-                                    .Contains(field))
-                                    unit.TargetFields.Add(field);
-                            }
-                        }
-
+                        unit.AddField(PickedObject as Field);
                     }
                     else
                         PickedObject.Parent.RemoveChild(PickedObject);
@@ -216,8 +193,6 @@ namespace ToylandSiege
 
         private GameObject PickObject()
         {
-            Logger.Log.Debug("Mouse pressed");
-
             var pickRay = CalculateRay(new Vector2(Mouse.GetState().X, Mouse.GetState().Y),
                 Camera.GetCurrentCamera().ViewMatrix, Camera.GetCurrentCamera().ProjectionMatrix,
                 ToylandSiege.GetToylandSiege().GraphicsDevice.Viewport);

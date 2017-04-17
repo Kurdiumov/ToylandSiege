@@ -117,7 +117,6 @@ namespace ToylandSiege.GameObjects
             return (index >= 0 && index < FieldCount);
         }
 
-
         public List<Field> GetNearestFields(Field field)
         {
             int index = field.Index;
@@ -141,7 +140,6 @@ namespace ToylandSiege.GameObjects
                         nearestFields.Add(GetByIndex(ind));
                     }
                 }
-
             }
 
             //Left and right nearest values should be at the same row

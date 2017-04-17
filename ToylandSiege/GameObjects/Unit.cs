@@ -9,29 +9,38 @@ namespace ToylandSiege.GameObjects
 {
     public class Unit : UnitBase
     {
-        public Field Field { get; set; }
+        private Field _field;
 
-        public List<Field> TargetFields = new List<Field>();
+        public Field Field {
+            get
+            {
+                return _field;
+            }
+            set
+            {
+                _field = value;
+                if(value == null)
+                    Logger.Log.Debug("Field set to NULL for unit " + this);
+                else
+                    Logger.Log.Debug("New field ("+ _field +") set for unit " + this);
+            }
+        }
+
+        public List<Field> TargetFields { get; set; }
 
         protected override void Initialize()
         {
-            // throw new NotImplementedException();
+            TargetFields = new List<Field>();
         }
 
         public override void Update()
         {
+            //TODO: Remove line belowe. Used to check drawing and update methods
+            Rotation += new Vector3(0.01f, 0, 0);
+            if (Field != null && TargetFields.Count > 0)
+                MoveToTarget();
+
             CreateTransformationMatrix();
-
-            // if (!this.IsStatic)
-            {
-                //TODO: Remove line belowe. Used to check drawing and update methods
-                this.Rotation += new Vector3(0.01f, 0, 0);
-                if (Field != null && TargetFields.Count > 0)
-                {
-                    MoveToTarget();
-                }
-
-            }
         }
 
         public bool IsOnField()
@@ -62,6 +71,30 @@ namespace ToylandSiege.GameObjects
             return false;
         }
 
+        public void AddField(Field field)
+        {
+            if (field.StartingTile && Field == null)
+            {
+                PlaceToField(field); // Set starting field
+            }
+            else if (Field != null)
+            {
+                if (TargetFields.Count > 0)
+                {
+                    if (TargetFields.Last().GetNearestFields().Contains(field))
+                        addTargetField(field);
+                }
+                else if (Field.GetNearestFields().Contains(field))
+                    addTargetField(field);
+            }
+        }
+
+        private void addTargetField(Field field)
+        {
+            TargetFields.Add(field);
+            Logger.Log.Debug("New target field (" + field + ") added to unit " + this);
+        }
+
         public void MoveToTarget()
         {
             float elapsed = 0.01f;
@@ -72,7 +105,7 @@ namespace ToylandSiege.GameObjects
 
             Position += direction * 5 * elapsed;
             if (distance < 0.1f)
-                
+
                 if (TargetFields.Count > 0)
                 {
                     Field.unit = null;
