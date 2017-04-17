@@ -160,6 +160,5 @@ namespace ToylandSiege.GameObjects
         {
             return GetNearestFields(GetByIndex(index));
         }
-
     }
 }

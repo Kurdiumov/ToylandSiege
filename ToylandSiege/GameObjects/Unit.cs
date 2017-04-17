@@ -72,10 +72,16 @@ namespace ToylandSiege.GameObjects
 
             Position += direction * 5 * elapsed;
             if (distance < 0.1f)
+                
                 if (TargetFields.Count > 0)
                 {
+                    Field.unit = null;
+                    Field = null;
                     if (TargetFields.First().Position == targetPosition)
+                    {
+                        Field = TargetFields.First();
                         TargetFields.RemoveAt(0);
+                    }
                 }
 
             //TODO:
