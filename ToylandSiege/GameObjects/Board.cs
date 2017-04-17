@@ -1,5 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ToylandSiege.GameObjects
 {
@@ -11,6 +14,7 @@ namespace ToylandSiege.GameObjects
         /// DONT TRY TO UNDERSTAND IT
         /// </summary>
         public string FieldName;
+
         public Vector3 StartingPosition;
         public string FieldModel;
         public float Step;
@@ -94,7 +98,7 @@ namespace ToylandSiege.GameObjects
 
         public Field GetByIndex(int index)
         {
-            if (IsInRange(index))
+            if (!IsInRange(index))
             {
                 Logger.Log.Error("Index out of Range");
                 return null;
@@ -102,13 +106,60 @@ namespace ToylandSiege.GameObjects
 
             int field = index;
             int column = 0;
-            for (; index >= Childs["Row" + column].Childs.Count; index -= Childs["Row" + column].Childs.Count, column++);
+            for (; index >= Childs["Row" + column].Childs.Count; index -= Childs["Row" + column].Childs.Count, column++)
+                ;
+
             return Childs["Row" + column].Childs["Field" + field] as Field;
         }
 
         public bool IsInRange(int index)
         {
-            return (index < 0 || index >= FieldCount);
+            return (index >= 0 && index < FieldCount);
         }
+
+
+        public List<Field> GetNearestFields(Field field)
+        {
+            int index = field.Index;
+            int CurrentRow = Childs.Values.ToList().IndexOf(field.Parent);
+            List<Field> nearestFields = new List<Field>();
+
+            void AddToNearestField(int ind, int row)
+            {
+                if (IsInRange(ind))
+                {
+                    if (row == -1 && CurrentRow - 1 == Childs.Values.ToList().IndexOf(GetByIndex(ind).Parent))
+                    {
+                        nearestFields.Add(GetByIndex(ind));
+                    }
+                    else if (row == 0 && field.Parent == GetByIndex(ind).Parent)
+                    {
+                        nearestFields.Add(GetByIndex(ind));
+                    }
+                    else if (row == 1 && CurrentRow + 1 == Childs.Values.ToList().IndexOf(GetByIndex(ind).Parent))
+                    {
+                        nearestFields.Add(GetByIndex(ind));
+                    }
+                }
+
+            }
+
+            //Left and right nearest values should be at the same row
+            AddToNearestField(index - 1, 0);
+            AddToNearestField(index + 1, 0);
+
+            AddToNearestField(index + _numberOfRows, 1);
+            AddToNearestField(index + _numberOfRows - 1, 1);
+            AddToNearestField(index - _numberOfRows, -1);
+            AddToNearestField(index - _numberOfRows + 1, -1);
+
+            return nearestFields;
+        }
+
+        public List<Field> GetNearestFields(int index)
+        {
+            return GetNearestFields(GetByIndex(index));
+        }
+
     }
 }

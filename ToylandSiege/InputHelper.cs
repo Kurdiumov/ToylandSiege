@@ -122,10 +122,11 @@ namespace ToylandSiege
                     {
                         Field field = PickedObject as Field;
                         Unit unit = ((Unit)Level.GetCurrentLevel().RootGameObject.Childs["UnitCube"]);
-                        if (field.StartingTile && unit.Field == null)
+                     /*   if (field.StartingTile && unit.Field == null)
                             unit.PlaceToField(field);
                         else
-                            unit.TargetFields.Add(field);
+                            unit.TargetFields.Add(field);*/
+                        ((Board) field.Parent.Parent).GetNearestFields(field);
                     }
                     else
                         PickedObject.Parent.RemoveChild(PickedObject);}

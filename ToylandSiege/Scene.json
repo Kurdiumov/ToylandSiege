@@ -309,7 +309,7 @@
             "Type":"BoardSetting",
             "Model":"Field",
             "Rows": 15,
-            "Columns": 15,
+            "Columns":5,
             "FieldName": "Field",
             "FieldModel": "Field",
             "Step": 5,

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ToylandSiege.GameObjects
@@ -49,6 +50,40 @@ namespace ToylandSiege.GameObjects
 
             Logger.Log.Debug("Can't place unit (" + unit + ") to field  + " + Name + " beacause field already contains unit (" + this.unit + ")");
             return false;
+        }
+
+        public List<Field> GetNearestFields()
+        {
+            return ((Board) Parent.Parent).GetNearestFields(this);
+        }
+
+        public override void Draw()
+        {
+            if (!IsEnabled)
+                return;
+
+            if (Model != null)
+            {
+                foreach (ModelMesh mesh in Model.Meshes)
+                {
+                    foreach (BasicEffect effect in mesh.Effects)
+                    {
+                        if (ToylandSiege.GetToylandSiege().configurationManager.LigthningEnabled)
+                            effect.EnableDefaultLighting();
+                        if (StartingTile && !HasUnit())
+                            effect.AmbientLightColor = new Vector3(0, 0.9f, 0.1f);
+                        else if (HasUnit() && unit.TargetFields.Contains(this))
+                            effect.AmbientLightColor = new Vector3(0.9f, 0.3f, 0.3f);
+                        else
+                            effect.AmbientLightColor = new Vector3(0, 0.3f, 0.3f);
+                        effect.View = Camera.GetCurrentCamera().ViewMatrix;
+
+                        effect.World = TransformationMatrix;
+                        effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
+                    }
+                    mesh.Draw();
+                }
+            }
         }
     }
 }

@@ -217,5 +217,10 @@ namespace ToylandSiege.GameObjects
             obj2.IsStatic = true;
             this.IsStatic = true;
         }
+
+        public void Destroy()
+        {          
+            Parent.RemoveChild(this);
+        }
     }
 }
