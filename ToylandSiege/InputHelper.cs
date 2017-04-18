@@ -122,7 +122,7 @@ namespace ToylandSiege
                         Unit unit = ((Unit)Level.GetCurrentLevel().RootGameObject.Childs["UnitCube"]);
                         unit.AddField(PickedObject as Field);
                     }
-                    else
+                    else if(!(PickedObject is Unit))
                         PickedObject.Parent.RemoveChild(PickedObject);
                 }
                 else
