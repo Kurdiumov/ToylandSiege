@@ -87,12 +87,12 @@ namespace ToylandSiege.GameObjects
             return new Vector3(x, y, z);
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             //Should only do it in Strategic or FirstPersonModes
             foreach (var child in Childs.Values)
             {
-                child.Update();
+                child.Update(gameTime);
             }
         }
 

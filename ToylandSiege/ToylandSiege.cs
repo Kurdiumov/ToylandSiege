@@ -77,7 +77,7 @@ namespace ToylandSiege
                 return;
 
             CollisionHelper.CalculateCollisions(); //TODO: Ensure if is in good order?
-            CurrentLevel.Update();
+            CurrentLevel.Update(gameTime);
             base.Update(gameTime);
         }
 

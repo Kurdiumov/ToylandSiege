@@ -21,7 +21,7 @@ namespace ToylandSiege.GameObjects
             CreateTransformationMatrix();
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             //Leave this empty
         }

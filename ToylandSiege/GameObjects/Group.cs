@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 
 namespace ToylandSiege.GameObjects
 {
@@ -19,14 +20,14 @@ namespace ToylandSiege.GameObjects
 
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             if (!IsStatic)
                 CreateTransformationMatrix();
 
             foreach (var child in Childs.Values)
             {
-                child.Update();
+                child.Update(gameTime);
             }
         }
     }

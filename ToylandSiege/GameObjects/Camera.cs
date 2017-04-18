@@ -45,7 +45,7 @@ namespace ToylandSiege.GameObjects
         }
 
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             CreateLookAt();
         }

@@ -115,7 +115,7 @@
          {
             "Name":"UnitCube",
             "Type":"Unit",
-            "Model":"MonoCube",
+            "Model":"123",
             "Health":100,
             "UnitType":"BasicType",
             "isEnabled":true,
@@ -135,7 +135,7 @@
                1
             ]
          },
-         {
+         /*{
             "Name":"EnemyCube",
             "Type":"Enemy",
             "Model":"MonoCube",
@@ -157,7 +157,7 @@
                0.7,
                0.7
             ]
-         },
+         }, */
          {
             "Name":"Cube",
             "Type":"TerrainObject",

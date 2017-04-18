@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SkinnedModel;
 using ToylandSiege.GameObjects;
 
 namespace ToylandSiege
@@ -163,6 +164,23 @@ namespace ToylandSiege
                 throw new ArgumentException("Unknown unit type " + type);
 
             unitObj.Model = mod;
+
+            // TODO: Load from config file
+            SkinningData skinningData = mod.Tag as SkinningData;
+
+            /*
+            if (skinningData == null)
+                throw new InvalidOperationException
+                    ("This model does not contain a SkinningData tag.");
+           */
+
+            // Create an animation player, and start decoding an animation clip.
+            unitObj.AnimationPlayer = new AnimationPlayer(skinningData);
+
+            AnimationClip clip = skinningData.AnimationClips["Take 001"];
+
+            unitObj.AnimationPlayer.StartClip(clip);
+
             unitObj.Name = name;
             unitObj.Type = type;
             unitObj.IsEnabled = IsEnabled;

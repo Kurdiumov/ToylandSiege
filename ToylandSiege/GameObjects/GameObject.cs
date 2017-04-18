@@ -31,7 +31,7 @@ namespace ToylandSiege.GameObjects
         public BoundingBox BBox;
 
         protected abstract void Initialize();
-        public abstract void Update();
+        public abstract void Update(GameTime gameTime);
 
         public virtual void Draw()
         {

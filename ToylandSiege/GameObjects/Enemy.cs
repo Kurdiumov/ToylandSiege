@@ -14,7 +14,7 @@ namespace ToylandSiege.GameObjects
             //throw new NotImplementedException();
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             CreateTransformationMatrix();
 

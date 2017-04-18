@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using ToylandSiege.GameObjects;
 
 
@@ -25,12 +26,12 @@ namespace ToylandSiege
             return _currenLevel;
         }
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
-            Camera.GetCurrentCamera().Update();
+            Camera.GetCurrentCamera().Update(gameTime);
             
             foreach (var child  in RootGameObject.Childs.Values)
-                child.Update();
+                child.Update(gameTime);
         }
 
         public void Draw()

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using SkinnedModel;
 
 namespace ToylandSiege.GameObjects
 {
@@ -11,13 +13,15 @@ namespace ToylandSiege.GameObjects
         public float Health;
         public string UnitType;
 
+        public AnimationPlayer AnimationPlayer;
+
         public UnitBase()
         {
             Initialize();
         }
         protected abstract override void Initialize();
 
-        public abstract override void Update();
+        public abstract override void Update(GameTime gameTime);
 
     }
 }

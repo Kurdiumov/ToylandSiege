@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using SkinnedModel;
 
 namespace ToylandSiege.GameObjects
 {
@@ -33,14 +35,45 @@ namespace ToylandSiege.GameObjects
             TargetFields = new List<Field>();
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             //TODO: Remove line belowe. Used to check drawing and update methods
-            Rotation += new Vector3(0.01f, 0, 0);
+            // Rotation += new Vector3(0.01f, 0, 0);
             if (Field != null && TargetFields.Count > 0)
                 MoveToTarget();
 
             CreateTransformationMatrix();
+
+            AnimationPlayer.Update(gameTime.ElapsedGameTime, true, TransformationMatrix);
+        }
+
+        public override void Draw()
+        {
+            // TODO: Small refactor for Rosti :)
+            if (!IsEnabled)
+                return;
+
+            if (Model != null)
+            {
+                Matrix[] bones = AnimationPlayer.GetSkinTransforms();
+
+                foreach (ModelMesh mesh in Model.Meshes)
+                {
+                    foreach (SkinnedEffect effect in mesh.Effects)
+                    {
+                        effect.SetBoneTransforms(bones);
+
+                        if (ToylandSiege.GetToylandSiege().configurationManager.LigthningEnabled)
+                            effect.EnableDefaultLighting();                  
+                            effect.AmbientLightColor = new Vector3(0, 0.3f, 0.3f);
+                        effect.View = Camera.GetCurrentCamera().ViewMatrix;
+
+                        effect.World = TransformationMatrix;
+                        effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
+                    }
+                    mesh.Draw();
+                }
+            }
         }
 
         public bool IsOnField()
