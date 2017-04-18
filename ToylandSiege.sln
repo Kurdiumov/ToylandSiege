@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToylandSiege", "ToylandSiege\ToylandSiege.csproj", "{5991D46F-A53C-4A67-9A4D-3AB9D43C9155}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MGSkinnedModel", "MGSkinnedModel\MGSkinnedModel.csproj", "{22C9AC62-3F1E-414A-9D88-A2348462A0C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MGSkinnedModelPipeline", "MGSkinnedModelPipeline\MGSkinnedModelPipeline.csproj", "{E3C41D8F-A2E6-47AA-8AAA-B85FC2C6D7DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,22 @@ Global
 		{5991D46F-A53C-4A67-9A4D-3AB9D43C9155}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5991D46F-A53C-4A67-9A4D-3AB9D43C9155}.Release|x86.ActiveCfg = Release|x86
 		{5991D46F-A53C-4A67-9A4D-3AB9D43C9155}.Release|x86.Build.0 = Release|x86
+		{22C9AC62-3F1E-414A-9D88-A2348462A0C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22C9AC62-3F1E-414A-9D88-A2348462A0C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22C9AC62-3F1E-414A-9D88-A2348462A0C3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{22C9AC62-3F1E-414A-9D88-A2348462A0C3}.Debug|x86.Build.0 = Debug|Any CPU
+		{22C9AC62-3F1E-414A-9D88-A2348462A0C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22C9AC62-3F1E-414A-9D88-A2348462A0C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22C9AC62-3F1E-414A-9D88-A2348462A0C3}.Release|x86.ActiveCfg = Release|Any CPU
+		{22C9AC62-3F1E-414A-9D88-A2348462A0C3}.Release|x86.Build.0 = Release|Any CPU
+		{E3C41D8F-A2E6-47AA-8AAA-B85FC2C6D7DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3C41D8F-A2E6-47AA-8AAA-B85FC2C6D7DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3C41D8F-A2E6-47AA-8AAA-B85FC2C6D7DE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E3C41D8F-A2E6-47AA-8AAA-B85FC2C6D7DE}.Debug|x86.Build.0 = Debug|Any CPU
+		{E3C41D8F-A2E6-47AA-8AAA-B85FC2C6D7DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3C41D8F-A2E6-47AA-8AAA-B85FC2C6D7DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3C41D8F-A2E6-47AA-8AAA-B85FC2C6D7DE}.Release|x86.ActiveCfg = Release|Any CPU
+		{E3C41D8F-A2E6-47AA-8AAA-B85FC2C6D7DE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
