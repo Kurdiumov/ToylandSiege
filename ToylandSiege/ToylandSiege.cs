@@ -14,6 +14,7 @@ namespace ToylandSiege
         public static GraphicsDeviceManager Graphics;
         public static Level CurrentLevel;
         public bool FpsEnabled = false;
+        public bool DebugDraw = true;
 
         private static ToylandSiege _ts;
         private readonly FPSCounter _frameCounter = new FPSCounter();
@@ -102,6 +103,7 @@ namespace ToylandSiege
                 _spriteBatch.End();
 
             }
+
             if (_gameState.GetCurrentGameState() == State.Paused)
             {
                 _spriteBatch.Begin();
@@ -112,6 +114,9 @@ namespace ToylandSiege
                     Color.Red);
                 _spriteBatch.End();
             }
+
+            if (DebugDraw)
+                DebugUtilities.DrawColliderWireframes();
         }
 
         //Used in scene parser and in inputHelper

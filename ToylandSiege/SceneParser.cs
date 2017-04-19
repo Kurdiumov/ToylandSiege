@@ -74,6 +74,7 @@ namespace ToylandSiege
             var terrainObj = new TerrainObject(name, mod);
             terrainObj.IsEnabled = IsEnabled;
             terrainObj.IsStatic = true;
+            terrainObj.IsCollidable = true;
             terrainObj.Type = JSONHelper.GetValue("Type", currentGameObject);
             terrainObj.Parent = parent;
 
@@ -94,6 +95,10 @@ namespace ToylandSiege
                     terrainObj.AddChild(ParseGameObject(currentGameObject.GetValue("Child")[i].ToObject<JObject>(), terrainObj));
                 }
             }
+
+            // TODO: Load from a config file?
+            terrainObj.BType = GameObject.BoundingType.Sphere;
+            terrainObj.RecreateBounding();
 
             return terrainObj;
         }
@@ -210,7 +215,7 @@ namespace ToylandSiege
 
             // TODO: Load from a config file?
             unitObj.BType = GameObject.BoundingType.Sphere;
-            unitObj.CreateBoundingSphereForModel();
+            unitObj.RecreateBounding();
 
             return unitObj;
         }

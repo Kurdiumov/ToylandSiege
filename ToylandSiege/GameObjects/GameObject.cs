@@ -191,6 +191,14 @@ namespace ToylandSiege.GameObjects
             this.BType = BoundingType.Box;
         }
 
+        public void RecreateBounding()
+        {
+            if (BType == BoundingType.Sphere)
+                CreateBoundingSphereForModel();
+            else if (BType == BoundingType.Box)
+                CreateBoundingBoxForModel();
+        }
+
         public void UpdateBoundary()
         {
             if (this.BType == BoundingType.Box)
