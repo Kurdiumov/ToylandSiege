@@ -18,6 +18,7 @@ namespace ToylandSiege.GameObjects
         public bool IsStatic = false;
         public bool IsCollidable = true;
         public bool IsEnabled = true;
+        public bool IsAnimated = false;
 
         public Model Model;
         public GameObject Parent = null;
@@ -125,19 +126,35 @@ namespace ToylandSiege.GameObjects
 
         public void CreateBoundingSphereForModel()
         {
-            Matrix[] boneTransforms = new Matrix[this.Model.Bones.Count];
-            this.Model.CopyAbsoluteBoneTransformsTo(boneTransforms);
+            BoundingSphere boundingSphere = new BoundingSphere(); ;
 
-            BoundingSphere boundingSphere = new BoundingSphere();
-            BoundingSphere meshSphere;
+            if (this.Model == null)
+                return;
 
-            for (int i = 0; i < this.Model.Meshes.Count; i++)
+            if (IsAnimated)
             {
-                meshSphere = this.Model.Meshes[i].BoundingSphere.Transform(boneTransforms[i]);
-                boundingSphere = BoundingSphere.CreateMerged(boundingSphere, meshSphere);
+                Matrix[] boneTransforms = new Matrix[this.Model.Bones.Count];
+                this.Model.CopyAbsoluteBoneTransformsTo(boneTransforms);
+
+                foreach (ModelMesh mesh in this.Model.Meshes)
+                {
+                    boundingSphere = BoundingSphere.CreateMerged(boundingSphere, mesh.BoundingSphere);
+                    boundingSphere.Transform(boneTransforms[mesh.ParentBone.Index]);
+                }
             }
-            //TODO: Should recalculate matrix here?
-            this.BSphere = boundingSphere.Transform(this.TransformationMatrix);
+            else
+            {
+                foreach (ModelMesh mesh in this.Model.Meshes)
+                {
+                    boundingSphere = BoundingSphere.CreateMerged(boundingSphere, mesh.BoundingSphere);
+                }
+            }
+
+            boundingSphere.Center = this.TransformationMatrix.Translation;
+            float maxScale = new float[] {this.Scale.X, this.Scale.Y, this.Scale.Z}.Max();
+            boundingSphere.Radius *= maxScale;
+
+            this.BSphere = boundingSphere;
             this.BType = BoundingType.Sphere;
         }
 

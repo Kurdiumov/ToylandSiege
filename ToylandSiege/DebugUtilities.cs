@@ -15,7 +15,7 @@ namespace ToylandSiege
             PrimitiveSphere = ToylandSiege.GetToylandSiege().Content.Load<Model>("PrimitiveShapes/Sphere");
         }
 
-        public static Model GetSphereModel(float radius, Matrix transformMatrix)
+        public static Model GetSphereModel(float radius, Vector3 position)
         {
             Model model = PrimitiveSphere;
             foreach (ModelMesh mesh in model.Meshes)
@@ -25,7 +25,7 @@ namespace ToylandSiege
                     //effect.AmbientLightColor = new Vector3(0, 0.3f, 0.3f);
                     effect.View = Camera.GetCurrentCamera().ViewMatrix;
                     effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
-                    effect.World = Matrix.CreateScale(radius) * transformMatrix;
+                    effect.World = Matrix.CreateScale(radius) * Matrix.CreateTranslation(position);
                 }
             }
             return model;
@@ -53,16 +53,16 @@ namespace ToylandSiege
             rasterizerStateWireframe.CullMode = CullMode.CullCounterClockwiseFace;
 
             ToylandSiege.GetToylandSiege().GraphicsDevice.RasterizerState = rasterizerStateWireframe;
-
+  
             ToylandSiege.GetToylandSiege().GraphicsDevice.BlendState = BlendState.Opaque;
             ToylandSiege.GetToylandSiege().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
-            foreach (var child in Level.GetCurrentLevel().RootGameObject.Childs.Values)
+            foreach (var child in Level.GetCurrentLevel().RootGameObject.GetAllChilds(Level.GetCurrentLevel().RootGameObject))
                 if (child.IsEnabled && child.IsCollidable)
                 {
                     if (child.BType == GameObject.BoundingType.Sphere)
                     {
-                        Model colliderModel = GetSphereModel(child.BSphere.Radius, Matrix.CreateTranslation(child.BSphere.Center));
+                        Model colliderModel = GetSphereModel(child.BSphere.Radius, child.BSphere.Center);
 
                         foreach (ModelMesh mesh in colliderModel.Meshes)
                         {

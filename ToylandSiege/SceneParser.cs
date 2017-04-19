@@ -193,6 +193,7 @@ namespace ToylandSiege
             unitObj.UnitType = unitType;
 
             unitObj.IsStatic = false;
+            unitObj.IsAnimated = true;
             unitObj.Parent = parent;
 
             if (JSONHelper.ValueExist("Position", currentGameObject))
