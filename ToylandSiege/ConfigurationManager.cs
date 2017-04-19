@@ -16,6 +16,7 @@ namespace ToylandSiege
         public bool MouseVisible;
         public bool PickingEnabled;
         public bool LigthningEnabled;
+        public bool DebugDraw;
 
         public int HeightResolution = 600;
         public int WidthResolution = 800;
@@ -42,6 +43,7 @@ namespace ToylandSiege
             IsMouseVisible();
             IsPickingEnabled();
             IsLightningEnabled();
+            IsDebugDrawEnabled();
         }
 
         public bool IsGodModeEnabled()
@@ -171,6 +173,17 @@ namespace ToylandSiege
             return LigthningEnabled;
         }
 
+        public bool IsDebugDrawEnabled()
+        {
+            if (JSONHelper.ValueExist("DebugDraw", Configuration))
+                DebugDraw = JSONHelper.ToBool(JSONHelper.GetValue("DebugDraw", Configuration));
+
+            if (DebugDraw)
+                Logger.Log.Debug("Debug draw Enabled");
+            else
+                Logger.Log.Debug("Debug Draw Disabled");
+
+            return DebugDraw;
+        }
     }
-    
 }

@@ -9,5 +9,6 @@
       "MouseVisible": true,
       "RayPickingEnabled": true,
       "LightningEnabled": true,
+      "DebugDraw": true,
    }
 }
