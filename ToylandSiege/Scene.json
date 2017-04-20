@@ -2,140 +2,140 @@
    "Level1":{
       "Name":"RootGameObject",
       "Type":"RootGameObject",
-      "Child":[
-         {
-            "Name":"TerrainObjectsGroup",
-            "Type":"Group",
-            "Model":null,
-            "isEnabled":true,
-            "Position":[
-               0,
-               0,
-               0
+    "Child": [
+      {
+        "Name": "TerrainObjectsGroup",
+        "Type": "Group",
+        "Model": null,
+        "isEnabled": true,
+        "Position": [
+          0,
+          0,
+          0
+        ],
+        "Rotation": [
+          0,
+          0,
+          0
+        ],
+        "Scale": [
+          0.2,
+          0.2,
+          0.2
+        ],
+        "Child": [
+          {
+            "Name": "Fortress",
+            "Type": "TerrainObject",
+            "Model": "Fortress",
+            "isEnabled": true,
+            "Position": [
+              0,
+              0,
+              -160
             ],
-            "Rotation":[
-               0,
-               0,
-               0
+            "Rotation": [
+              0,
+              0,
+              0
             ],
-            "Scale":[
-               0.2,
-               0.2,
-               0.2
+            "Scale": [
+              1.2,
+              1.2,
+              1.2
             ],
-            "Child":[
-               {
-                  "Name":"Fortress",
-                  "Type":"TerrainObject",
-                  "Model":"Fortress",
-                  "isEnabled":true,
-                  "Position":[
-                     0,
-                     0,
-                     -160
-                  ],
-                  "Rotation":[
-                     0,
-                     0,
-                     0
-                  ],
-                  "Scale":[
-                     1.2,
-                     1.2,
-                     1.2
-                  ],
-                  "Child":[
-                     {
-                        "Name":"Gate",
-                        "Type":"TerrainObject",
-                        "Model":"Gate",
-                        "isEnabled":true,
-                        "Position":[
-                           0,
-                           0,
-                           0
-                        ],
-                        "Rotation":[
-                           0,
-                           0,
-                           0
-                        ],
-                        "Scale":[
-                           1,
-                           1,
-                           1
-                        ]
-                     }
-                  ]
-               },
-               {
-                  "Name":"Tower",
-                  "Type":"TerrainObject",
-                  "Model":"Tower",
-                  "isEnabled":true,
-                  "Position":[
-                     60,
-                     0,
-                     -80
-                  ],
-                  "Rotation":[
-                     0,
-                     0,
-                     0
-                  ],
-                  "Scale":[
-                     1,
-                     1,
-                     1
-                  ]
-               },
-               {
-                  "Name":"Terrain",
-                  "Type":"TerrainObject",
-                  "Model":"Terrain",
-                  "isEnabled":true,
-                  "Position":[
-                     0,
-                     0,
-                     0
-                  ],
-                  "Rotation":[
-                     0,
-                     0,
-                     0
-                  ],
-                  "Scale":[
-                     1,
-                     1,
-                     1
-                  ]
-               }
+            "Child": [
+              {
+                "Name": "Gate",
+                "Type": "TerrainObject",
+                "Model": "Gate",
+                "isEnabled": true,
+                "Position": [
+                  0,
+                  0,
+                  0
+                ],
+                "Rotation": [
+                  0,
+                  0,
+                  0
+                ],
+                "Scale": [
+                  1,
+                  1,
+                  1
+                ]
+              }
             ]
-         },
-         {
-            "Name":"UnitCube",
-            "Type":"Unit",
-            "Model":"123",
-            "Health":100,
-            "UnitType":"BasicType",
-            "isEnabled":true,
-            "Position":[
-               25,
-               8,
-               10
+          },
+          {
+            "Name": "Tower",
+            "Type": "TerrainObject",
+            "Model": "Tower",
+            "isEnabled": true,
+            "Position": [
+              60,
+              0,
+              -80
             ],
-            "Rotation":[
-               0,
-               0,
-               0
+            "Rotation": [
+              0,
+              0,
+              0
             ],
-            "Scale":[
-               0.1,
-               0.1,
-               0.1
+            "Scale": [
+              1,
+              1,
+              1
             ]
-         },
-         /*{
+          },
+          {
+            "Name": "Terrain",
+            "Type": "TerrainObject",
+            "Model": "Terrain",
+            "isEnabled": true,
+            "Position": [
+              0,
+              0,
+              0
+            ],
+            "Rotation": [
+              0,
+              0,
+              0
+            ],
+            "Scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      {
+        "Name": "UnitCube",
+        "Type": "Unit",
+        "Model": "1234",
+        "Health": 100,
+        "UnitType": "BasicType",
+        "isEnabled": true,
+        "Position": [
+          25,
+          8,
+          10
+        ],
+        "Rotation": [
+          0,
+          0,
+          0
+        ],
+        "Scale": [
+          0.1,
+          0.1,
+          0.1
+        ]
+      },
+      /*{
             "Name":"EnemyCube",
             "Type":"Enemy",
             "Model":"MonoCube",
@@ -158,177 +158,177 @@
                0.7
             ]
          }, */
-         {
-            "Name":"Cube",
-            "Type":"TerrainObject",
-            "Model":"MonoCube",
-            "isEnabled":true,
-            "Position":[
-               40,
-               8,
-               5
+      {
+        "Name": "Cube",
+        "Type": "TerrainObject",
+        "Model": "MonoCube",
+        "isEnabled": true,
+        "Position": [
+          40,
+          8,
+          5
+        ],
+        "Rotation": [
+          0,
+          0,
+          0
+        ],
+        "Scale": [
+          1,
+          1,
+          1
+        ],
+        "Child": [
+          {
+            "Name": "InnerCube",
+            "Type": "TerrainObject",
+            "Model": "MonoCube",
+            "isEnabled": true,
+            "Position": [
+              4,
+              -4,
+              0
             ],
-            "Rotation":[
-               0,
-               0,
-               0
+            "Rotation": [
+              0,
+              0,
+              0
             ],
-            "Scale":[
-               1,
-               1,
-               1
+            "Scale": [
+              0.5,
+              0.5,
+              0.5
             ],
-            "Child":[
-               {
-                  "Name":"InnerCube",
-                  "Type":"TerrainObject",
-                  "Model":"MonoCube",
-                  "isEnabled":true,
-                  "Position":[
-                     4,
-                     -4,
-                     0
-                  ],
-                  "Rotation":[
-                     0,
-                     0,
-                     0
-                  ],
-                  "Scale":[
-                     0.5,
-                     0.5,
-                     0.5
-                  ],
-                  "Child":[
-                     {
-                        "Name":"InnerInnerCube",
-                        "Type":"TerrainObject",
-                        "Model":"MonoCube",
-                        "isEnabled":true,
-                        "Position":[
-                           0,
-                           -5,
-                           0
-                        ],
-                        "Rotation":[
-                           0,
-                           0,
-                           0
-                        ],
-                        "Scale":[
-                           2,
-                           2,
-                           2
-                        ]
-                     }
-                  ]
-               }
+            "Child": [
+              {
+                "Name": "InnerInnerCube",
+                "Type": "TerrainObject",
+                "Model": "MonoCube",
+                "isEnabled": true,
+                "Position": [
+                  0,
+                  -5,
+                  0
+                ],
+                "Rotation": [
+                  0,
+                  0,
+                  0
+                ],
+                "Scale": [
+                  2,
+                  2,
+                  2
+                ]
+              }
             ]
-         },
-         {
-            "Name":"GodModeCamera",
-            "Type":"Camera",
-            "Model":null,
-            "CurrentCamera":true,
-            "UpVector":[
-               0,
-               1,
-               0
-            ],
-            "Direction":[
-               0,
-               0,
-               -1
-            ],
-            "isEnabled":true,
-            "Position":[
-               0,
-               18,
-               32
-            ],
-            "Angle":45,
-            "NearPlaneDistance":1,
-            "FarPlaneDistance":1000,
-            "Speed":0.6
-         },
-         {
-            "Name":"StrategicCamera",
-            "Type":"Camera",
-            "Model":null,
-            "CurrentCamera":false,
-            "UpVector":[
-               0,
-               1,
-               0
-            ],
-            "Direction":[
-               0,
-               -1,
-               -1
-            ],
-            "isEnabled":false,
-            "Position":[
-               0,
-               50,
-               26
-            ],
-            "Angle":60,
-            "NearPlaneDistance":1,
-            "FarPlaneDistance":1000,
-            "Speed":0.3
-         },
-         {
-            "Name":"FirsPersonCamera",
-            "Type":"Camera",
-            "Model":null,
-            "CurrentCamera":false,
-            "UpVector":[
-               0,
-               1,
-               0
-            ],
-            "Direction":[
-               0,
-               -1,
-               -1
-            ],
-            "isEnabled":false,
-            "Position":[
-               0,
-               18,
-               32
-            ],
-            "Angle":60,
-            "NearPlaneDistance":1,
-            "FarPlaneDistance":1000,
-            "Speed":0.3
-         },
-         {
-          //Should be at root level!
-            "Name":"Board",
-            "Type":"BoardSetting",
-            "Model":"Field",
-            "Rows": 15,
-            "Columns":15,
-            "FieldName": "Field",
-            "FieldModel": "Field",
-            "Step": 5,
-            "Position":[
-               0,
-               0.25,
-               5
-            ],
-            "StartingPosition":[
-              -35,
-               0,
-               10
-            ],
-            "Scale":[
-              0.95,
-              0.95,
-              0.95
-            ],
-         }
-      ]
+          }
+        ]
+      },
+      {
+        "Name": "GodModeCamera",
+        "Type": "Camera",
+        "Model": null,
+        "CurrentCamera": true,
+        "UpVector": [
+          0,
+          1,
+          0
+        ],
+        "Direction": [
+          0,
+          0,
+          -1
+        ],
+        "isEnabled": true,
+        "Position": [
+          0,
+          18,
+          32
+        ],
+        "Angle": 45,
+        "NearPlaneDistance": 1,
+        "FarPlaneDistance": 1000,
+        "Speed": 0.6
+      },
+      {
+        "Name": "StrategicCamera",
+        "Type": "Camera",
+        "Model": null,
+        "CurrentCamera": false,
+        "UpVector": [
+          0,
+          1,
+          0
+        ],
+        "Direction": [
+          0,
+          -1,
+          -1
+        ],
+        "isEnabled": false,
+        "Position": [
+          0,
+          50,
+          26
+        ],
+        "Angle": 60,
+        "NearPlaneDistance": 1,
+        "FarPlaneDistance": 1000,
+        "Speed": 0.3
+      },
+      {
+        "Name": "FirsPersonCamera",
+        "Type": "Camera",
+        "Model": null,
+        "CurrentCamera": false,
+        "UpVector": [
+          0,
+          1,
+          0
+        ],
+        "Direction": [
+          0,
+          -1,
+          -1
+        ],
+        "isEnabled": false,
+        "Position": [
+          0,
+          18,
+          32
+        ],
+        "Angle": 60,
+        "NearPlaneDistance": 1,
+        "FarPlaneDistance": 1000,
+        "Speed": 0.3
+      },
+      {
+        //Should be at root level!
+        "Name": "Board",
+        "Type": "BoardSetting",
+        "Model": "Field",
+        "Rows": 15,
+        "Columns": 15,
+        "FieldName": "Field",
+        "FieldModel": "Field",
+        "Step": 5,
+        "Position": [
+          0,
+          0.25,
+          5
+        ],
+        "StartingPosition": [
+          -35,
+          0,
+          10
+        ],
+        "Scale": [
+          0.95,
+          0.95,
+          0.95
+        ]
+      }
+    ]
    }
 }
