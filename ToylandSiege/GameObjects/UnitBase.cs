@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using SkinnedModel;
+﻿using Microsoft.Xna.Framework;
+
 
 namespace ToylandSiege.GameObjects
 {
@@ -12,8 +7,6 @@ namespace ToylandSiege.GameObjects
     {
         public float Health;
         public string UnitType;
-
-        public AnimationPlayer AnimationPlayer;
 
         public UnitBase()
         {

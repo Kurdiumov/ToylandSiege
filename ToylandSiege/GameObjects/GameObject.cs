@@ -3,6 +3,8 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Security.Cryptography.X509Certificates;
+using SkinnedModel;
 
 namespace ToylandSiege.GameObjects
 {
@@ -43,15 +45,36 @@ namespace ToylandSiege.GameObjects
             {
                 foreach (ModelMesh mesh in Model.Meshes)
                 {
-                    foreach (BasicEffect effect in mesh.Effects)
+                    if (mesh.Effects.All(e => e is BasicEffect))
                     {
-                        if (ToylandSiege.GetToylandSiege().configurationManager.LigthningEnabled)
-                            effect.EnableDefaultLighting();
-                        effect.AmbientLightColor = new Vector3(0, 0.3f, 0.3f);
-                        effect.View = Camera.GetCurrentCamera().ViewMatrix;
+                        foreach (BasicEffect effect in mesh.Effects)
+                        {
+                            if (ToylandSiege.GetToylandSiege().configurationManager.LigthningEnabled)
+                                effect.EnableDefaultLighting();
+                            effect.AmbientLightColor = new Vector3(0, 0.3f, 0.3f);
+                            effect.View = Camera.GetCurrentCamera().ViewMatrix;
 
-                        effect.World = TransformationMatrix;
-                        effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
+                            effect.World = TransformationMatrix;
+                            effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
+
+                        }
+                    }
+                    else if(AnimationPlayer != null && mesh.Effects.All(e => e is SkinnedEffect))
+                    {
+
+                        Matrix[] bones = AnimationPlayer.GetSkinTransforms();
+
+                        foreach (SkinnedEffect effect in mesh.Effects)
+                        {
+                            (effect).SetBoneTransforms(bones);
+                            if (ToylandSiege.GetToylandSiege().configurationManager.LigthningEnabled)
+                                effect.EnableDefaultLighting();
+                            effect.AmbientLightColor = new Vector3(0, 0.3f, 0.3f);
+                            effect.View = Camera.GetCurrentCamera().ViewMatrix;
+
+                            effect.World = TransformationMatrix;
+                            effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
+                        }
                     }
                     mesh.Draw();
                 }
@@ -62,11 +85,12 @@ namespace ToylandSiege.GameObjects
             }
         }
 
+        public AnimationPlayer AnimationPlayer;
         public void AddChild(GameObject obj)
         {
             Childs.Add(obj.Name, obj);
             obj.Parent = this;
-            if(!(obj is Field)) // For better performance. Dont want to write to log 70+ objects
+            if (!(obj is Field)) // For better performance. Dont want to write to log 70+ objects
                 Logger.Log.Debug("GameObject " + obj.Name + " added to " + Name + " GameObject type: " + Type);
         }
 
@@ -151,7 +175,7 @@ namespace ToylandSiege.GameObjects
             }
 
             boundingSphere.Center = this.TransformationMatrix.Translation;
-            float maxScale = new float[] {this.Scale.X, this.Scale.Y, this.Scale.Z}.Max();
+            float maxScale = new float[] { this.Scale.X, this.Scale.Y, this.Scale.Z }.Max();
             boundingSphere.Radius *= maxScale;
 
             this.BSphere = boundingSphere;
@@ -244,7 +268,7 @@ namespace ToylandSiege.GameObjects
         }
 
         public void Destroy()
-        {          
+        {
             Parent.RemoveChild(this);
         }
     }

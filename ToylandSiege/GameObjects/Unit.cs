@@ -47,35 +47,6 @@ namespace ToylandSiege.GameObjects
             AnimationPlayer.Update(gameTime.ElapsedGameTime, true, TransformationMatrix);
         }
 
-        public override void Draw()
-        {
-            // TODO: Small refactor for Rosti :)
-            if (!IsEnabled)
-                return;
-
-            if (Model != null)
-            {
-                Matrix[] bones = AnimationPlayer.GetSkinTransforms();
-
-                foreach (ModelMesh mesh in Model.Meshes)
-                {
-                    foreach (SkinnedEffect effect in mesh.Effects)
-                    {
-                        effect.SetBoneTransforms(bones);
-
-                        if (ToylandSiege.GetToylandSiege().configurationManager.LigthningEnabled)
-                            effect.EnableDefaultLighting();                  
-                            effect.AmbientLightColor = new Vector3(0, 0.3f, 0.3f);
-                        effect.View = Camera.GetCurrentCamera().ViewMatrix;
-
-                        effect.World = TransformationMatrix;
-                        effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
-                    }
-                    mesh.Draw();
-                }
-            }
-        }
-
         public bool IsOnField()
         {
             return Field != null;
