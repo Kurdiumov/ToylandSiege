@@ -170,21 +170,8 @@ namespace ToylandSiege
 
             unitObj.Model = mod;
 
-            // TODO: Load from config file
-            SkinningData skinningData = mod.Tag as SkinningData;
-
-            /*
-            if (skinningData == null)
-                throw new InvalidOperationException
-                    ("This model does not contain a SkinningData tag.");
-           */
-
-            // Create an animation player, and start decoding an animation clip.
-            unitObj.AnimationPlayer = new AnimationPlayer(skinningData);
-
-            AnimationClip clip = skinningData.AnimationClips["Take 001"];
-
-            unitObj.AnimationPlayer.StartClip(clip);
+            //Parse animation
+            ParseAnimationPlayer(unitObj, currentGameObject.GetValue("Animation"));
 
             unitObj.Name = name;
             unitObj.Type = type;
@@ -278,8 +265,27 @@ namespace ToylandSiege
                 Scale = scale,
                 Step =  step,
             };
+            
             board.CreateFields();
             return board;
+        }
+
+        private void ParseAnimationPlayer(GameObject gameObject, JToken currentGameObject)
+        {
+            if (currentGameObject == null)
+                return;
+
+            SkinningData skinningData = gameObject.Model.Tag as SkinningData;
+            if (skinningData == null)
+                throw new InvalidOperationException
+                    ("This model does not contain a SkinningData tag.");
+
+            gameObject.AnimationPlayer = new AnimationPlayer(skinningData);
+
+            foreach (var item in currentGameObject)
+                gameObject.Clips.Add(item.ToString(), skinningData.AnimationClips[item.ToString()]);
+            
+            gameObject.AnimationPlayer.StartClip(gameObject.Clips.First().Value);
         }
     }
 }

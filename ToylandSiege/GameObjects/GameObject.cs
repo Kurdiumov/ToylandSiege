@@ -33,6 +33,8 @@ namespace ToylandSiege.GameObjects
         public BoundingSphere BSphere;
         public BoundingBox BBox;
 
+        public Dictionary<string, AnimationClip> Clips = new Dictionary<string, AnimationClip>();
+
         protected abstract void Initialize();
         public abstract void Update(GameTime gameTime);
 

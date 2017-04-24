@@ -119,6 +119,9 @@
         "Health": 100,
         "UnitType": "BasicType",
         "isEnabled": true,
+        "Animation": [
+          "Take 001",
+        ],
         "Position": [
           25,
           8,
