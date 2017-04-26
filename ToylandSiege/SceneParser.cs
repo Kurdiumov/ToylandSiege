@@ -97,7 +97,7 @@ namespace ToylandSiege
             }
 
             // TODO: Load from a config file?
-            terrainObj.Collider.BType = Collider.BoundingType.Complex;
+            terrainObj.Collider.BType = Collider.BoundingType.Box;
             terrainObj.Collider.RecreateBounding();
 
             return terrainObj;

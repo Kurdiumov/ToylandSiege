@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ToylandSiege.GameObjects;
 
@@ -31,7 +32,26 @@ namespace ToylandSiege
             return model;
         }
 
-        // TODO: Implement GetBoxModel, maybe even function to draw Complex colliders
+        public static Model GetBoxModel(Vector3 min, Vector3 max)
+        {
+            Model model = PrimitiveBox;
+
+            Vector3 center = max - min;
+            double diagonal = Vector3.Distance(max, min);
+            float edge = (float) (diagonal / Math.Sqrt(3));  // from the Pitagoras theorem, scale should be length of the edge (as cube model is 1x1x1)
+
+            foreach (ModelMesh mesh in model.Meshes)
+            {
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                    //effect.AmbientLightColor = new Vector3(0, 0.3f, 0.3f);
+                    effect.View = Camera.GetCurrentCamera().ViewMatrix;
+                    effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
+                    effect.World = Matrix.CreateScale(edge) * Matrix.CreateTranslation(center);
+                }
+            }
+            return model;
+        }
 
         public static void ShowAllGameObjects(GameObject rootObject, int tabulation = 0)
         {
@@ -78,6 +98,12 @@ namespace ToylandSiege
                         // TODO: Add Box debug drawing
                         case Collider.BoundingType.Box:
                         {
+                            Model colliderModel = GetBoxModel(child.Collider.BoxCollider.Min,
+                                child.Collider.BoxCollider.Max);
+                            foreach (ModelMesh mesh in colliderModel.Meshes)
+                            {
+                                mesh.Draw();
+                            }
                             break;
                         }
 
