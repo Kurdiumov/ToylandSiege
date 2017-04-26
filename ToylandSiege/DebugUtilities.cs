@@ -36,9 +36,13 @@ namespace ToylandSiege
         {
             Model model = PrimitiveBox;
 
-            Vector3 center = max - min;
+            Vector3 center = (min + max)/2;       
+
             double diagonal = Vector3.Distance(max, min);
             float edge = (float) (diagonal / Math.Sqrt(3));  // from the Pitagoras theorem, scale should be length of the edge (as cube model is 1x1x1)
+
+            // TODO: Check if true position is correct without below hack
+            center.Z -= edge/2;
 
             foreach (ModelMesh mesh in model.Meshes)
             {
