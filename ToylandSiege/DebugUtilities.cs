@@ -31,6 +31,8 @@ namespace ToylandSiege
             return model;
         }
 
+        // TODO: Implement GetBoxModel, maybe even function to draw Complex colliders
+
         public static void ShowAllGameObjects(GameObject rootObject, int tabulation = 0)
         {
             string output = "";
@@ -60,18 +62,39 @@ namespace ToylandSiege
             foreach (var child in Level.GetCurrentLevel().RootGameObject.GetAllChilds(Level.GetCurrentLevel().RootGameObject))
                 if (child.IsEnabled && child.IsCollidable)
                 {
-                    if (child.BType == GameObject.BoundingType.Sphere)
+                    switch (child.Collider.BType)
                     {
-                        Model colliderModel = GetSphereModel(child.BSphere.Radius, child.BSphere.Center);
-
-                        foreach (ModelMesh mesh in colliderModel.Meshes)
+                        case Collider.BoundingType.Sphere:
                         {
-                            mesh.Draw();
+                            Model colliderModel = GetSphereModel(child.Collider.SphereCollider.Radius,
+                                child.Collider.SphereCollider.Center);
+                            foreach (ModelMesh mesh in colliderModel.Meshes)
+                            {
+                                mesh.Draw();
+                            }
+                            break;
                         }
 
-                    } else if (child.BType == GameObject.BoundingType.Box)
-                    {
-                        
+                        // TODO: Add Box debug drawing
+                        case Collider.BoundingType.Box:
+                        {
+                            break;
+                        }
+
+                        // TODO: Add Complex debug drawing
+                        case Collider.BoundingType.Complex:
+                        {
+                            foreach (BoundingSphere sphere in child.Collider.SphereColliders)
+                            {
+                                Model colliderModel = GetSphereModel(sphere.Radius, sphere.Center);
+                                foreach (ModelMesh mesh in colliderModel.Meshes)
+                                {
+                                    mesh.Draw();
+                                }
+                            }
+                            break;
+                        }
+
                     }
                 }
 

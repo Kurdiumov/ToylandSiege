@@ -59,6 +59,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Collider.cs" />
     <Compile Include="CollisionHelper.cs" />
     <Compile Include="ConfigurationManager.cs" />
     <Compile Include="DebugUtilities.cs" />

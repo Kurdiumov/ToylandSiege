@@ -97,8 +97,8 @@ namespace ToylandSiege
             }
 
             // TODO: Load from a config file?
-            terrainObj.BType = GameObject.BoundingType.Sphere;
-            terrainObj.RecreateBounding();
+            terrainObj.Collider.BType = Collider.BoundingType.Complex;
+            terrainObj.Collider.RecreateBounding();
 
             return terrainObj;
         }
@@ -202,8 +202,8 @@ namespace ToylandSiege
             }
 
             // TODO: Load from a config file?
-            unitObj.BType = GameObject.BoundingType.Sphere;
-            unitObj.RecreateBounding();
+            unitObj.Collider.BType = Collider.BoundingType.Sphere;
+            unitObj.Collider.RecreateBounding();
 
             return unitObj;
         }

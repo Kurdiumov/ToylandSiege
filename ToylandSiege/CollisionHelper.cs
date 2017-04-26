@@ -18,42 +18,10 @@ namespace ToylandSiege
             if (!obj2.IsEnabled || !obj2.IsCollidable)
                 return false;
 
-            if (obj1.BType == BoundingType.Box)
+            if (obj1.Collider.Intersects(obj2.Collider))
             {
-                if (obj2.BType == BoundingType.Box)
-                {
-                    if (obj1.BBox.Intersects(obj2.BBox)) {
-                        OnCollisionDetected(obj1, obj2);
-                        return true;
-                    }
-                }
-                else
-                {
-                    if (obj1.BBox.Intersects(obj2.BSphere))
-                    {
-                        OnCollisionDetected(obj1, obj2);
-                        return true;
-                    }
-                }
-            }
-            else
-            {
-                if (obj2.BType == BoundingType.Box)
-                {
-                    if (obj1.BSphere.Intersects(obj2.BBox))
-                    {
-                        OnCollisionDetected(obj1, obj2);
-                        return true;
-                    }
-                }
-                else
-                {
-                    if (obj1.BSphere.Intersects(obj2.BSphere))
-                    {
-                        OnCollisionDetected(obj1, obj2);
-                        return true;
-                    }
-                }
+                OnCollisionDetected(obj1, obj2);
+                return true;
             }
 
             return false;
@@ -76,7 +44,7 @@ namespace ToylandSiege
                     dynamicObjects.Add(obj);
                     // TODO: Add recalculation of Box to GameObject.Rotate (BB must be parallel to axis)
                     // others to Constructor only
-                    obj.UpdateBoundary();
+                    obj.Collider.UpdateBoundary();
                 }
             }
 
