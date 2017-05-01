@@ -1,7 +1,14 @@
 ﻿{
    "config":{
       "GodModeEnabled":true,
-      "GameState": "GodMode",
+      "GameStates": [
+         "GodMode",
+         "FirstPerson",
+         "Strategic",
+         "Menu",
+         "Paused",
+      ],
+      "StartingGameState": "GodMode",
       "IsFullScreen": true,
       "HeightResolution": 1080,
       "WidthResolution": 1920,

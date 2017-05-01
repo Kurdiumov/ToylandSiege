@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json.Linq;
+using ToylandSiege.GameState;
 
 namespace ToylandSiege
 {
@@ -10,7 +12,6 @@ namespace ToylandSiege
         private readonly JObject Configuration;
 
         public bool GodModeEnabled;
-        public  State GameState = State.FirstPerson;
         public bool IsFullScreen;
         public bool FPSEnabled;
         public bool MouseVisible;
@@ -36,14 +37,13 @@ namespace ToylandSiege
         private void ReadAllProperties()
         {
             IsGodModeEnabled();
-            GetGameState();
             IsFullScreenEnabled();
             GetResolution();
             IsFPSEnabled();
             IsMouseVisible();
             IsPickingEnabled();
             IsLightningEnabled();
-            IsDebugDrawEnabled();
+            IsDebugDrawEnabled();            
         }
 
         public bool IsGodModeEnabled()
@@ -71,42 +71,47 @@ namespace ToylandSiege
 
             return IsFullScreen;
         }
-
-        public State GetGameState()
+        
+        public void InitGameStates()
         {
-            if (!JSONHelper.ValueExist("GameState", Configuration))
-                return State.FirstPerson;
+            var gameStateManager = ToylandSiege.GetToylandSiege().gameStateManager;
 
-            var state = JSONHelper.GetValue("GameState", Configuration);
-
-            switch (state.ToLower())
+            for (int i = 0; i < Configuration.GetValue("GameStates").Count(); i++)
             {
-                case "godmode":
-                    if (!GodModeEnabled)
-                        throw new ArgumentException("GodMode is not Enabled in configuration file!");
-                    GameState = State.GodMode;
-                    Logger.Log.Debug("Starting GameState:  GodMode");
-                    break;
-                case "firstperson":
-                    GameState = State.FirstPerson;
-                    Logger.Log.Debug("Starting GameState:  FirstPerson");
-                    break;
-                case "strategic":
-                    GameState = State.Strategic;
-                    Logger.Log.Debug("Starting GameState:  Strategic");
-                    break;
-                case "menu":
-                    GameState = State.Menu;
-                    Logger.Log.Debug("Starting GameState:  Menu");
-                    break;
-                case "paused":
-                    GameState = State.Paused;
-                    Logger.Log.Debug("Starting GameState:  Paused");
-                    break;
-                default:
-                    throw new ArgumentException("Not supported game state " + state);
+                var state = Configuration.GetValue("GameStates")[i].Value<string>();
+
+                switch (state.ToLower())
+                {
+                    case "godmode":
+                        if (!GodModeEnabled)
+                            throw new ArgumentException("GodMode is not Enabled in configuration file!");
+                        gameStateManager.AddGameState("GodMode", new GodMode());
+                        Logger.Log.Debug("GameState added:  GodMode");
+                        break;
+                    case "firstperson":
+                        gameStateManager.AddGameState("FirstPerson", new FirstPerson());
+                        Logger.Log.Debug("GameState added:  FirstPerson");
+                        break;
+                    case "strategic":
+                        gameStateManager.AddGameState("Strategic", new Strategic());
+                        Logger.Log.Debug("GameState added:  Strategic");
+                        break;
+                    case "menu":
+                        gameStateManager.AddGameState("Menu", new Menu());
+                        Logger.Log.Debug("GameState added:  Menu");
+                        break;
+                    case "paused":
+                        gameStateManager.AddGameState("Paused", new Paused());
+                        Logger.Log.Debug("GameState added:  Paused");
+                        break;
+                    default:
+                        throw new ArgumentException("Not supported game state " + state);
+                }
             }
-            return GameState;
+
+            //Set starting game state
+            if (JSONHelper.ValueExist("StartingGameState", Configuration))
+                gameStateManager.SetNewGameState(gameStateManager.AvailableGameStates[JSONHelper.GetValue("StartingGameState", Configuration)]);
         }
 
         private void GetResolution()

@@ -72,8 +72,13 @@
     <Compile Include="GameObjects\RootGameObject.cs" />
     <Compile Include="GameObjects\Unit.cs" />
     <Compile Include="GameObjects\UnitBase.cs" />
-    <Compile Include="GameState.cs" />
-    <Compile Include="InputHelper.cs" />
+    <Compile Include="GameState\FirstPerson.cs" />
+    <Compile Include="GameState\GameState.cs" />
+    <Compile Include="GameStateManager.cs" />
+    <Compile Include="GameState\GodMode.cs" />
+    <Compile Include="GameState\Menu.cs" />
+    <Compile Include="GameState\Paused.cs" />
+    <Compile Include="GameState\Strategic.cs" />
     <Compile Include="JSONHelper.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Logger.cs" />

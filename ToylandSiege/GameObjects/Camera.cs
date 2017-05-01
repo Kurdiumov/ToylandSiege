@@ -99,5 +99,27 @@ namespace ToylandSiege.GameObjects
                     ToylandSiege.GetToylandSiege().GraphicsDevice.Viewport.AspectRatio, NearDistance, FarDistance);
         }
 
+        public void RotateCamera(MouseState _previousMouseState)
+        {
+            if (Mouse.GetState() != _previousMouseState)
+            {
+                Camera.GetCurrentCamera().Direction = Vector3.Transform(
+                     Camera.GetCurrentCamera().Direction,
+                     Matrix.CreateFromAxisAngle(Camera.GetCurrentCamera().Up,
+                         (-MathHelper.PiOver4 / 150) * (Mouse.GetState().X - _previousMouseState.X)));
+
+
+                Camera.GetCurrentCamera().Direction = Vector3.Transform(
+                    Camera.GetCurrentCamera().Direction,
+                    Matrix.CreateFromAxisAngle(
+                        Vector3.Cross(Camera.GetCurrentCamera().Up, Camera.GetCurrentCamera().Direction),
+                        (MathHelper.PiOver4 / 100) * (Mouse.GetState().Y - _previousMouseState.Y)));
+
+
+                // Reset PrevMouseState
+                Mouse.SetPosition(ToylandSiege.GetToylandSiege().Window.ClientBounds.Width / 2, ToylandSiege.GetToylandSiege().Window.ClientBounds.Height / 2);
+            }
+        }
+
     }
 }
