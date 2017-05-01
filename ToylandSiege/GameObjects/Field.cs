@@ -68,7 +68,7 @@ namespace ToylandSiege.GameObjects
                 {
                     foreach (BasicEffect effect in mesh.Effects)
                     {
-                        if (ToylandSiege.GetToylandSiege().configurationManager.LigthningEnabled)
+                        if (ToylandSiege.GetInstance().configurationManager.LigthningEnabled)
                             effect.EnableDefaultLighting();
                         if (StartingTile && !HasUnit())
                             effect.AmbientLightColor = new Vector3(0, 0.9f, 0.1f);

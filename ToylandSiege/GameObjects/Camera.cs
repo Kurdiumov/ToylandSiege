@@ -23,7 +23,7 @@ namespace ToylandSiege.GameObjects
         public float Speed = 0.3F;
 
         private static Camera _currentCamera;
-        private static Dictionary<string, Camera> AvailableCameras = new Dictionary<string, Camera>();
+        public static Dictionary<string, Camera> AvailableCameras = new Dictionary<string, Camera>();
 
 
         public Camera(string Name)
@@ -93,14 +93,16 @@ namespace ToylandSiege.GameObjects
         {
             if(zoom)
                 ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(Angle/_zoomstrength),
-                    ToylandSiege.GetToylandSiege().GraphicsDevice.Viewport.AspectRatio, NearDistance, FarDistance);
+                    ToylandSiege.GetInstance().GraphicsDevice.Viewport.AspectRatio, NearDistance, FarDistance);
             else
                 ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(Angle),
-                    ToylandSiege.GetToylandSiege().GraphicsDevice.Viewport.AspectRatio, NearDistance, FarDistance);
+                    ToylandSiege.GetInstance().GraphicsDevice.Viewport.AspectRatio, NearDistance, FarDistance);
         }
 
         public void RotateCamera(MouseState _previousMouseState)
         {
+            if (!ToylandSiege.GetInstance().IsActive)
+                return;
             if (Mouse.GetState() != _previousMouseState)
             {
                 Camera.GetCurrentCamera().Direction = Vector3.Transform(
@@ -117,7 +119,7 @@ namespace ToylandSiege.GameObjects
 
 
                 // Reset PrevMouseState
-                Mouse.SetPosition(ToylandSiege.GetToylandSiege().Window.ClientBounds.Width / 2, ToylandSiege.GetToylandSiege().Window.ClientBounds.Height / 2);
+                Mouse.SetPosition(ToylandSiege.GetInstance().Window.ClientBounds.Width / 2, ToylandSiege.GetInstance().Window.ClientBounds.Height / 2);
             }
         }
 

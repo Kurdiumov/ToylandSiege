@@ -74,7 +74,7 @@ namespace ToylandSiege
         
         public void InitGameStates()
         {
-            var gameStateManager = ToylandSiege.GetToylandSiege().gameStateManager;
+            var gameStateManager = ToylandSiege.GetInstance().gameStateManager;
 
             for (int i = 0; i < Configuration.GetValue("GameStates").Count(); i++)
             {

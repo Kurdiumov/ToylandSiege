@@ -17,9 +17,11 @@ namespace ToylandSiege.GameState
 
         public override void ProcessInput()
         {
+            if (!ToylandSiege.GetInstance().IsActive)
+                return;
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back ==
              ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                ToylandSiege.GetToylandSiege().Exit();
+                ToylandSiege.GetInstance().Exit();
         }
     }
 }

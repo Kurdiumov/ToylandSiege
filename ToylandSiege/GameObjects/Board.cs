@@ -55,7 +55,7 @@ namespace ToylandSiege.GameObjects
                 {
                     var field = new Field(FieldName + index, index, CalculatePosition(column, row, index), Scale)
                     {
-                        Model = ToylandSiege.GetToylandSiege().Content.Load<Model>(FieldModel),
+                        Model = ToylandSiege.GetInstance().Content.Load<Model>(FieldModel),
                     };
 
 

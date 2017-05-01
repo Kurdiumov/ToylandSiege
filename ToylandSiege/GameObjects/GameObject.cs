@@ -53,7 +53,7 @@ namespace ToylandSiege.GameObjects
                     {
                         foreach (BasicEffect effect in mesh.Effects)
                         {
-                            if (ToylandSiege.GetToylandSiege().configurationManager.LigthningEnabled)
+                            if (ToylandSiege.GetInstance().configurationManager.LigthningEnabled)
                                 effect.EnableDefaultLighting();
                             effect.AmbientLightColor = new Vector3(0, 0.3f, 0.3f);
                             effect.View = Camera.GetCurrentCamera().ViewMatrix;
@@ -71,7 +71,7 @@ namespace ToylandSiege.GameObjects
                         foreach (SkinnedEffect effect in mesh.Effects)
                         {
                             (effect).SetBoneTransforms(bones);
-                            if (ToylandSiege.GetToylandSiege().configurationManager.LigthningEnabled)
+                            if (ToylandSiege.GetInstance().configurationManager.LigthningEnabled)
                                 effect.EnableDefaultLighting();
                             effect.AmbientLightColor = new Vector3(0, 0.3f, 0.3f);
                             effect.View = Camera.GetCurrentCamera().ViewMatrix;

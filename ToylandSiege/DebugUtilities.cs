@@ -12,8 +12,8 @@ namespace ToylandSiege
 
         static DebugUtilities()
         {
-            PrimitiveBox = ToylandSiege.GetToylandSiege().Content.Load<Model>("PrimitiveShapes/Cube");
-            PrimitiveSphere = ToylandSiege.GetToylandSiege().Content.Load<Model>("PrimitiveShapes/Sphere");
+            PrimitiveBox = ToylandSiege.GetInstance().Content.Load<Model>("PrimitiveShapes/Cube");
+            PrimitiveSphere = ToylandSiege.GetInstance().Content.Load<Model>("PrimitiveShapes/Sphere");
         }
 
         public static Model GetSphereModel(float radius, Vector3 position)
@@ -72,16 +72,16 @@ namespace ToylandSiege
 
         public static void DrawColliderWireframes()
         {
-            RasterizerState rasterizerStateOriginal = ToylandSiege.GetToylandSiege().GraphicsDevice.RasterizerState;
+            RasterizerState rasterizerStateOriginal = ToylandSiege.GetInstance().GraphicsDevice.RasterizerState;
 
             RasterizerState rasterizerStateWireframe = new RasterizerState();
             rasterizerStateWireframe.FillMode = FillMode.WireFrame;
             rasterizerStateWireframe.CullMode = CullMode.CullCounterClockwiseFace;
 
-            ToylandSiege.GetToylandSiege().GraphicsDevice.RasterizerState = rasterizerStateWireframe;
+            ToylandSiege.GetInstance().GraphicsDevice.RasterizerState = rasterizerStateWireframe;
   
-            ToylandSiege.GetToylandSiege().GraphicsDevice.BlendState = BlendState.Opaque;
-            ToylandSiege.GetToylandSiege().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            ToylandSiege.GetInstance().GraphicsDevice.BlendState = BlendState.Opaque;
+            ToylandSiege.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
             foreach (var child in Level.GetCurrentLevel().RootGameObject.GetAllChilds(Level.GetCurrentLevel().RootGameObject))
                 if (child.IsEnabled && child.IsCollidable)
@@ -128,7 +128,7 @@ namespace ToylandSiege
                     }
                 }
 
-            ToylandSiege.GetToylandSiege().GraphicsDevice.RasterizerState = rasterizerStateOriginal;
+            ToylandSiege.GetInstance().GraphicsDevice.RasterizerState = rasterizerStateOriginal;
         }
     }
 }

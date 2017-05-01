@@ -14,13 +14,14 @@ namespace ToylandSiege.GameState
         
         public Paused()
         {
-            _spriteBatch = new SpriteBatch(ToylandSiege.GetToylandSiege().GraphicsDevice);
-            _spritePausedFont = ToylandSiege.GetToylandSiege().Content.Load<SpriteFont>("PausedSpriteFont");
+            _spriteBatch = new SpriteBatch(ToylandSiege.GetInstance().GraphicsDevice);
+            _spritePausedFont = ToylandSiege.GetInstance().Content.Load<SpriteFont>("PausedSpriteFont");
             
         }
 
         public override void Update(GameTime gameTime)
         {
+            ToylandSiege.GetInstance().IsMouseVisible = false;
             ProcessInput();
             _previousKeyboardState = Keyboard.GetState();
             _previousMouseState = Mouse.GetState();
@@ -32,22 +33,25 @@ namespace ToylandSiege.GameState
             this._spriteBatch.Begin();
             string TextToDraw = "Game Paused";
             this._spriteBatch.DrawString(_spritePausedFont, TextToDraw,
-                new Vector2(ToylandSiege.GetToylandSiege().GraphicsDevice.Viewport.Bounds.Width / 2,
-                ToylandSiege.GetToylandSiege().GraphicsDevice.Viewport.Bounds.Height / 2) - _spritePausedFont.MeasureString(TextToDraw) / 2,
+                new Vector2(ToylandSiege.GetInstance().GraphicsDevice.Viewport.Bounds.Width / 2,
+                ToylandSiege.GetInstance().GraphicsDevice.Viewport.Bounds.Height / 2) - _spritePausedFont.MeasureString(TextToDraw) / 2,
                 Color.Red);
             this._spriteBatch.End();
         }
 
         public override void ProcessInput()
         {
+            if (!ToylandSiege.GetInstance().IsActive)
+                return;
             if (IsSimpleKeyPress(Keys.P))
             {
+                ToylandSiege.GetInstance().IsMouseVisible = ToylandSiege.GetInstance().configurationManager.IsMouseVisible();
                 _GameStateManager.SetNewGameState(_GameStateManager.GetPreviousGameState());
             }
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back ==
              ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                ToylandSiege.GetToylandSiege().Exit();
+                ToylandSiege.GetInstance().Exit();
         }
     }
 }

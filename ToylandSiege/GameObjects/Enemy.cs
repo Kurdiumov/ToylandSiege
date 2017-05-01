@@ -16,6 +16,9 @@ namespace ToylandSiege.GameObjects
 
         public override void Update(GameTime gameTime)
         {
+            if (!WaveController.RoundRunning)
+                return;
+                
             CreateTransformationMatrix();
 
             //TODO: Remove line belowe. Used to check drawing and update methods

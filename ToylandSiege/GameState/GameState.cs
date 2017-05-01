@@ -28,11 +28,11 @@ namespace ToylandSiege.GameState
 
         public void Init()
         {
-            FpsEnabled = ToylandSiege.GetToylandSiege().configurationManager.FPSEnabled;
-            _spriteBatch = new SpriteBatch(ToylandSiege.GetToylandSiege().GraphicsDevice);
-            _spriteFont = ToylandSiege.GetToylandSiege().Content.Load<SpriteFont>("FPS");
-            _configurationManager = ToylandSiege.GetToylandSiege().configurationManager;
-            Mouse.SetPosition(ToylandSiege.GetToylandSiege().Window.ClientBounds.Width / 2, ToylandSiege.GetToylandSiege().Window.ClientBounds.Height / 2);
+            FpsEnabled = ToylandSiege.GetInstance().configurationManager.FPSEnabled;
+            _spriteBatch = new SpriteBatch(ToylandSiege.GetInstance().GraphicsDevice);
+            _spriteFont = ToylandSiege.GetInstance().Content.Load<SpriteFont>("FPS");
+            _configurationManager = ToylandSiege.GetInstance().configurationManager;
+            Mouse.SetPosition(ToylandSiege.GetInstance().Window.ClientBounds.Width / 2, ToylandSiege.GetInstance().Window.ClientBounds.Height / 2);
             _previousMouseState = Mouse.GetState();
             _frameCounter = new FPSCounter();
         }
@@ -41,11 +41,11 @@ namespace ToylandSiege.GameState
 
         public virtual void Draw(GameTime gameTime)
         {
-            ToylandSiege.GetToylandSiege().GraphicsDevice.Clear(Color.CornflowerBlue);
+            ToylandSiege.GetInstance().GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            ToylandSiege.GetToylandSiege().GraphicsDevice.BlendState = BlendState.Opaque;
-            ToylandSiege.GetToylandSiege().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            ToylandSiege.GetToylandSiege().GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
+            ToylandSiege.GetInstance().GraphicsDevice.BlendState = BlendState.Opaque;
+            ToylandSiege.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            ToylandSiege.GetInstance().GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
 
             Level.GetCurrentLevel().Draw();
 
@@ -60,7 +60,7 @@ namespace ToylandSiege.GameState
                 _spriteBatch.End();
             }
 
-            if (ToylandSiege.GetToylandSiege().configurationManager.DebugDraw)
+            if (ToylandSiege.GetInstance().configurationManager.DebugDraw)
                 DebugUtilities.DrawColliderWireframes();
         }
 
@@ -87,7 +87,7 @@ namespace ToylandSiege.GameState
         {
             var pickRay = CalculateRay(new Vector2(Mouse.GetState().X, Mouse.GetState().Y),
                 Camera.GetCurrentCamera().ViewMatrix, Camera.GetCurrentCamera().ProjectionMatrix,
-                ToylandSiege.GetToylandSiege().GraphicsDevice.Viewport);
+                ToylandSiege.GetInstance().GraphicsDevice.Viewport);
 
             GameObject closestObject = null;
             float? closestObjectDistance = null;

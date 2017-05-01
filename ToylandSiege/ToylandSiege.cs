@@ -13,6 +13,7 @@ namespace ToylandSiege
     {
         public static GraphicsDeviceManager Graphics;
         public static Level CurrentLevel;
+        public static WaveController waveController = new WaveController();
         private static ToylandSiege _ts;
 
        
@@ -50,6 +51,8 @@ namespace ToylandSiege
             gameStateManager = new GameStateManager();
             configurationManager.InitGameStates();
 
+            var WaveBuilder = new WavesBuilder();
+            WaveBuilder.Build();
         }
 
         protected override void LoadContent()
@@ -63,6 +66,7 @@ namespace ToylandSiege
 
         protected override void Update(GameTime gameTime)
         {
+            waveController.Update(gameTime);
             gameStateManager.Update(gameTime);
             base.Update(gameTime);
         }
@@ -74,7 +78,7 @@ namespace ToylandSiege
         }
 
         //Used in scene parser and in inputHelper
-        public static ToylandSiege GetToylandSiege()
+        public static ToylandSiege GetInstance()
         {
             if (_ts == null)
                 throw new NullReferenceException("Toyland siege is not created");

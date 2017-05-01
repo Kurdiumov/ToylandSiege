@@ -37,8 +37,9 @@ namespace ToylandSiege.GameObjects
 
         public override void Update(GameTime gameTime)
         {
-            //TODO: Remove line belowe. Used to check drawing and update methods
-            // Rotation += new Vector3(0.01f, 0, 0);
+            if (!WaveController.RoundRunning)
+                return;
+
             if (Field != null && TargetFields.Count > 0)
                 MoveToTarget();
 

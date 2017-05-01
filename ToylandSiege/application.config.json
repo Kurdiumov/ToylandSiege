@@ -8,7 +8,7 @@
          "Menu",
          "Paused",
       ],
-      "StartingGameState": "GodMode",
+      "StartingGameState": "Strategic",
       "IsFullScreen": true,
       "HeightResolution": 1080,
       "WidthResolution": 1920,
@@ -16,6 +16,6 @@
       "MouseVisible": true,
       "RayPickingEnabled": true,
       "LightningEnabled": true,
-      "DebugDraw": true,
+      "DebugDraw": false,
    }
 }

@@ -23,6 +23,8 @@ namespace ToylandSiege.GameState
 
         public override void ProcessInput()
         {
+            if (!ToylandSiege.GetInstance().IsActive)
+                return;
             if (Keyboard.GetState().IsKeyDown(Keys.Left) || Keyboard.GetState().IsKeyDown(Keys.A))
             {
                 Camera.GetCurrentCamera().Position += Vector3.Cross(Camera.GetCurrentCamera().Up, Camera.GetCurrentCamera().Direction) * Camera.GetCurrentCamera().Speed;
@@ -76,7 +78,7 @@ namespace ToylandSiege.GameState
             }
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back ==
              ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                ToylandSiege.GetToylandSiege().Exit();
+                ToylandSiege.GetInstance().Exit();
         }
     }
 }

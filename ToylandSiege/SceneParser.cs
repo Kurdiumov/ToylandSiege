@@ -70,7 +70,7 @@ namespace ToylandSiege
             var IsEnabled = JSONHelper.ToBool(JSONHelper.GetValue("isEnabled", currentGameObject));
 
 
-            var mod = ToylandSiege.GetToylandSiege().Content.Load<Model>(model);
+            var mod = ToylandSiege.GetInstance().Content.Load<Model>(model);
             var terrainObj = new TerrainObject(name, mod);
             terrainObj.IsEnabled = IsEnabled;
             terrainObj.IsStatic = true;
@@ -140,7 +140,7 @@ namespace ToylandSiege
             float Angle = float.Parse(JSONHelper.GetValue("Angle", currentGameObject));
 
             camera.ProjectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(Angle),
-                ToylandSiege.GetToylandSiege().GraphicsDevice.Viewport.AspectRatio, NearDistance, FarDistance);
+                ToylandSiege.GetInstance().GraphicsDevice.Viewport.AspectRatio, NearDistance, FarDistance);
 
             camera.NearDistance = NearDistance;
             camera.FarDistance = FarDistance;
@@ -158,7 +158,7 @@ namespace ToylandSiege
             var health = float.Parse(JSONHelper.GetValue("Health", currentGameObject));
             var unitType = JSONHelper.GetValue("UnitType", currentGameObject);
 
-            var mod = ToylandSiege.GetToylandSiege().Content.Load<Model>(model);
+            var mod = ToylandSiege.GetInstance().Content.Load<Model>(model);
 
             UnitBase unitObj;
             if (type == "Unit")

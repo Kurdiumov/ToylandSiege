@@ -232,7 +232,7 @@
         "Name": "GodModeCamera",
         "Type": "Camera",
         "Model": null,
-        "CurrentCamera": true,
+        "CurrentCamera": false,
         "UpVector": [
           0,
           1,
@@ -258,7 +258,7 @@
         "Name": "StrategicCamera",
         "Type": "Camera",
         "Model": null,
-        "CurrentCamera": false,
+        "CurrentCamera": true,
         "UpVector": [
           0,
           1,
@@ -267,7 +267,7 @@
         "Direction": [
           0,
           -1,
-          -1
+          -0.8
         ],
         "isEnabled": false,
         "Position": [
@@ -281,7 +281,7 @@
         "Speed": 0.3
       },
       {
-        "Name": "FirsPersonCamera",
+        "Name": "FirstPersonCamera",
         "Type": "Camera",
         "Model": null,
         "CurrentCamera": false,
