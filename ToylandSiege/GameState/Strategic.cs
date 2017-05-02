@@ -78,6 +78,8 @@ namespace ToylandSiege.GameState
                 else if (SelectedUnit != null) //Selecting field when unit not null
                 {
                      SelectedField = (Field)PickObject(new List<Type>(){typeof(Field)});
+                    if (SelectedField.HasUnit() || !SelectedField.StartingTile)
+                        SelectedField = null;
                     if (SelectedUnit != null && SelectedField != null)
                     {
                         _placeUnitOnField(SelectedUnit, SelectedField);
@@ -130,6 +132,7 @@ namespace ToylandSiege.GameState
             this.SelectedUnit.Field = field;
             _currentWave.AvailableUnits.Remove(SelectedUnit);
             //Addunit to level
+            SelectedUnit.Position = field.Position;
             Level.GetCurrentLevel().RootGameObject.AddChild(SelectedUnit);
             _updateUI();
         }

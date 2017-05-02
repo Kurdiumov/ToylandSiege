@@ -32,20 +32,19 @@ namespace ToylandSiege.GameObjects
 
         protected override void Initialize()
         {
-            TargetFields = new List<Field>();
+                TargetFields = new List<Field>();
         }
 
         public override void Update(GameTime gameTime)
         {
+            CreateTransformationMatrix();
+            AnimationPlayer.Update(gameTime.ElapsedGameTime, true, TransformationMatrix);
+
             if (!WaveController.RoundRunning)
                 return;
 
             if (Field != null && TargetFields.Count > 0)
                 MoveToTarget();
-
-            CreateTransformationMatrix();
-
-            AnimationPlayer.Update(gameTime.ElapsedGameTime, true, TransformationMatrix);
         }
 
         public bool IsOnField()
