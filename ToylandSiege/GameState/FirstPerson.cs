@@ -63,6 +63,13 @@ namespace ToylandSiege.GameState
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back ==
              ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 ToylandSiege.GetInstance().Exit();
+
+
+            //Secret combination to finish wave immediately
+            if (IsSimpleKeyPress(Keys.F) && Keyboard.GetState().IsKeyDown(Keys.LeftAlt))
+            {
+                Level.GetCurrentLevel().WaveController.FinishRound();
+            }
         }
 
 

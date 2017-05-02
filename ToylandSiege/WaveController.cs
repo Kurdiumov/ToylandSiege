@@ -61,15 +61,18 @@ namespace ToylandSiege
         {
             RoundRunning = false;
             Camera.SetCurrentCamera(Camera.AvailableCameras["StrategicCamera"]);
-            ToylandSiege.GetInstance().gameStateManager.SetNewGameState(ToylandSiege.GetInstance().gameStateManager.AvailableGameStates["Strategic"]);
-
+            
             //Remove Wave
             Waves.Remove(CurrentWave);
-            CurrentWave = Waves.FirstOrDefault();
+            CurrentWave = Waves.First();
+            
             //TODO: Finish game here
             //Maybe throw exception to toyland siege Update method level??
-            if(CurrentWave == null && Waves.Count == 0)
+            if (CurrentWave == null && Waves.Count == 0)
                 throw new TimeoutException("Game Finished!");
+
+            ToylandSiege.GetInstance().gameStateManager.SetNewGameState(ToylandSiege.GetInstance().gameStateManager.AvailableGameStates["Strategic"]);
+
         }
     }
 }

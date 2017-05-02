@@ -1,4 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Web.UI.WebControls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -85,7 +88,7 @@ namespace ToylandSiege.GameState
                    Mouse.GetState().ScrollWheelValue != _previousMouseState.ScrollWheelValue;
         }
 
-        protected GameObject PickObject()
+        protected GameObject PickObject(List<Type> types = null)
         {
             var pickRay = CalculateRay(new Vector2(Mouse.GetState().X, Mouse.GetState().Y),
                 Camera.GetCurrentCamera().ViewMatrix, Camera.GetCurrentCamera().ProjectionMatrix,
@@ -96,7 +99,7 @@ namespace ToylandSiege.GameState
 
             foreach (var child in Level.GetCurrentLevel().RootGameObject.GetAllChilds(Level.GetCurrentLevel().RootGameObject))
             {
-                if (child.Model == null || child.IsEnabled == false)
+                if (child.Model == null || child.IsEnabled == false || (types !=null && types.All(type => child.GetType() != type)))
                     continue;
 
                 foreach (var mesh in child.Model.Meshes)
