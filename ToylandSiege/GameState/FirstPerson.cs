@@ -71,7 +71,7 @@ namespace ToylandSiege.GameState
             base.Draw(gameTime);
 
             _TimerSpriteBatch.Begin();
-            _TimerSpriteBatch.DrawString(_TimerSpriteFont, Math.Round(ToylandSiege.waveController.CurrentWave.TimeLeft).ToString(), new Vector2((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width/2)-12, 10), Color.Black);
+            _TimerSpriteBatch.DrawString(_TimerSpriteFont, Math.Round(Level.GetCurrentLevel().WaveController.CurrentWave.TimeLeft).ToString(), new Vector2((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width/2)-12, 10), Color.Black);
             _TimerSpriteBatch.End();
         }
     }

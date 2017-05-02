@@ -27,7 +27,7 @@ namespace ToylandSiege.GameState
 
             if (!WaveController.RoundRunning && IsSimpleKeyPress(Keys.Space))
             {
-                ToylandSiege.waveController.StartRound();
+                Level.GetCurrentLevel().WaveController.StartRound();
             }
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back ==

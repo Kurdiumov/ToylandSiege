@@ -7,14 +7,14 @@ namespace ToylandSiege
 {
     public class WavesBuilder
     {
-        public void Build()
+        public void Build(WaveController WaveController)
         {
-            ToylandSiege.waveController.AddWave(BuildWave(4, 120));
-            ToylandSiege.waveController.AddWave(BuildWave(3, 100));
-            ToylandSiege.waveController.AddWave(BuildWave(3, 80));
-            ToylandSiege.waveController.AddWave(BuildWave(6, 150));
+            WaveController.AddWave(BuildWave(4, 120));
+            WaveController.AddWave(BuildWave(3, 100));
+            WaveController.AddWave(BuildWave(3, 80));
+            WaveController.AddWave(BuildWave(6, 150));
 
-            ToylandSiege.waveController.SetCurrentWave(ToylandSiege.waveController.Waves.First());
+            WaveController.SetCurrentWave(WaveController.Waves.First());
         }
 
         public Wave BuildWave(uint units, double time)

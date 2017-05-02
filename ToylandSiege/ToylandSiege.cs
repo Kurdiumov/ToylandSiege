@@ -13,9 +13,7 @@ namespace ToylandSiege
     {
         public static GraphicsDeviceManager Graphics;
         public static Level CurrentLevel;
-        public static WaveController waveController = new WaveController();
         private static ToylandSiege _ts;
-
        
         public GameStateManager gameStateManager;
         public ConfigurationManager configurationManager;
@@ -50,9 +48,6 @@ namespace ToylandSiege
  
             gameStateManager = new GameStateManager();
             configurationManager.InitGameStates();
-
-            var WaveBuilder = new WavesBuilder();
-            WaveBuilder.Build();
         }
 
         protected override void LoadContent()
@@ -65,8 +60,7 @@ namespace ToylandSiege
         }
 
         protected override void Update(GameTime gameTime)
-        {
-            waveController.Update(gameTime);
+        { 
             gameStateManager.Update(gameTime);
             base.Update(gameTime);
         }

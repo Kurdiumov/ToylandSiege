@@ -12,11 +12,15 @@ namespace ToylandSiege
         public GameObject RootGameObject = null;
 
         private static Level _currenLevel;
+        public WaveController WaveController = new WaveController();
 
         public Level(string Name)
         {
             this.Name = Name;
             _currenLevel = this;
+
+            var WaveBuilder = new WavesBuilder();
+            WaveBuilder.Build(WaveController);
         }
 
         public static Level GetCurrentLevel()
@@ -29,7 +33,7 @@ namespace ToylandSiege
         public void Update(GameTime gameTime)
         {
             Camera.GetCurrentCamera().Update(gameTime);
-            
+            WaveController.Update(gameTime);
             foreach (var child  in RootGameObject.Childs.Values)
                 child.Update(gameTime);
         }
