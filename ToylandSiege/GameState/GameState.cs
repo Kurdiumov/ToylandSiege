@@ -62,6 +62,8 @@ namespace ToylandSiege.GameState
 
             if (ToylandSiege.GetInstance().configurationManager.DebugDraw)
                 DebugUtilities.DrawColliderWireframes();
+
+            DrawUI();
         }
 
         public abstract void ProcessInput();
@@ -134,5 +136,14 @@ namespace ToylandSiege.GameState
             return new Ray(nearPoint, direction);
         }
 
+        public virtual void DrawUI()
+        {
+
+        }
+
+        public virtual  void GameStateChanged()
+        {
+            
+        }
     }
 }

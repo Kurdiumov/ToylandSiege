@@ -9,7 +9,7 @@ namespace ToylandSiege
     {
         public void Build(WaveController WaveController)
         {
-            WaveController.AddWave(BuildWave(4, 120));
+            WaveController.AddWave(BuildWave(3, 120));
             WaveController.AddWave(BuildWave(3, 100));
             WaveController.AddWave(BuildWave(3, 80));
             WaveController.AddWave(BuildWave(6, 150));

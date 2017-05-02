@@ -39,6 +39,7 @@ namespace ToylandSiege
             {
                 _previousState = _state;
                 _state = state;
+                _state.GameStateChanged();
             }
         }
 

@@ -37,12 +37,6 @@ namespace ToylandSiege
                     FinishRound();
                 }
             }
-           /* else
-            {
-                StartRound();
-            }*/
-
-
         }
 
         public void SetCurrentWave(Wave wave)
