@@ -11,23 +11,7 @@ namespace ToylandSiege.GameObjects
 {
     public class Unit : UnitBase
     {
-        private Field _field;
         public float Speed { get; set; }
-
-        public Field Field {
-            get
-            {
-                return _field;
-            }
-            set
-            {
-                _field = value;
-                if(value == null)
-                    Logger.Log.Debug("Field set to NULL for unit " + this);
-                else
-                    Logger.Log.Debug("New field ("+ _field +") set for unit " + this);
-            }
-        }
 
         public List<Field> TargetFields { get; set; }
 
@@ -120,6 +104,7 @@ namespace ToylandSiege.GameObjects
                     if (TargetFields.First().Position == targetPosition)
                     {
                         Field = TargetFields.First();
+                        Field.unit = this;
                         TargetFields.RemoveAt(0);
                     }
                 }

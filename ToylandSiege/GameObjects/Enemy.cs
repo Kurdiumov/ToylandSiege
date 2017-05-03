@@ -4,30 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using MonoGame.Framework.Content.Pipeline.Builder;
 
 namespace ToylandSiege.GameObjects
 {
     public class Enemy:UnitBase
     {
-        private Field _field;
-        public Field Field
-        {
-            get
-            {
-                return _field;
-            }
-            set
-            {
-                _field = value;
-                if (value == null)
-                    Logger.Log.Debug("Field set to NULL for enemy " + this);
-                else
-                    Logger.Log.Debug("New field (" + _field + ") set for enemy " + this);
-            }
-        }
+        protected readonly HashSet<Unit> UnitsInRange = new HashSet<Unit>();
+
         protected override void Initialize()
         {
-            //throw new NotImplementedException();
+
         }
 
         public override void Update(GameTime gameTime)
@@ -37,6 +24,13 @@ namespace ToylandSiege.GameObjects
 
             if (!WaveController.RoundRunning)
                 return;
+
+            UpdateUnitsInRange();
+            
+            if (CanShoot(gameTime) && UnitsInRange.Count > 0)
+            {
+                Shoot(gameTime);
+            }
         }
 
         public bool PlaceToField(Field field)
@@ -46,9 +40,35 @@ namespace ToylandSiege.GameObjects
                 field.SetEnemy(this);
                 Field = field;
                 Position = Field.Position;
+
+                UpdateFieldsInRange();
+                UpdateUnitsInRange();
+
                 return true;
             }
             return false;
+        }
+
+        public void UpdateUnitsInRange()
+        {
+            UnitsInRange.Clear();
+
+            foreach (Field field in FieldsInRange)
+            {
+                if (field.HasUnit())
+                {
+                    UnitsInRange.Add(field.unit);
+                }
+            }
+        }
+
+        public void Shoot(GameTime gameTime)
+        {
+            Logger.Log.Debug(this + " shooting ");
+            //TODO:Sound here
+            var target = UnitsInRange.First();
+            target.GetDamage(Damage);
+            LastShootTime = gameTime.TotalGameTime;
         }
     }
 }

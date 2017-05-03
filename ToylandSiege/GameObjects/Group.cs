@@ -25,10 +25,11 @@ namespace ToylandSiege.GameObjects
             if (!IsStatic)
                 CreateTransformationMatrix();
 
-            foreach (var child in Childs.Values)
-            {
-                child.Update(gameTime);
-            }
+            //foreach (var child in Childs.Values)
+            //    child.Update(gameTime);
+            
+            for(int i = 0 ; i < Childs.Values.Count; i++)
+                Childs.Values.ElementAt(i).Update(gameTime);
         }
     }
 }

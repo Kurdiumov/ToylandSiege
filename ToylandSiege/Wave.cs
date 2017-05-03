@@ -26,7 +26,7 @@ namespace ToylandSiege
         public void RefreshLists()
         {
             AvailableUnits.RemoveAll(item => item == null);
-            UnitsInWave.RemoveAll(item => item == null);
+            UnitsInWave.RemoveAll(item => item == null || item.Health <= 0);
         }
 
         public void AddUnitToField(Unit unit)
