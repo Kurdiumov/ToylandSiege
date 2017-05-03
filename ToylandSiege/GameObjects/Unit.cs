@@ -102,13 +102,15 @@ namespace ToylandSiege.GameObjects
 
         public void MoveToTarget()
         {
+            
             float elapsed = 0.01f;
             Vector3 targetPosition = TargetFields.First().Position;
 
             float distance = Vector3.Distance(Position, targetPosition);
             Vector3 direction = Vector3.Normalize(targetPosition - Position);
 
-            Position += direction * 5 * elapsed;
+            RotateToTarget(direction);
+            Position += direction * Speed * elapsed;
             if (distance < 0.1f)
 
                 if (TargetFields.Count > 0)
@@ -122,10 +124,12 @@ namespace ToylandSiege.GameObjects
                     }
                 }
 
-            //TODO:
-            //1. Raycast down for changing current field
-            //2. Use pathfinder
+            //TODO: Use pathfinder
+        }
 
+        public void RotateToTarget(Vector3 direction)
+        {
+            //TODO: Implement this Method
         }
     }
 }

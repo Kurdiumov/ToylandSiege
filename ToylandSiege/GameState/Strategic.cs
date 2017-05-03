@@ -53,7 +53,8 @@ namespace ToylandSiege.GameState
 
             if (!WaveController.RoundRunning && IsSimpleKeyPress(Keys.Space))
             {
-                Level.GetCurrentLevel().WaveController.StartRound();
+                if(_CanStartWave())
+                    Level.GetCurrentLevel().WaveController.StartRound();
             }
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back ==
@@ -127,7 +128,7 @@ namespace ToylandSiege.GameState
             _currentWave.AvailableUnits.Remove(SelectedUnit);
             _currentWave.UnitsInWave.Add(SelectedUnit);
 
-            //Addunit to level
+            //Add unit to level
             SelectedUnit.Position = field.Position;
             Level.GetCurrentLevel().RootGameObject.Childs["Units"].AddChild(SelectedUnit);
 
@@ -136,7 +137,7 @@ namespace ToylandSiege.GameState
 
         private void _PlacingUnit()
         {
-            if (sodlierstTextures.Any(rectangle => rectangle.Contains(Mouse.GetState().Position)))
+            if (SelectedUnit == null && sodlierstTextures.Any(rectangle => rectangle.Contains(Mouse.GetState().Position)))
             {
                 int UnitIndex = 0;
                 for (int i = 0; i < sodlierstTextures.Count; i++)
@@ -156,6 +157,8 @@ namespace ToylandSiege.GameState
             else if (SelectedUnit != null) //Selecting field when unit not null
             {
                 SelectedField = (Field)PickObject(new List<Type>() { typeof(Field) });
+                if (SelectedField == null)
+                    return;
                 if (SelectedField.HasUnit())
                     SelectedField = null;
                 if (SelectedUnit.Field == null )
@@ -187,6 +190,15 @@ namespace ToylandSiege.GameState
                 SelectedUnit = null;
                 SelectedField = null;
             }
+        }
+
+        private bool _CanStartWave()
+        {
+            if (_currentWave.UnitsInWave.Count == 0)
+                return false;
+            return
+                _currentWave.UnitsInWave.All(
+                    unit => (unit.TargetFields.Count > 0 && unit.TargetFields.Last().FinishingTile));
         }
     }
 }
