@@ -15,6 +15,7 @@ namespace ToylandSiege.GameObjects
 
         public Unit unit;
         public Enemy enemy;
+        public bool IsPartOfWay = false;
 
         public Field(string name, int index, Vector3 position, Vector3 scale)
         {
@@ -47,6 +48,7 @@ namespace ToylandSiege.GameObjects
         {
             return unit != null;
         }
+
         public bool HasEnemy()
         {
             return enemy != null;
@@ -96,12 +98,14 @@ namespace ToylandSiege.GameObjects
                     {
                         if (ToylandSiege.GetInstance().configurationManager.LigthningEnabled)
                             effect.EnableDefaultLighting();
-                        if (StartingTile && !HasUnit())
+                        if (StartingTile && !HasUnit() || FinishingTile)
                             effect.AmbientLightColor = new Vector3(0, 0.9f, 0.1f);
                         else if (HasUnit() && unit.TargetFields.Contains(this))
                             effect.AmbientLightColor = new Vector3(0.9f, 0.3f, 0.3f);
                         else if (IsSpawner)
                             effect.AmbientLightColor = new Vector3(1f, 0.0f, 0.0f);
+                        else if (IsPartOfWay)
+                            effect.AmbientLightColor = new Vector3(0f, 0.0f, 1.0f);
                         else
                             effect.AmbientLightColor = new Vector3(0, 0.3f, 0.3f);
                         effect.View = Camera.GetCurrentCamera().ViewMatrix;
@@ -112,6 +116,17 @@ namespace ToylandSiege.GameObjects
                     mesh.Draw();
                 }
             }
+        }
+
+        public bool CanPlaceUnit()
+        {
+            if (IsSpawner)
+                return false;
+            if (HasUnit() || HasEnemy())
+                return false;
+            if (IsPartOfWay)
+                return false;
+            return true;
         }
     }
 }

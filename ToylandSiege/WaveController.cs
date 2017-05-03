@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Caching;
 using Microsoft.Xna.Framework;
 using ToylandSiege.GameObjects;
 
@@ -19,7 +20,7 @@ namespace ToylandSiege
 
         public WaveController()
         {
-            
+
         }
 
         public void Update(GameTime gameTime)
@@ -33,7 +34,7 @@ namespace ToylandSiege
 
             if (RoundRunning)
             {
-                if(CurrentWave.TimeLeft <= 0.0)
+                if (CurrentWave.TimeLeft <= 0.0)
                 {
                     FinishRound();
                 }
@@ -62,18 +63,45 @@ namespace ToylandSiege
         {
             RoundRunning = false;
             Camera.SetCurrentCamera(Camera.AvailableCameras["StrategicCamera"]);
-            
+
+            CurrentWave.RefreshLists();
+            //Should add units which are alive to next wave?
+            List<Unit> AliveUnits = new List<Unit>();
+            CurrentWave.UnitsInWave.ForEach(unit => AliveUnits.Add(unit));
+            CurrentWave.AvailableUnits.ForEach(unit => AliveUnits.Add(unit));
+
+            //Remove Units in Wave
+            foreach (Unit unit in CurrentWave.UnitsInWave)
+            {
+                unit.Field.unit = null;
+                unit.Field = null;
+                unit.TargetFields.Clear();
+
+                Level.GetCurrentLevel().RootGameObject.Childs["Units"].RemoveChild(unit);
+            }
+
             //Remove Wave
             Waves.Remove(CurrentWave);
             CurrentWave = Waves.First();
-            
+
             //TODO: Finish game here
             //Maybe throw exception to toyland siege Update method level??
             if (CurrentWave == null && Waves.Count == 0)
                 throw new TimeoutException("Game Finished!");
 
-            ToylandSiege.GetInstance().gameStateManager.SetNewGameState(ToylandSiege.GetInstance().gameStateManager.AvailableGameStates["Strategic"]);
+            foreach (Unit unit in AliveUnits)
+            {
+                CurrentWave.AvailableUnits.Add(unit);
+            }
 
+
+            //Set IsPartOfWay to false for each field in board
+            foreach (var rows in Level.GetCurrentLevel().RootGameObject.Childs["Board"].Childs.Values)
+                foreach (var field in rows.Childs.Values)
+                    if (field is Field)
+                        (field as Field).IsPartOfWay = false;
+
+            ToylandSiege.GetInstance().gameStateManager.SetNewGameState(ToylandSiege.GetInstance().gameStateManager.AvailableGameStates["Strategic"]);
         }
     }
 }

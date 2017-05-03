@@ -19,6 +19,7 @@ namespace ToylandSiege.GameObjects
             Rotation = new Vector3(0,0,0);
             Scale = new Vector3(1,1,1);
             CreateTransformationMatrix();
+            Childs.Add("Units", new Group("Units"));
         }
 
         public override void Update(GameTime gameTime)

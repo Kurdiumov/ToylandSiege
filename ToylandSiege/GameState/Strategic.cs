@@ -8,7 +8,7 @@ using ToylandSiege.GameObjects;
 
 namespace ToylandSiege.GameState
 {
-    public class Strategic: GameState
+    public class Strategic : GameState
     {
         private Texture2D soldierTexture2D;
         private Texture2D scoutTexture2D;
@@ -18,12 +18,12 @@ namespace ToylandSiege.GameState
         private Wave _currentWave;
 
         private readonly int _soldierTextureSize = 100;
-        private  int _soldierTextureOffset = 0;
+        private int _soldierTextureOffset = 0;
         private readonly int _soldierTexturePadding = 10;
 
         private Unit SelectedUnit;
         private Field SelectedField;
-        private List<Rectangle> sodlierstTextures = new List<Rectangle>();  
+        private List<Rectangle> sodlierstTextures = new List<Rectangle>();
 
         public Strategic()
         {
@@ -60,44 +60,11 @@ namespace ToylandSiege.GameState
              ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 ToylandSiege.GetInstance().Exit();
 
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed && IsSimpleClick() )
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed && IsSimpleClick())
             {
                 Logger.Log.Debug("Clicked in Startegic view!");
-                if (sodlierstTextures.Any(rectangle => rectangle.Contains(Mouse.GetState().Position)))
-                {
-                    int UnitIndex = 0;
-                    for (int i = 0; i < sodlierstTextures.Count; i++)
-                    {
-                        if (sodlierstTextures[i].Contains(Mouse.GetState().Position))
-                        {
-                            UnitIndex = i;
-                            break;
-                        }
-                    }
-                    SelectedUnit = _currentWave.AvailableUnits[UnitIndex];
-                    if (SelectedUnit != null)
-                    {
-                        Logger.Log.Debug("Unit selected:  " + SelectedUnit);
-                    }
-                }
-                else if (SelectedUnit != null) //Selecting field when unit not null
-                {
-                     SelectedField = (Field)PickObject(new List<Type>(){typeof(Field)});
-                    if (SelectedField.HasUnit() || !SelectedField.StartingTile)
-                        SelectedField = null;
-                    if (SelectedUnit != null && SelectedField != null)
-                    {
-                        _placeUnitOnField(SelectedUnit, SelectedField);
-                        SelectedUnit = null;
-                        SelectedField = null;
-                    }
-                }
-                else
-                {
-                    SelectedUnit = null;
-                    SelectedField = null;
-                }
-             }
+                _PlacingUnit();
+            }
 
 
             //Secret combination to switch  to god mode
@@ -110,7 +77,7 @@ namespace ToylandSiege.GameState
         public override void DrawUI()
         {
             _spriteBatch.Begin();
-            
+
             if (sodlierstTextures.Count != _currentWave.AvailableUnits.Count)
                 throw new ArgumentException("Something went wrong. Count of rectangles should be the same as Units");
             for (int i = 0; i < sodlierstTextures.Count; i++)
@@ -158,11 +125,68 @@ namespace ToylandSiege.GameState
             field.SetUnit(SelectedUnit);
             this.SelectedUnit.Field = field;
             _currentWave.AvailableUnits.Remove(SelectedUnit);
-            
+            _currentWave.UnitsInWave.Add(SelectedUnit);
+
             //Addunit to level
             SelectedUnit.Position = field.Position;
-            Level.GetCurrentLevel().RootGameObject.AddChild(SelectedUnit);
+            Level.GetCurrentLevel().RootGameObject.Childs["Units"].AddChild(SelectedUnit);
+
             _updateUI();
+        }
+
+        private void _PlacingUnit()
+        {
+            if (sodlierstTextures.Any(rectangle => rectangle.Contains(Mouse.GetState().Position)))
+            {
+                int UnitIndex = 0;
+                for (int i = 0; i < sodlierstTextures.Count; i++)
+                {
+                    if (sodlierstTextures[i].Contains(Mouse.GetState().Position))
+                    {
+                        UnitIndex = i;
+                        break;
+                    }
+                }
+                SelectedUnit = _currentWave.AvailableUnits[UnitIndex];
+                if (SelectedUnit != null)
+                {
+                    Logger.Log.Debug("Unit selected:  " + SelectedUnit);
+                }
+            }
+            else if (SelectedUnit != null) //Selecting field when unit not null
+            {
+                SelectedField = (Field)PickObject(new List<Type>() { typeof(Field) });
+                if (SelectedField.HasUnit())
+                    SelectedField = null;
+                if (SelectedUnit.Field == null )
+                {
+                    if (SelectedField.StartingTile)
+                    {
+                        if (SelectedUnit != null && SelectedField != null)
+                        {
+                            _placeUnitOnField(SelectedUnit, SelectedField);
+                        }
+                    }
+                }
+                else if (SelectedUnit.TargetFields.Count == 0 && SelectedUnit.Field.GetNearestFields().Contains(SelectedField) || (SelectedUnit.TargetFields.Count != 0 && SelectedUnit.TargetFields.Last().GetNearestFields().Contains(SelectedField)))
+                {
+                    if (!SelectedField.CanPlaceUnit())
+                        return;
+
+                    SelectedUnit.AddField(SelectedField);
+                    SelectedField.IsPartOfWay = true;
+                    if (SelectedField.FinishingTile)
+                    {
+                        SelectedUnit = null;
+                        SelectedField = null;
+                    }
+                }
+            }
+            else
+            {
+                SelectedUnit = null;
+                SelectedField = null;
+            }
         }
     }
 }
