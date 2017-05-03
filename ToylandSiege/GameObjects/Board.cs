@@ -73,6 +73,12 @@ namespace ToylandSiege.GameObjects
             }
         }
 
+        public void CreateSpawners()
+        {
+            new Spawner(193, this, "Defender");
+            new Spawner(196, this, "Sniper");
+        }
+
         private Vector3 CalculatePosition(int column, int row, int index)
         {
             float x = StartingPosition.X;

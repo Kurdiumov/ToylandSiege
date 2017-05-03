@@ -15,10 +15,13 @@ namespace ToylandSiege
             switch (Type.ToLower())
             {
                 case "standart":
+                    Spawner.EnemyCount++;
                     return _BuildStandart(Name);
                 case "sniper":
+                    Spawner.EnemyCount++;
                     return _BuildSniper(Name);
                 case "defender":
+                    Spawner.EnemyCount++;
                     return _BuildDefender(Name);
                 default:
                     throw new ArgumentException("Unsupported unit type " + Type);

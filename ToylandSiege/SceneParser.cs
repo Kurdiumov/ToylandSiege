@@ -30,7 +30,7 @@ namespace ToylandSiege
 
             RootObject.Name = LevelObject.GetValue("Name").ToString();
             RootObject.Type = LevelObject.GetValue("Type").ToString();
-
+            Level.GetCurrentLevel().RootGameObject = RootObject;
 
             for (int i = 0; i < LevelObject.GetValue("Child").Count(); i++)
             {
@@ -38,6 +38,7 @@ namespace ToylandSiege
             }
 
             Logger.Log.Debug("File " + _filePath + "parsed successfully");
+            Level.GetCurrentLevel().RootGameObject.Childs.Add("Enemies", new Group("Enemies"));
             return RootObject;
         }
 
@@ -267,6 +268,7 @@ namespace ToylandSiege
             };
             
             board.CreateFields();
+            board.CreateSpawners();
             return board;
         }
 

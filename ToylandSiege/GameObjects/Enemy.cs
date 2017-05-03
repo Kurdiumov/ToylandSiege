@@ -9,6 +9,22 @@ namespace ToylandSiege.GameObjects
 {
     public class Enemy:UnitBase
     {
+        private Field _field;
+        public Field Field
+        {
+            get
+            {
+                return _field;
+            }
+            set
+            {
+                _field = value;
+                if (value == null)
+                    Logger.Log.Debug("Field set to NULL for enemy " + this);
+                else
+                    Logger.Log.Debug("New field (" + _field + ") set for enemy " + this);
+            }
+        }
         protected override void Initialize()
         {
             //throw new NotImplementedException();
@@ -16,14 +32,23 @@ namespace ToylandSiege.GameObjects
 
         public override void Update(GameTime gameTime)
         {
+            CreateTransformationMatrix();
+            AnimationPlayer.Update(gameTime.ElapsedGameTime, true, TransformationMatrix);
+
             if (!WaveController.RoundRunning)
                 return;
-                
-            CreateTransformationMatrix();
+        }
 
-            //TODO: Remove line belowe. Used to check drawing and update methods
-            if (!this.IsStatic)
-                this.Position -= new Vector3(0.01f, 0f, 0f);
+        public bool PlaceToField(Field field)
+        {
+            if (!field.HasUnit())
+            {
+                field.SetEnemy(this);
+                Field = field;
+                Position = Field.Position;
+                return true;
+            }
+            return false;
         }
     }
 }
