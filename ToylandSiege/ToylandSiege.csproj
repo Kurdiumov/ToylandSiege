@@ -63,6 +63,7 @@
     <Compile Include="CollisionHelper.cs" />
     <Compile Include="ConfigurationManager.cs" />
     <Compile Include="DebugUtilities.cs" />
+    <Compile Include="EnemyBuilder.cs" />
     <Compile Include="FPSCounter.cs" />
     <Compile Include="GameObjects\Board.cs" />
     <Compile Include="GameObjects\Camera.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitBuilder.cs" />
     <Compile Include="Wave.cs" />
     <Compile Include="WaveController.cs" />
     <Compile Include="WavesBuilder.cs" />

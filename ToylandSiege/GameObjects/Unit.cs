@@ -12,6 +12,7 @@ namespace ToylandSiege.GameObjects
     public class Unit : UnitBase
     {
         private Field _field;
+        public float Speed { get; set; }
 
         public Field Field {
             get

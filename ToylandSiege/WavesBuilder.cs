@@ -13,36 +13,36 @@ namespace ToylandSiege
     {
         public void Build(WaveController WaveController)
         {
-            WaveController.AddWave(BuildWave(3, 120));
-            WaveController.AddWave(BuildWave(5, 100));
-            WaveController.AddWave(BuildWave(3, 80));
-            WaveController.AddWave(BuildWave(6, 150));
+            Dictionary<string, string> Wave1 = new Dictionary<string, string>();
+            Wave1.Add("Unit1", "Soldier");
+            Wave1.Add("Unit2", "Tank");
+            Wave1.Add("Unit3", "Scout");
+            WaveController.AddWave(BuildWave(Wave1, 120));
+
+            Dictionary<string, string> Wave2 = new Dictionary<string, string>();
+            Wave2.Add("Unit4", "Soldier");
+            Wave2.Add("Unit5", "Soldier");
+            Wave2.Add("Unit6", "Soldier");
+            Wave2.Add("Unit7", "Scout");
+            WaveController.AddWave(BuildWave(Wave2, 120));
+
+            Dictionary<string, string> Wave3 = new Dictionary<string, string>();
+            Wave3.Add("Unit8", "Tank");
+            Wave3.Add("Unit9", "Scout");
+            Wave3.Add("Unit10", "Tank");
+            WaveController.AddWave(BuildWave(Wave3, 120));
 
             WaveController.SetCurrentWave(WaveController.Waves.First());
         }
 
-        public Wave BuildWave(uint units, double time)
+        public Wave BuildWave(Dictionary<string, string> units, double time)
         {
             Wave wave = new Wave();
 
             wave.WaveTime = time;
-            for (int i = 0; i < units; i++)
-            {
-                wave.AddUnit(new Unit()
-                {
-                    Name = "Unit"+i,
-                    Model = ToylandSiege.GetInstance().Content.Load<Model>("1234"),
-                    Type = "Unit",
-                    IsEnabled = false,
-                    Health = 100,
-                    UnitType = "BasicType",
-                    AnimationPlayer = new AnimationPlayer(ToylandSiege.GetInstance().Content.Load<Model>("1234").Tag as SkinningData),
-                    Clips = new Dictionary<string, AnimationClip>() { {"Take 001", (ToylandSiege.GetInstance().Content.Load<Model>("1234").Tag as SkinningData).AnimationClips["Take 001"]} },
-                    Scale = new Vector3(0.1f,0.1f,0.1f)
-            });
-                wave.AvailableUnits.Last().AnimationPlayer.StartClip(wave.AvailableUnits.Last().Clips.First().Value);
-            }
-
+            foreach (var unit in units)
+                wave.AddUnit(UnitBuilder.BuildUnit(unit.Key, unit.Value));
+            
             return wave;
         }
     }

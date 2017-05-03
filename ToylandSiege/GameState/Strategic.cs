@@ -11,6 +11,9 @@ namespace ToylandSiege.GameState
     public class Strategic: GameState
     {
         private Texture2D soldierTexture2D;
+        private Texture2D scoutTexture2D;
+        private Texture2D tankTexture2D;
+
         private SpriteBatch _spriteBatch;
         private Wave _currentWave;
 
@@ -25,6 +28,8 @@ namespace ToylandSiege.GameState
         public Strategic()
         {
             soldierTexture2D = ToylandSiege.GetInstance().Content.Load<Texture2D>("soldierTexture");
+            scoutTexture2D = ToylandSiege.GetInstance().Content.Load<Texture2D>("scoutTexture");
+            tankTexture2D = ToylandSiege.GetInstance().Content.Load<Texture2D>("TankTexture");
             _spriteBatch = new SpriteBatch(ToylandSiege.GetInstance().GraphicsDevice);
         }
 
@@ -93,16 +98,38 @@ namespace ToylandSiege.GameState
                     SelectedField = null;
                 }
              }
+
+
+            //Secret combination to switch  to god mode
+            if (IsSimpleKeyPress(Keys.G) && Keyboard.GetState().IsKeyDown(Keys.LeftAlt))
+            {
+                ToylandSiege.GetInstance().gameStateManager.SetNewGameState(ToylandSiege.GetInstance().gameStateManager.AvailableGameStates["GodMode"]);
+            }
         }
 
         public override void DrawUI()
         {
             _spriteBatch.Begin();
-            foreach (var rectangle in sodlierstTextures)
+            
+            if (sodlierstTextures.Count != _currentWave.AvailableUnits.Count)
+                throw new ArgumentException("Something went wrong. Count of rectangles should be the same as Units");
+            for (int i = 0; i < sodlierstTextures.Count; i++)
             {
-                _spriteBatch.Draw(soldierTexture2D, rectangle, Color.White);
+                switch (_currentWave.AvailableUnits[i].UnitType.ToLower())
+                {
+                    case "soldier":
+                        _spriteBatch.Draw(soldierTexture2D, sodlierstTextures[i], Color.White);
+                        break;
+                    case "tank":
+                        _spriteBatch.Draw(tankTexture2D, sodlierstTextures[i], Color.White);
+                        break;
+                    case "scout":
+                        _spriteBatch.Draw(scoutTexture2D, sodlierstTextures[i], Color.White);
+                        break;
+                    default:
+                        throw new ArgumentException("Unsupported unit type " + (_currentWave.AvailableUnits[i].UnitType));
+                }
             }
-
             _spriteBatch.End();
         }
 
@@ -131,6 +158,7 @@ namespace ToylandSiege.GameState
             field.SetUnit(SelectedUnit);
             this.SelectedUnit.Field = field;
             _currentWave.AvailableUnits.Remove(SelectedUnit);
+            
             //Addunit to level
             SelectedUnit.Position = field.Position;
             Level.GetCurrentLevel().RootGameObject.AddChild(SelectedUnit);

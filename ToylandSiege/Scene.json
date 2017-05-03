@@ -111,123 +111,7 @@
             ]
           }
         ]
-      },
-      {
-        "Name": "UnitCube",
-        "Type": "Unit",
-        "Model": "1234",
-        "Health": 100,
-        "UnitType": "BasicType",
-        "isEnabled": true,
-        "Animation": [
-          "Take 001",
-        ],
-        "Position": [
-          25,
-          8,
-          10
-        ],
-        "Rotation": [
-          0,
-          0,
-          0
-        ],
-        "Scale": [
-          0.1,
-          0.1,
-          0.1
-        ]
-      },
-      /*{
-            "Name":"EnemyCube",
-            "Type":"Enemy",
-            "Model":"MonoCube",
-            "Health":100,
-            "UnitType":"BasicType",
-            "isEnabled":true,
-            "Position":[
-               30,
-               8,
-               10
-            ],
-            "Rotation":[
-               0,
-               0,
-               0
-            ],
-            "Scale":[
-               0.7,
-               0.7,
-               0.7
-            ]
-         }, */
-      {
-        "Name": "Cube",
-        "Type": "TerrainObject",
-        "Model": "MonoCube",
-        "isEnabled": true,
-        "Position": [
-          40,
-          8,
-          5
-        ],
-        "Rotation": [
-          0,
-          0,
-          0
-        ],
-        "Scale": [
-          1,
-          1,
-          1
-        ],
-        "Child": [
-          {
-            "Name": "InnerCube",
-            "Type": "TerrainObject",
-            "Model": "MonoCube",
-            "isEnabled": true,
-            "Position": [
-              4,
-              -4,
-              0
-            ],
-            "Rotation": [
-              0,
-              0,
-              0
-            ],
-            "Scale": [
-              0.5,
-              0.5,
-              0.5
-            ],
-            "Child": [
-              {
-                "Name": "InnerInnerCube",
-                "Type": "TerrainObject",
-                "Model": "MonoCube",
-                "isEnabled": true,
-                "Position": [
-                  0,
-                  -5,
-                  0
-                ],
-                "Rotation": [
-                  0,
-                  0,
-                  0
-                ],
-                "Scale": [
-                  2,
-                  2,
-                  2
-                ]
-              }
-            ]
-          }
-        ]
-      },
+      },      
       {
         "Name": "GodModeCamera",
         "Type": "Camera",
@@ -311,13 +195,13 @@
         "Name": "Board",
         "Type": "BoardSetting",
         "Model": "Field",
-        "Rows": 15,
+        "Rows": 21,
         "Columns": 15,
         "FieldName": "Field",
         "FieldModel": "Field",
         "Step": 5,
         "Position": [
-          0,
+          -15,
           0.25,
           5
         ],
