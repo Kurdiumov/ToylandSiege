@@ -76,7 +76,7 @@ namespace ToylandSiege.GameObjects
 
             Logger.Log.Debug("Can't place enemy (" + enemy + ") to field  + " + Name + " beacause field already contains unit or enemy");
             return false;
-        }
+        } 
 
         public List<Field> GetNearestFields()
         {

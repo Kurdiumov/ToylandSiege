@@ -38,7 +38,6 @@ namespace ToylandSiege
             }
 
             Logger.Log.Debug("File " + _filePath + "parsed successfully");
-            Level.GetCurrentLevel().RootGameObject.Childs.Add("Enemies", new Group("Enemies"));
             return RootObject;
         }
 

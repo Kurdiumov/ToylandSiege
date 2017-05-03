@@ -27,6 +27,7 @@ namespace ToylandSiege
             this.gameTime = gameTime;
             if (CurrentWave != null)
             {
+                //TODO: Fix pause time
                 CurrentWave.TimeLeft = CurrentWave.WaveTime - (gameTime.TotalGameTime - CurrentWave.WaveStartedTime).TotalSeconds;
             }
 
