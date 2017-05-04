@@ -29,7 +29,7 @@ namespace ToylandSiege.GameObjects
             
             if (CanShoot(gameTime) && UnitsInRange.Count > 0)
             {
-                Shoot(gameTime);
+                Shoot(gameTime, UnitsInRange.First());
             }
         }
 
@@ -60,15 +60,6 @@ namespace ToylandSiege.GameObjects
                     UnitsInRange.Add(field.unit);
                 }
             }
-        }
-
-        public void Shoot(GameTime gameTime)
-        {
-            Logger.Log.Debug(this + " shooting ");
-            //TODO:Sound here
-            var target = UnitsInRange.First();
-            target.GetDamage(Damage);
-            LastShootTime = gameTime.TotalGameTime;
         }
     }
 }

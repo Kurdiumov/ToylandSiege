@@ -14,6 +14,7 @@ namespace ToylandSiege.GameObjects
         public float Speed { get; set; }
 
         public List<Field> TargetFields { get; set; }
+        protected readonly HashSet<Enemy> EnemiesInRange = new HashSet<Enemy>();
 
         protected override void Initialize()
         {
@@ -24,12 +25,18 @@ namespace ToylandSiege.GameObjects
         {
             CreateTransformationMatrix();
             AnimationPlayer.Update(gameTime.ElapsedGameTime, true, TransformationMatrix);
-
+            UpdateFieldsInRange();
+            UpdatEnemiesInRange();
             if (!WaveController.RoundRunning)
                 return;
 
             if (Field != null && TargetFields.Count > 0)
                 MoveToTarget();
+
+            if (CanShoot(gameTime) && EnemiesInRange.Count > 0)
+            {
+                Shoot(gameTime, EnemiesInRange.First());
+            }
         }
 
         public bool IsOnField()
@@ -44,8 +51,11 @@ namespace ToylandSiege.GameObjects
                 field.SetUnit(this);
                 Field = field;
                 Position = Field.Position;
+                UpdateFieldsInRange();
+                UpdatEnemiesInRange();
                 return true;
             }
+
             return false;
         }
 
@@ -86,7 +96,6 @@ namespace ToylandSiege.GameObjects
 
         public void MoveToTarget()
         {
-            
             float elapsed = 0.01f;
             Vector3 targetPosition = TargetFields.First().Position;
 
@@ -115,6 +124,19 @@ namespace ToylandSiege.GameObjects
         public void RotateToTarget(Vector3 direction)
         {
             //TODO: Implement this Method
+        }
+
+        public void UpdatEnemiesInRange()
+        {
+            EnemiesInRange.Clear();
+
+            foreach (Field field in FieldsInRange)
+            {
+                if (field.HasEnemy())
+                {
+                    EnemiesInRange.Add(field.enemy);
+                }
+            }
         }
     }
 }

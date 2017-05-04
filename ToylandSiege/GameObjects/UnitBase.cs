@@ -75,7 +75,7 @@ namespace ToylandSiege.GameObjects
             Logger.Log.Debug(Name + " Destroing itself. Health = " + Health);
             if (this is Unit)
             {
-                if (Field == null)
+                if (Field != null)
                 {
                     Field.unit = null;
                 }
@@ -83,10 +83,12 @@ namespace ToylandSiege.GameObjects
             }
             else if (this is Enemy)
             {
-                if (Field == null)
+                if (Field != null)
                 {
                     Field.enemy = null;
                 }
+                
+                Field.Spawner.TimerStarted = false;
                 Level.GetCurrentLevel().RootGameObject.Childs["Enemies"].RemoveChild(this);
             }
         }
@@ -97,6 +99,19 @@ namespace ToylandSiege.GameObjects
             Logger.Log.Debug(Name + " got" + Damage +" Damage. Health = " + Health);
             if (this.Health <= 0)
                 DestroyItself();
+        }
+
+        public void Shoot(GameTime gameTime, UnitBase target)
+        {
+            if (target == null)
+            {
+                Logger.Log.Error(this + "cant shoot. Target is Null ");
+                return;
+            }
+            Logger.Log.Debug(this + " shooting. Target:  " + target);
+            //TODO:Sound here
+            target.GetDamage(Damage);
+            LastShootTime = gameTime.TotalGameTime;
         }
     }
 }
