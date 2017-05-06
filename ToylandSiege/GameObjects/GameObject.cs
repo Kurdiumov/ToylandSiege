@@ -45,7 +45,6 @@ namespace ToylandSiege.GameObjects
         {
             if (!IsEnabled)
                 return;
-
             if (Model != null)
             {
                 foreach (ModelMesh mesh in Model.Meshes)
@@ -61,12 +60,11 @@ namespace ToylandSiege.GameObjects
 
                             effect.World = TransformationMatrix;
                             effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
-
-                        }
+                            GlobalLightning.DrawGlobalLightning(effect);
+                         }
                     }
                     else if(AnimationPlayer != null && mesh.Effects.All(e => e is SkinnedEffect))
                     {
-
                         Matrix[] bones = AnimationPlayer.GetSkinTransforms();
 
                         foreach (SkinnedEffect effect in mesh.Effects)
@@ -79,6 +77,7 @@ namespace ToylandSiege.GameObjects
 
                             effect.World = TransformationMatrix;
                             effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
+                            GlobalLightning.DrawGlobalLightning(effect);
                         }
                     }
                     mesh.Draw();

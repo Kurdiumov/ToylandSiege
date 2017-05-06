@@ -83,6 +83,7 @@
     <Compile Include="GameState\Strategic.cs" />
     <Compile Include="JSONHelper.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="GlobalLightning.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="GameObjects\TerrainObject.cs" />
     <Compile Include="SceneParser.cs" />

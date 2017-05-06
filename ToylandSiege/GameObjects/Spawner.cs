@@ -63,13 +63,6 @@ namespace ToylandSiege.GameObjects
             {
                 SpawnEnemy();
             }
-            /*
-            //To remove Enemy from field!
-            var enemy = Field.enemy;
-            Field.enemy.Field = null;
-            Field.enemy = null;
-            Level.GetCurrentLevel().RootGameObject.Childs["Enemies"].RemoveChild(enemy);
-            */
         }
 
         public void SpawnEnemy()

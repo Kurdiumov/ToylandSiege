@@ -112,6 +112,7 @@ namespace ToylandSiege.GameObjects
                         effect.World = TransformationMatrix;
                         effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
                         effect.Alpha = Alpha;
+                        GlobalLightning.DrawGlobalLightning(effect);
                     }
                     mesh.Draw();
                 }
