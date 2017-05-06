@@ -35,7 +35,7 @@ namespace ToylandSiege
             if (RoundRunning)
             {
                 CurrentWave.RefreshLists();
-                if (CurrentWave.TimeLeft <= 0.0 || CurrentWave.UnitsInWave.Count == 0)
+                if (CurrentWave.TimeLeft <= 0.0 || CurrentWave.UnitsInWave.Count == 0 || CurrentWave.UnitsInWave.All(unit => unit.Field.FinishingTile))
                 {
                     FinishRound();
                 }
