@@ -25,6 +25,9 @@ namespace ToylandSiege.GameState
         private Field SelectedField;
         private List<Rectangle> sodlierstTextures = new List<Rectangle>();
 
+
+        public static bool FirstUnitPlacing = false;
+        public static bool UnitSelected = false;
         public Strategic()
         {
             soldierTexture2D = ToylandSiege.GetInstance().Content.Load<Texture2D>("soldierTexture");
@@ -123,6 +126,7 @@ namespace ToylandSiege.GameState
         {
             Logger.Log.Debug("Placing unit to field");
             SelectedUnit.IsEnabled = true;
+            SelectedUnit.FieldsInWay.Add(field);
             field.SetUnit(SelectedUnit);
             this.SelectedUnit.Field = field;
             _currentWave.AvailableUnits.Remove(SelectedUnit);
@@ -137,8 +141,11 @@ namespace ToylandSiege.GameState
 
         private void _PlacingUnit()
         {
+            FirstUnitPlacing = false;
+            UnitSelected = true;
             if (SelectedUnit == null && sodlierstTextures.Any(rectangle => rectangle.Contains(Mouse.GetState().Position)))
             {
+                FirstUnitPlacing = true;
                 int UnitIndex = 0;
                 for (int i = 0; i < sodlierstTextures.Count; i++)
                 {
@@ -187,6 +194,8 @@ namespace ToylandSiege.GameState
             }
             else
             {
+                FirstUnitPlacing = false;
+                UnitSelected = false;
                 SelectedUnit = null;
                 SelectedField = null;
             }

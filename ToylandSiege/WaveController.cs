@@ -77,6 +77,7 @@ namespace ToylandSiege
                 unit.Field.unit = null;
                 unit.Field = null;
                 unit.TargetFields.Clear();
+                unit.FieldsInWay.Clear();
 
                 Level.GetCurrentLevel().RootGameObject.Childs["Units"].RemoveChild(unit);
             }
@@ -101,6 +102,7 @@ namespace ToylandSiege
                 foreach (var field in rows.Childs.Values)
                     if (field is Field)
                         (field as Field).IsPartOfWay = false;
+                    
 
             ToylandSiege.GetInstance().gameStateManager.SetNewGameState(ToylandSiege.GetInstance().gameStateManager.AvailableGameStates["Strategic"]);
         }

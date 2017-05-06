@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using ToylandSiege.GameObjects;
@@ -49,21 +50,11 @@ namespace ToylandSiege.GameState
             }
             if (Mouse.GetState().LeftButton == ButtonState.Pressed && IsSimpleClick() && _configurationManager.PickingEnabled)
             {
-                var PickedObject = PickObject();
-
+                var PickedObject = PickObject(new List<Type>(){ typeof(Field)}); // Use this for pciking only fields
+                //var PickedObject = PickObject(); //USe this for picking all abjects
                 if (PickedObject != null)
                 {
-                    //Logger.Log.Debug("Object picked: " + PickedObject.ToString());
-                    System.Diagnostics.Debug.Print("Object picked: " + PickedObject.ToString());
-
-                    //Unit movement
-                    if (PickedObject is Field)
-                    {
-                        Unit unit = ((Unit)Level.GetCurrentLevel().RootGameObject.Childs["UnitCube"]);
-                        unit.AddField(PickedObject as Field);
-                    }
-                    else if (!(PickedObject is Unit))
-                        PickedObject.Parent.RemoveChild(PickedObject);
+                    Logger.Log.Debug("Object picked: " + PickedObject.ToString());
                 }
                 else
                 {

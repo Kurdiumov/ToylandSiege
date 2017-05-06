@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ToylandSiege.GameState;
 
 namespace ToylandSiege.GameObjects
 {
@@ -10,8 +11,12 @@ namespace ToylandSiege.GameObjects
         public bool StartingTile = false;
         public bool FinishingTile = false;
         public bool IsSpawner = false;
+        public int FieldSpeed = 3;
 
         public Spawner Spawner { get; set; }
+        public Vector3 ColorVector3 = new Vector3(0.5f, 0.8f, 0.3f);
+        public Vector3 AmbientVector3 = new Vector3(0.3f, 0.3f, 0.3f);
+        public float Alpha = 0.5f;
 
         public Unit unit;
         public Enemy enemy;
@@ -59,6 +64,7 @@ namespace ToylandSiege.GameObjects
             if (!HasUnit() && !HasEnemy())
             {
                 this.unit = unit;
+                IsPartOfWay = true;
                 Logger.Log.Debug("Setting unit (" + unit + ") to field  + " + Name);
                 return true;
             }
@@ -78,18 +84,18 @@ namespace ToylandSiege.GameObjects
 
             Logger.Log.Debug("Can't place enemy (" + enemy + ") to field  + " + Name + " beacause field already contains unit or enemy");
             return false;
-        } 
+        }
 
         public List<Field> GetNearestFields()
         {
-            return ((Board) Parent.Parent).GetNearestFields(this);
+            return ((Board)Parent.Parent).GetNearestFields(this);
         }
 
         public override void Draw()
         {
             if (!IsEnabled)
                 return;
-
+            UpdateColors();
             if (Model != null)
             {
                 foreach (ModelMesh mesh in Model.Meshes)
@@ -98,20 +104,14 @@ namespace ToylandSiege.GameObjects
                     {
                         if (ToylandSiege.GetInstance().configurationManager.LigthningEnabled)
                             effect.EnableDefaultLighting();
-                        if (StartingTile && !HasUnit() || FinishingTile)
-                            effect.AmbientLightColor = new Vector3(0, 0.9f, 0.1f);
-                        else if (HasUnit() && unit.TargetFields.Contains(this))
-                            effect.AmbientLightColor = new Vector3(0.9f, 0.3f, 0.3f);
-                        else if (IsSpawner)
-                            effect.AmbientLightColor = new Vector3(1f, 0.0f, 0.0f);
-                        else if (IsPartOfWay)
-                            effect.AmbientLightColor = new Vector3(0f, 0.0f, 1.0f);
-                        else
-                            effect.AmbientLightColor = new Vector3(0, 0.3f, 0.3f);
+                        effect.AmbientLightColor = AmbientVector3;
+                        effect.DiffuseColor = ColorVector3;
+
                         effect.View = Camera.GetCurrentCamera().ViewMatrix;
 
                         effect.World = TransformationMatrix;
                         effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
+                        effect.Alpha = Alpha;
                     }
                     mesh.Draw();
                 }
@@ -127,6 +127,49 @@ namespace ToylandSiege.GameObjects
             if (IsPartOfWay)
                 return false;
             return true;
+        }
+
+        public void UpdateColors()
+        {
+            SetDefaultColor();
+            if (IsPartOfWay)
+            {
+                AmbientVector3 = new Vector3(0.0f, 0.1f, 0.0f);
+            }
+            else if (Strategic.FirstUnitPlacing)
+            {
+                if (StartingTile)
+                {
+                    if (!HasUnit())
+                    {
+                        ColorVector3 = new Vector3(0.4f, 1f, 0.1f);
+                        AmbientVector3 = new Vector3(1, 1, 1);
+                    }
+                }
+            }
+            else if (Strategic.UnitSelected && FinishingTile)
+            {
+                ColorVector3 = new Vector3(0.1f, 0.4f, 0.2f);
+                AmbientVector3 = new Vector3(1, 1, 1);
+            }
+        }
+
+        public void SetDefaultColor()
+        {
+            if (IsSpawner)
+            {
+                ColorVector3 = new Vector3(0.9f, 1f, 0.1f);
+                AmbientVector3 = new Vector3(1, 1, 1);
+            }
+            else if (FieldSpeed == 3 )
+            {
+                ColorVector3 = new Vector3(0.5f, 0.8f, 0.3f);
+                AmbientVector3 = new Vector3(0.3f, 0.3f, 0.3f);
+            }
+            else
+            {
+                AmbientVector3 = new Vector3(0.3f, 0.3f, 0.3f);
+            }
         }
     }
 }

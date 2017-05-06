@@ -79,6 +79,16 @@ namespace ToylandSiege.GameObjects
             new Spawner(196, this, "Sniper");
         }
 
+        public void SetUpFileds()
+        {
+            //Create river
+            for(int i = 164; i < 185; i++)
+            {
+                GetByIndex(i).FieldSpeed = 1;
+                GetByIndex(i).ColorVector3 = new Vector3(0,0.7f,0.9f);
+            }
+        }
+
         private Vector3 CalculatePosition(int column, int row, int index)
         {
             float x = StartingPosition.X;

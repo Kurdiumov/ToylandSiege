@@ -75,8 +75,12 @@ namespace ToylandSiege.GameObjects
             Logger.Log.Debug(Name + " Destroing itself. Health = " + Health);
             if (this is Unit)
             {
+                foreach (var field in (this as Unit).FieldsInWay)
+                    field.IsPartOfWay = false;
+
                 if (Field != null)
                 {
+                    Field.IsPartOfWay = false;
                     Field.unit = null;
                 }
                 Level.GetCurrentLevel().RootGameObject.Childs["Units"].RemoveChild(this);

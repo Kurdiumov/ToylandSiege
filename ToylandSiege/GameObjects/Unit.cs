@@ -14,11 +14,13 @@ namespace ToylandSiege.GameObjects
         public float Speed { get; set; }
 
         public List<Field> TargetFields { get; set; }
+        public List<Field> FieldsInWay { get; set; }
         protected readonly HashSet<Enemy> EnemiesInRange = new HashSet<Enemy>();
 
         protected override void Initialize()
         {
-                TargetFields = new List<Field>();
+            TargetFields = new List<Field>();
+            FieldsInWay = new List<Field>();
         }
 
         public override void Update(GameTime gameTime)
@@ -64,7 +66,9 @@ namespace ToylandSiege.GameObjects
             if (Level.GetCurrentLevel().RootGameObject.Childs["Board"] is Board)
             {
                 Board board = Level.GetCurrentLevel().RootGameObject.Childs["Board"] as Board;
-                return PlaceToField(board.GetByIndex(fieldIndex));
+                var field = board.GetByIndex(fieldIndex);
+                field.IsPartOfWay = true;
+                return PlaceToField(field);
             }
             Logger.Log.Error("Board is not typeof board!");
             return false;
@@ -72,9 +76,10 @@ namespace ToylandSiege.GameObjects
 
         public void AddField(Field field)
         {
-            if (field.StartingTile && Field == null)
+            FieldsInWay.Add(field);
+            if (field.StartingTile && Field == null && !field.HasUnit())
             {
-                PlaceToField(field); // Set starting field
+                PlaceToField(field); // Set starting field            
             }
             else if (Field != null)
             {
@@ -91,6 +96,7 @@ namespace ToylandSiege.GameObjects
         private void addTargetField(Field field)
         {
             TargetFields.Add(field);
+            field.IsPartOfWay = true;
             Logger.Log.Debug("New target field (" + field + ") added to unit " + this);
         }
 
@@ -103,7 +109,7 @@ namespace ToylandSiege.GameObjects
             Vector3 direction = Vector3.Normalize(targetPosition - Position);
 
             RotateToTarget(direction);
-            Position += direction * Speed * elapsed;
+            Position += direction * (Speed * Field.FieldSpeed / 2) * elapsed;
             if (distance < 0.1f)
 
                 if (TargetFields.Count > 0)

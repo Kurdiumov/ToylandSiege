@@ -268,6 +268,7 @@ namespace ToylandSiege
             
             board.CreateFields();
             board.CreateSpawners();
+            board.SetUpFileds();
             return board;
         }
 
