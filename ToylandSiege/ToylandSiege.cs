@@ -32,6 +32,8 @@ namespace ToylandSiege
             Graphics.PreferredBackBufferWidth = configurationManager.WidthResolution;
 
             Content.RootDirectory = "Content";
+            SoundManager SoundManager = new SoundManager();
+            SoundManager.Initialize();
         }
 
         protected override void Initialize()

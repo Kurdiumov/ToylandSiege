@@ -273,3 +273,15 @@
 /processorParam:TextureFormat=Color
 /build:soldierTexture.jpg
 
+#begin Sounds/SniperShootSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/SniperShootSound.wav
+
+#begin Sounds/DefenderShootSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/DefenderShootSound.wav
+

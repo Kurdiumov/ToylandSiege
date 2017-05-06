@@ -19,12 +19,10 @@ namespace ToylandSiege.GameObjects
         protected TimeSpan LastShootTime;
 
         private Field _field;
+
         public Field Field
         {
-            get
-            {
-                return _field;
-            }
+            get { return _field; }
             set
             {
                 _field = value;
@@ -39,6 +37,7 @@ namespace ToylandSiege.GameObjects
         {
             Initialize();
         }
+
         protected abstract override void Initialize();
 
         public abstract override void Update(GameTime gameTime);
@@ -72,6 +71,7 @@ namespace ToylandSiege.GameObjects
 
         public void DestroyItself()
         {
+            //TODO: Play dying sound her
             Logger.Log.Debug(Name + " Destroing itself. Health = " + Health);
             if (this is Unit)
             {
@@ -91,7 +91,7 @@ namespace ToylandSiege.GameObjects
                 {
                     Field.enemy = null;
                 }
-                
+
                 Field.Spawner.TimerStarted = false;
                 Level.GetCurrentLevel().RootGameObject.Childs["Enemies"].RemoveChild(this);
             }
@@ -100,7 +100,7 @@ namespace ToylandSiege.GameObjects
         public void GetDamage(float Damage)
         {
             Health -= Damage;
-            Logger.Log.Debug(Name + " got" + Damage +" Damage. Health = " + Health);
+            Logger.Log.Debug(Name + " got" + Damage + " Damage. Health = " + Health);
             if (this.Health <= 0)
                 DestroyItself();
         }
@@ -113,9 +113,45 @@ namespace ToylandSiege.GameObjects
                 return;
             }
             Logger.Log.Debug(this + " shooting. Target:  " + target);
-            //TODO:Sound here
+            _PlayShootSound();
             target.GetDamage(Damage);
             LastShootTime = gameTime.TotalGameTime;
+        }
+
+        private void _PlayShootSound()
+        {
+            //TODO: Remove try-catch block when all sound will be loaded in SoundManager
+            try
+            {
+                switch (UnitType.ToLower())
+                {
+                    case "sniper":
+                        SoundManager.PlaySound("SniperShootSound", 0.5f);
+                        break;
+                    case "defender":
+                        SoundManager.PlaySound("DefenderShootSound", 0.8f);
+                        break;
+                    case "standart":
+                        SoundManager.PlaySound("StandartShootSound", 0.5f);
+                        break;
+                    case "soldier":
+                        SoundManager.PlaySound("SoldierShootSound", 0.5f);
+                        break;
+                    case "tank":
+                        SoundManager.PlaySound("TankShootSound", 0.5f);
+                        break;
+                    case "scout":
+                        SoundManager.PlaySound("ScoutShootSound", 0.5f);
+                        break;
+                    default:
+                        throw new ArgumentException("Type not supported + " + UnitType);
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Log.Error(e);
+            }
         }
     }
 }
