@@ -5,27 +5,37 @@ namespace ToylandSiege
 {
     public static class GlobalLightning
     {
-        private static Vector3 _diffuseColor = new Vector3(0.8f, 0.8f, 0.8f);
-        private static Vector3 _direction = new Vector3(0.8f, -0.2f, -1);
-        private static Vector3 _specularColor = new Vector3(0.7f, 0.7f, 0.7f);
+        public static Vector3 DiffuseColor = new Vector3(0.8f, 0.8f, 0.8f);
+        public static Vector3 Direction = new Vector3(0.8f, -0.2f, -1);
+        public static Vector3 SpecularColor = new Vector3(0.7f, 0.7f, 0.7f);
 
+        public static Matrix LightView;
+        public static Matrix LightProjection;
+        public static Matrix LightViewProjection;
 
         public static void DrawGlobalLightning(Effect effect)
         {
+            LightView = Matrix.CreateLookAt(Vector3.Zero,
+                        Vector3.Zero + GlobalLightning.Direction,
+                        Vector3.Up);
+
+            LightProjection = Matrix.CreateOrthographic(1366, 768, 1, 1000);
+            LightViewProjection = LightView * LightProjection;
+
             if (!ToylandSiege.GetInstance().configurationManager.LigthningEnabled)
                 return;
             if (effect is BasicEffect)
             {
-                (effect as BasicEffect).DirectionalLight0.DiffuseColor = _diffuseColor;
-                (effect as BasicEffect).DirectionalLight0.Direction = _direction;
-                (effect as BasicEffect).DirectionalLight0.SpecularColor = _specularColor;
+                (effect as BasicEffect).DirectionalLight0.DiffuseColor = DiffuseColor;
+                (effect as BasicEffect).DirectionalLight0.Direction = Direction;
+                (effect as BasicEffect).DirectionalLight0.SpecularColor = SpecularColor;
 
             }
             else if (effect is SkinnedEffect)
             {
-                (effect as SkinnedEffect).DirectionalLight0.DiffuseColor = _diffuseColor;
-                (effect as SkinnedEffect).DirectionalLight0.Direction = _direction;
-                (effect as SkinnedEffect).DirectionalLight0.SpecularColor = _specularColor;
+                (effect as SkinnedEffect).DirectionalLight0.DiffuseColor = DiffuseColor;
+                (effect as SkinnedEffect).DirectionalLight0.Direction = Direction;
+                (effect as SkinnedEffect).DirectionalLight0.SpecularColor = SpecularColor;
             }
             else
             {

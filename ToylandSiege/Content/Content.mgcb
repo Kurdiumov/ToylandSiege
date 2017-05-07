@@ -304,6 +304,18 @@
 /processorParam:TextureFormat=Compressed
 /build:Sphere.FBX
 
+#begin Shaders/ReflectionShader.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/ReflectionShader.fx
+
+#begin Shaders/ShadowShader.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/ShadowShader.fx
+
 #begin SkyTexture.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
