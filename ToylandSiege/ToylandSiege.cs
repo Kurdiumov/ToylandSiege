@@ -70,6 +70,7 @@ namespace ToylandSiege
 
         protected override void Draw(GameTime gameTime)
         {
+            GraphicsDevice.Clear(Color.CornflowerBlue);
             gameStateManager.Draw(gameTime);
             base.Draw(gameTime);
         }

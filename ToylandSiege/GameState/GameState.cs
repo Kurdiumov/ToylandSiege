@@ -44,12 +44,6 @@ namespace ToylandSiege.GameState
 
         public virtual void Draw(GameTime gameTime)
         {
-            ToylandSiege.GetInstance().GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            ToylandSiege.GetInstance().GraphicsDevice.BlendState = BlendState.Opaque;
-            ToylandSiege.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            ToylandSiege.GetInstance().GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
-
             Level.GetCurrentLevel().Draw();
 
 
