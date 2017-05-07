@@ -1,9 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToylandSiege", "ToylandSiege\ToylandSiege.csproj", "{5991D46F-A53C-4A67-9A4D-3AB9D43C9155}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E3C41D8F-A2E6-47AA-8AAA-B85FC2C6D7DE} = {E3C41D8F-A2E6-47AA-8AAA-B85FC2C6D7DE}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MGSkinnedModel", "MGSkinnedModel\MGSkinnedModel.csproj", "{22C9AC62-3F1E-414A-9D88-A2348462A0C3}"
 EndProject
