@@ -17,9 +17,10 @@ namespace ToylandSiege
     public class SceneParser
     {
         private readonly string _filePath = "Scene.json";
-
+        private string LevelName;
         public GameObject Parse(string LevelName)
         {
+            this.LevelName = LevelName;
             Logger.Log.Debug("Parsing " + LevelName + " from " + _filePath + " file");
             RootGameObject RootObject = new RootGameObject();
 
@@ -267,8 +268,12 @@ namespace ToylandSiege
             };
             
             board.CreateFields();
-            board.CreateSpawners();
-            board.SetUpFileds();
+            if(LevelName == "Level1")
+                board.InitializeLevel1();
+            else if(LevelName == "TutorialLevel")
+                board.InitializeTutorialLevel();
+            else
+                throw new InvalidEnumArgumentException("Cant initalize board");
             return board;
         }
 

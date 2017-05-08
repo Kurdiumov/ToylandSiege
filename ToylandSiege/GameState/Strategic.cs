@@ -70,7 +70,6 @@ namespace ToylandSiege.GameState
                 _PlacingUnit();
             }
 
-
             //Secret combination to switch  to god mode
             if (IsSimpleKeyPress(Keys.G) && Keyboard.GetState().IsKeyDown(Keys.LeftAlt))
             {

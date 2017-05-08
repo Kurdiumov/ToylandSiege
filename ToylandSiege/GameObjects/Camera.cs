@@ -30,7 +30,8 @@ namespace ToylandSiege.GameObjects
         {
             this.Name = Name;
             CreateLookAt();
-            AvailableCameras.Add(Name, this);
+            if(!AvailableCameras.ContainsKey(Name))
+                AvailableCameras.Add(Name, this);
             Initialize();
         }
 

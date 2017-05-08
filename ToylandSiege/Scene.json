@@ -1,4 +1,181 @@
 ﻿{
+   "TutorialLevel":{
+      "Name":"RootGameObject",
+      "Type":"RootGameObject",
+    "Child": [
+      {
+        "Name": "TerrainObjectsGroup",
+        "Type": "Group",
+        "Model": null,
+        "isEnabled": true,
+        "Position": [
+          0,
+          0,
+          0
+        ],
+        "Rotation": [
+          0,
+          0,
+          0
+        ],
+        "Scale": [
+          0.2,
+          0.2,
+          0.2
+        ],
+        "Child": [
+          {
+            "Name": "Fortress",
+            "Type": "TerrainObject",
+            "Model": "Fortress",
+            "isEnabled": true,
+            "Position": [
+              0,
+              0,
+              -160
+            ],
+            "Rotation": [
+              0,
+              0,
+              0
+            ],
+            "Scale": [
+              1.2,
+              1.2,
+              1.2
+            ],
+            "Child": [              
+            ]
+          },          
+          {
+            "Name": "Terrain",
+            "Type": "TerrainObject",
+            "Model": "Terrain",
+            "isEnabled": true,
+            "Position": [
+              0,
+              0,
+              0
+            ],
+            "Rotation": [
+              0,
+              0,
+              0
+            ],
+            "Scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      },      
+      {
+        "Name": "GodModeCamera",
+        "Type": "Camera",
+        "Model": null,
+        "CurrentCamera": false,
+        "UpVector": [
+          0,
+          1,
+          0
+        ],
+        "Direction": [
+          0,
+          0,
+          -1
+        ],
+        "isEnabled": true,
+        "Position": [
+          0,
+          18,
+          32
+        ],
+        "Angle": 45,
+        "NearPlaneDistance": 1,
+        "FarPlaneDistance": 1000,
+        "Speed": 0.6
+      },
+      {
+        "Name": "StrategicCamera",
+        "Type": "Camera",
+        "Model": null,
+        "CurrentCamera": true,
+        "UpVector": [
+          0,
+          1,
+          0
+        ],
+        "Direction": [
+          0,
+          -1,
+          -0.8
+        ],
+        "isEnabled": false,
+        "Position": [
+          0,
+          50,
+          26
+        ],
+        "Angle": 60,
+        "NearPlaneDistance": 1,
+        "FarPlaneDistance": 1000,
+        "Speed": 0.3
+      },
+      {
+        "Name": "FirstPersonCamera",
+        "Type": "Camera",
+        "Model": null,
+        "CurrentCamera": false,
+        "UpVector": [
+          0,
+          1,
+          0
+        ],
+        "Direction": [
+          0,
+          -1,
+          -1
+        ],
+        "isEnabled": false,
+        "Position": [
+          0,
+          18,
+          32
+        ],
+        "Angle": 60,
+        "NearPlaneDistance": 1,
+        "FarPlaneDistance": 1000,
+        "Speed": 0.3
+      },
+      {
+        //Should be at root level!
+        "Name": "Board",
+        "Type": "BoardSetting",
+        "Model": "Field",
+        "Rows": 10,
+        "Columns": 15,
+        "FieldName": "Field",
+        "FieldModel": "Field",
+        "Step": 5,
+        "Position": [
+          12.5,
+          0.25,
+          5
+        ],
+        "StartingPosition": [
+          -35,
+          0,
+          10
+        ],
+        "Scale": [
+          0.95,
+          0.95,
+          0.95
+        ]
+      }
+    ]
+   },
    "Level1":{
       "Name":"RootGameObject",
       "Type":"RootGameObject",

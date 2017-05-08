@@ -71,6 +71,7 @@
     <Compile Include="GameObjects\Field.cs" />
     <Compile Include="GameObjects\Group.cs" />
     <Compile Include="GameObjects\RootGameObject.cs" />
+    <Compile Include="MenuButton.cs" />
     <Compile Include="Sky.cs" />
     <Compile Include="GameObjects\Spawner.cs" />
     <Compile Include="GameObjects\Unit.cs" />

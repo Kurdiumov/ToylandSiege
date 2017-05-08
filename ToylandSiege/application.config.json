@@ -8,7 +8,7 @@
          "Menu",
          "Paused",
       ],
-      "StartingGameState": "Strategic",
+      "StartingGameState": "Menu",
       "IsFullScreen": true,
       "HeightResolution": 768, //1080
       "WidthResolution": 1366, //1920

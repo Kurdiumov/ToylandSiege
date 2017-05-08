@@ -73,21 +73,24 @@ namespace ToylandSiege.GameObjects
             }
         }
 
-        public void CreateSpawners()
+        public void InitializeLevel1()
         {
             new Spawner(193, this, "Defender");
             new Spawner(196, this, "Sniper");
-        }
 
-        public void SetUpFileds()
-        {
             //Create river
-            for(int i = 164; i < 185; i++)
+            for (int i = 164; i < 185; i++)
             {
                 GetByIndex(i).FieldSpeed = 1;
-                GetByIndex(i).ColorVector3 = new Vector3(0,0.7f,0.9f);
+                GetByIndex(i).ColorVector3 = new Vector3(0, 0.7f, 0.9f);
             }
         }
+
+        public void InitializeTutorialLevel()
+        {
+
+        }
+
 
         private Vector3 CalculatePosition(int column, int row, int index)
         {
