@@ -33,7 +33,7 @@ namespace ToylandSiege.GameState
         {
             FpsEnabled = ToylandSiege.GetInstance().configurationManager.FPSEnabled;
             _spriteBatch = new SpriteBatch(ToylandSiege.GetInstance().GraphicsDevice);
-            _spriteFont = ToylandSiege.GetInstance().Content.Load<SpriteFont>("FPS");
+            _spriteFont = ToylandSiege.GetInstance().Content.Load<SpriteFont>("Fonts/FPS");
             _configurationManager = ToylandSiege.GetInstance().configurationManager;
             Mouse.SetPosition(ToylandSiege.GetInstance().Window.ClientBounds.Width / 2, ToylandSiege.GetInstance().Window.ClientBounds.Height / 2);
             _previousMouseState = Mouse.GetState();
@@ -141,6 +141,11 @@ namespace ToylandSiege.GameState
         public virtual  void GameStateChanged()
         {
             
+        }
+
+        public virtual void LevelChanged(Level level)
+        {
+
         }
     }
 }

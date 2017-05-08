@@ -27,7 +27,7 @@ namespace ToylandSiege
             this.heigth = heihgt;
             this.width = width;
             rectangle  = new Rectangle(X, Y, width, heihgt);
-            font = ToylandSiege.GetInstance().Content.Load<SpriteFont>("MenuFont");
+            font = ToylandSiege.GetInstance().Content.Load<SpriteFont>("Fonts/MenuFont");
 
         }
 

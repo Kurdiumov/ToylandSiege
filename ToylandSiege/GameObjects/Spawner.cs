@@ -14,19 +14,12 @@ namespace ToylandSiege.GameObjects
         public TimeSpan CountDownTimeStarteDateTime;
         public bool TimerStarted;
 
-
-        public Spawner(Field field, string EnemyType)
-        {
-            Field = field;
-            this.EnemyType = EnemyType;
-            Initialize();
-        }
-
         public Spawner(int fieldIndex, Board board, string EnemyType)
         {
             Field = board.GetByIndex(fieldIndex);
             this.EnemyType = EnemyType;
             Initialize();
+            board.Spawners.Add(this);
         }
 
         protected override void Initialize()
@@ -58,7 +51,9 @@ namespace ToylandSiege.GameObjects
         public override void Update(GameTime gameTime)
         {
             if (!IsEnabled)
+            {
                 return;
+            }
             if (ShouldSpawnEnemy(gameTime))
             {
                 SpawnEnemy();

@@ -45,16 +45,18 @@ namespace ToylandSiege
         {
             Logger.Log.Debug("Initializing");
             base.Initialize();
+
+            gameStateManager = new GameStateManager();
+            configurationManager.InitGameStates();
+
             CurrentLevel = new Level("Level1");
 
             SceneParser parser = new SceneParser();
             CurrentLevel.RootGameObject = parser.Parse("Level1");
-
+            
             DebugUtilities.ShowAllGameObjects(CurrentLevel.RootGameObject);
+            
             IsMouseVisible = configurationManager.MouseVisible;
-
-            gameStateManager = new GameStateManager();
-            configurationManager.InitGameStates();
 
 
             shadowMapRenderTarget = new RenderTarget2D(GraphicsDevice, 2048, 2048, false, SurfaceFormat.Single, DepthFormat.Depth24, 0, RenderTargetUsage.PlatformContents);

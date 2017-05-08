@@ -45,13 +45,6 @@
 /processorParam:TextureFormat=Color
 /build:MonoCubeTexture.png
 
-#begin FPS.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:FPS.spritefont
-
 #begin Fortress.DAE
 /importer:OpenAssetImporter
 /processor:ModelProcessor
@@ -147,13 +140,6 @@
 /processorParam:TextureFormat=Compressed
 /build:Wall.DAE
 
-#begin PausedSpriteFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:PausedSpriteFont.spritefont
-
 #begin Field.FBX
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -229,13 +215,6 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:1234.fbx
-
-#begin TimerFont.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:TimerFont.spritefont
 
 #begin TankTexture.jpg
 /importer:TextureImporter
@@ -328,10 +307,38 @@
 /processorParam:TextureFormat=Color
 /build:SkyTexture.jpg
 
-#begin MenuFont.spritefont
+#begin Fonts/FPS.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:MenuFont.spritefont
+/build:Fonts/FPS.spritefont
+
+#begin Fonts/MenuFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/MenuFont.spritefont
+
+#begin Fonts/PausedSpriteFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/PausedSpriteFont.spritefont
+
+#begin Fonts/TimerFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/TimerFont.spritefont
+
+#begin Fonts/SpawnersFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/SpawnersFont.spritefont
 

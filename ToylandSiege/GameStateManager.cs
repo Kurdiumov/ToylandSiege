@@ -53,5 +53,10 @@ namespace ToylandSiege
         {
             _state.Draw(gameTime);
         }
+
+        public void LevelChanged(Level level)
+        {
+            AvailableGameStates["FirstPerson"].LevelChanged(level);
+        }
     }
 }

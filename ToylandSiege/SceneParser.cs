@@ -39,6 +39,7 @@ namespace ToylandSiege
             }
 
             Logger.Log.Debug("File " + _filePath + "parsed successfully");
+            
             return RootObject;
         }
 
@@ -268,9 +269,9 @@ namespace ToylandSiege
             };
             
             board.CreateFields();
-            if(LevelName == "Level1")
+            if (LevelName == "Level1")
                 board.InitializeLevel1();
-            else if(LevelName == "TutorialLevel")
+            else if (LevelName == "TutorialLevel")
                 board.InitializeTutorialLevel();
             else
                 throw new InvalidEnumArgumentException("Cant initalize board");

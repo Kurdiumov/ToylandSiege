@@ -6,17 +6,25 @@ using ToylandSiege.GameObjects;
 
 namespace ToylandSiege.GameState
 {
-    public class FirstPerson: GameState
+    public class FirstPerson : GameState
     {
         private bool aim;
 
+        private SpriteFont _SpawnersFont;
         private SpriteFont _TimerSpriteFont;
         private SpriteBatch _TimerSpriteBatch;
+        private Board _CurrentBorad;
 
         public FirstPerson()
         {
             _TimerSpriteBatch = new SpriteBatch(ToylandSiege.GetInstance().GraphicsDevice);
-            _TimerSpriteFont = ToylandSiege.GetInstance().Content.Load<SpriteFont>("TimerFont");
+            _TimerSpriteFont = ToylandSiege.GetInstance().Content.Load<SpriteFont>("Fonts/TimerFont");
+            _SpawnersFont = ToylandSiege.GetInstance().Content.Load<SpriteFont>("Fonts/SpawnersFont");
+        }
+
+        public override void LevelChanged(Level level)
+        {
+            _CurrentBorad = level.RootGameObject.Childs["Board"] as Board;
         }
 
         public override void Update(GameTime gameTime)
@@ -79,6 +87,8 @@ namespace ToylandSiege.GameState
             _TimerSpriteBatch.Begin();
             _TimerSpriteBatch.DrawString(_TimerSpriteFont, Math.Round(Level.GetCurrentLevel().WaveController.CurrentWave.TimeLeft).ToString(), new Vector2((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2) - 12, 10), Color.Black);
             _TimerSpriteBatch.DrawString(_TimerSpriteFont, "Wave " + WaveController.RoundNumber + "/" + WaveController.WawesCount, new Vector2((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width) - 180, 10), Color.DarkRed);
+            if (_CurrentBorad != null)
+                _TimerSpriteBatch.DrawString(_SpawnersFont, "Spawners: " + _CurrentBorad.GetEnabledEnemiesSpawnersCount() + "/" + _CurrentBorad.GetAllEnemiesSpawnersCount(), new Vector2(10, ToylandSiege.GetInstance().GraphicsDevice.DisplayMode.Height - 30), Color.DarkRed);
             _TimerSpriteBatch.End();
         }
     }

@@ -21,6 +21,7 @@ namespace ToylandSiege
         {
             this.Name = Name;
             _currenLevel = this;
+            
 
             var WaveBuilder = new WavesBuilder();
             if (Name == "Level1")
@@ -29,6 +30,7 @@ namespace ToylandSiege
                WaveBuilder.BuildTutorial(WaveController);
             else
                 throw new InvalidEnumArgumentException("Cant initalize board");
+            
             _sky = new Sky();
         }
 

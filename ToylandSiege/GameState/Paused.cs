@@ -15,8 +15,7 @@ namespace ToylandSiege.GameState
         public Paused()
         {
             _spriteBatch = new SpriteBatch(ToylandSiege.GetInstance().GraphicsDevice);
-            _spritePausedFont = ToylandSiege.GetInstance().Content.Load<SpriteFont>("PausedSpriteFont");
-            
+            _spritePausedFont = ToylandSiege.GetInstance().Content.Load<SpriteFont>("Fonts/PausedSpriteFont");
         }
 
         public override void Update(GameTime gameTime)

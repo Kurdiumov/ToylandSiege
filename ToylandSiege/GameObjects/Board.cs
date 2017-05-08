@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 
@@ -23,12 +24,13 @@ namespace ToylandSiege.GameObjects
         private readonly int _numberOfColumns;
 
         public int FieldCount = 0;
-
+        public List<Spawner> Spawners;
         public Board(string name, int rows, int colums)
         {
             Name = name;
             _numberOfRows = rows;
             _numberOfColumns = colums;
+            Spawners = new List<Spawner>();
             Initialize();
         }
 
@@ -88,7 +90,7 @@ namespace ToylandSiege.GameObjects
 
         public void InitializeTutorialLevel()
         {
-
+            new Spawner(71, this, "Standart");
         }
 
 
@@ -176,6 +178,22 @@ namespace ToylandSiege.GameObjects
         public List<Field> GetNearestFields(int index)
         {
             return GetNearestFields(GetByIndex(index));
+        }
+
+        public int GetEnabledEnemiesSpawnersCount()
+        {
+            var count = 0;
+            foreach (var spawner in Spawners)
+            {
+                if (spawner.IsEnabled)
+                    count++;
+            }
+            return count;
+        }
+
+        public int GetAllEnemiesSpawnersCount()
+        {
+            return Spawners.Count;
         }
     }
 }

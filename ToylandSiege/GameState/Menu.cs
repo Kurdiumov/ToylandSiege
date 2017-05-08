@@ -39,7 +39,7 @@ namespace ToylandSiege.GameState
                 data[i] = color;
             return data;
         }
-        
+
         public override void Update(GameTime gameTime)
         {
             ProcessInput();
@@ -51,7 +51,7 @@ namespace ToylandSiege.GameState
         {
             if (!ToylandSiege.GetInstance().IsActive)
                 return;
-            
+
             if (IsSimpleKeyPress(Keys.Escape))
                 ToylandSiege.GetInstance().Exit();
 
@@ -65,6 +65,7 @@ namespace ToylandSiege.GameState
                     SceneParser parser = new SceneParser();
                     ToylandSiege.CurrentLevel.RootGameObject = parser.Parse("TutorialLevel");
                     ToylandSiege.GetInstance().gameStateManager.SetNewGameState(ToylandSiege.GetInstance().gameStateManager.AvailableGameStates["Strategic"]);
+                    ToylandSiege.GetInstance().gameStateManager.LevelChanged(Level.GetCurrentLevel());
                 }
                 else if (btn2.rectangle.Contains(new Point(Mouse.GetState().X, Mouse.GetState().Y)))
                 {
@@ -72,6 +73,7 @@ namespace ToylandSiege.GameState
                     SceneParser parser = new SceneParser();
                     ToylandSiege.CurrentLevel.RootGameObject = parser.Parse("Level1");
                     ToylandSiege.GetInstance().gameStateManager.SetNewGameState(ToylandSiege.GetInstance().gameStateManager.AvailableGameStates["Strategic"]);
+                    ToylandSiege.GetInstance().gameStateManager.LevelChanged(Level.GetCurrentLevel());
                 }
                 else if (btn3.rectangle.Contains(new Point(Mouse.GetState().X, Mouse.GetState().Y)))
                 {
