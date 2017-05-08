@@ -37,14 +37,19 @@ namespace ToylandSiege
             Graphics.GraphicsProfile = GraphicsProfile.HiDef;
 
             Content.RootDirectory = "Content";
-            SoundManager SoundManager = new SoundManager();
-            SoundManager.Initialize();
         }
 
         protected override void Initialize()
         {
             Logger.Log.Debug("Initializing");
             base.Initialize();
+
+            SoundManager SoundManager = new SoundManager();
+            SoundManager.Initialize();
+
+            ShaderManager shaderManager = new ShaderManager();
+            shaderManager.Initialize();
+
             CurrentLevel = new Level("Level1");
 
             SceneParser parser = new SceneParser();
@@ -56,9 +61,8 @@ namespace ToylandSiege
             gameStateManager = new GameStateManager();
             configurationManager.InitGameStates();
 
-
             shadowMapRenderTarget = new RenderTarget2D(GraphicsDevice, 2048, 2048, false, SurfaceFormat.Single, DepthFormat.Depth24, 0, RenderTargetUsage.PlatformContents);
-            _ShadowMapGenerate = Content.Load<Effect>("Shaders/ShadowShader");
+            _ShadowMapGenerate = ShaderManager.Get("ShadowShader");
             _spriteBatch = new SpriteBatch(GraphicsDevice);
         }
 

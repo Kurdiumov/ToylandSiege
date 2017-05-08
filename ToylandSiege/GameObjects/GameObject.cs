@@ -32,10 +32,11 @@ namespace ToylandSiege.GameObjects
         public Collider Collider;
 
         public Dictionary<string, AnimationClip> Clips = new Dictionary<string, AnimationClip>();
-
+        public Effect effect;
         protected GameObject()
         {
             this.Collider = new Collider(this);
+            effect = ShaderManager.Get("LightShader");
         }
 
         protected abstract void Initialize();
@@ -49,21 +50,27 @@ namespace ToylandSiege.GameObjects
             {
                 foreach (ModelMesh mesh in Model.Meshes)
                 {
-                    if (mesh.Effects.All(e => e is BasicEffect))
+                    if (mesh.Effects.All(e => !(e is SkinnedEffect)))
                     {
-                        foreach (BasicEffect effect in mesh.Effects)
-                        {
-                            if (ToylandSiege.GetInstance().configurationManager.LigthningEnabled)
-                                effect.EnableDefaultLighting();
-                            effect.AmbientLightColor = new Vector3(0, 0.3f, 0.3f);
-                            effect.View = Camera.GetCurrentCamera().ViewMatrix;
+                            DrawModelWithEffect();
+                      /*  
+                        
+                            foreach (BasicEffect effect in mesh.Effects)
+                            {
+                                if (ToylandSiege.GetInstance().configurationManager.LigthningEnabled)
+                                    effect.EnableDefaultLighting();
+                                effect.AmbientLightColor = new Vector3(0, 0.3f, 0.3f);
+                                effect.View = Camera.GetCurrentCamera().ViewMatrix;
+                                effect.PreferPerPixelLighting = true;
 
-                            effect.World = TransformationMatrix;
-                            effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
-                            GlobalLightning.DrawGlobalLightning(effect);
-                         }
+                                effect.World = TransformationMatrix;
+                                effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
+                                GlobalLightning.DrawGlobalLightning(effect);
+                            }
+                        */
+
                     }
-                    else if(AnimationPlayer != null && mesh.Effects.All(e => e is SkinnedEffect))
+                    else if (AnimationPlayer != null && mesh.Effects.All(e => e is SkinnedEffect))
                     {
                         Matrix[] bones = AnimationPlayer.GetSkinTransforms();
 
@@ -88,6 +95,30 @@ namespace ToylandSiege.GameObjects
                 child.Draw();
             }
         }
+
+        private void DrawModelWithEffect()
+        {
+            foreach (ModelMesh mesh in Model.Meshes)
+            {
+                foreach (ModelMeshPart part in mesh.MeshParts)
+                {
+                    part.Effect = effect;
+                    effect.Parameters["World"].SetValue(Camera.GetCurrentCamera().World * TransformationMatrix);
+                    effect.Parameters["View"].SetValue(Camera.GetCurrentCamera().ViewMatrix);
+                    effect.Parameters["Projection"].SetValue(Camera.GetCurrentCamera().ProjectionMatrix);
+                    Matrix worldInverseTransposeMatrix = Matrix.Transpose(Matrix.Invert(mesh.ParentBone.Transform * Camera.GetCurrentCamera().World));
+                    effect.Parameters["WorldInverseTranspose"].SetValue(worldInverseTransposeMatrix);
+                    
+
+                    var viewVector = Vector3.Transform(Camera.GetCurrentCamera().Direction, Matrix.CreateRotationY(0));
+                    viewVector.Normalize();
+                    effect.Parameters["ViewVector"].SetValue(viewVector);
+
+                }
+                mesh.Draw();
+            }
+        }
+        
 
         public AnimationPlayer AnimationPlayer;
         public void AddChild(GameObject obj)

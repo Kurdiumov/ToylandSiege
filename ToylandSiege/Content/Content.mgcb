@@ -310,12 +310,6 @@
 /processorParam:DebugMode=Auto
 /build:Shaders/ReflectionShader.fx
 
-#begin Shaders/ShadowShader.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Shaders/ShadowShader.fx
-
 #begin SkyTexture.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -327,4 +321,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:SkyTexture.jpg
+
+#begin Shaders/LightShader.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/LightShader.fx
+
+#begin Shaders/ShadowShader.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/ShadowShader.fx
 

@@ -11,6 +11,7 @@ namespace ToylandSiege.GameObjects
     {  
         public Matrix ProjectionMatrix;
         public Matrix ViewMatrix;
+        public Matrix World;
 
         public Vector3 Direction = Vector3.Forward;
         public Vector3 Up = Vector3.Up;
@@ -47,6 +48,7 @@ namespace ToylandSiege.GameObjects
 
         public override void Update(GameTime gameTime)
         {
+            World = Matrix.CreateTranslation(Position);
             CreateLookAt();
         }
 
