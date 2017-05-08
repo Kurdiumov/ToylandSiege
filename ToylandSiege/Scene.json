@@ -154,14 +154,14 @@
         "Type": "BoardSetting",
         "Model": "Field",
         "Rows": 10,
-        "Columns": 15,
+        "Columns": 14,
         "FieldName": "Field",
         "FieldModel": "Field",
         "Step": 5,
         "Position": [
           12.5,
           0.25,
-          5
+          0
         ],
         "StartingPosition": [
           -35,
@@ -373,14 +373,14 @@
         "Type": "BoardSetting",
         "Model": "Field",
         "Rows": 21,
-        "Columns": 15,
+        "Columns": 14,
         "FieldName": "Field",
         "FieldModel": "Field",
         "Step": 5,
         "Position": [
           -15,
           0.25,
-          5
+          0
         ],
         "StartingPosition": [
           -35,

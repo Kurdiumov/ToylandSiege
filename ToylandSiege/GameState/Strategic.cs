@@ -28,12 +28,23 @@ namespace ToylandSiege.GameState
 
         public static bool FirstUnitPlacing = false;
         public static bool UnitSelected = false;
+
+        private int btnWidth = 250, btnHeight = 60;
+        private Menubutton StartWaveBtn;
         public Strategic()
         {
             soldierTexture2D = ToylandSiege.GetInstance().Content.Load<Texture2D>("soldierTexture");
             scoutTexture2D = ToylandSiege.GetInstance().Content.Load<Texture2D>("scoutTexture");
             tankTexture2D = ToylandSiege.GetInstance().Content.Load<Texture2D>("TankTexture");
             _spriteBatch = new SpriteBatch(ToylandSiege.GetInstance().GraphicsDevice);
+
+            //Create start Wave button
+            var startWaveTexture = new Texture2D(ToylandSiege.GetInstance().GraphicsDevice, btnWidth, btnHeight);
+            var data = new Color[btnWidth * btnHeight];
+            for (int i = 0; i < data.Length; ++i)
+                data[i] = Color.Green;
+            startWaveTexture.SetData(data);
+            StartWaveBtn = new Menubutton(startWaveTexture, (ToylandSiege.GetInstance().GraphicsDevice.DisplayMode.Width / 2) - (btnWidth / 2), ToylandSiege.GetInstance().GraphicsDevice.DisplayMode.Height-70, btnWidth, btnHeight, "Start Wave   ");
         }
 
         public override void Update(GameTime gameTime)
@@ -56,7 +67,7 @@ namespace ToylandSiege.GameState
 
             if (!WaveController.RoundRunning && IsSimpleKeyPress(Keys.Space))
             {
-                if(_CanStartWave())
+                if (_CanStartWave())
                     Level.GetCurrentLevel().WaveController.StartRound();
             }
 
@@ -67,8 +78,15 @@ namespace ToylandSiege.GameState
 
             if (Mouse.GetState().LeftButton == ButtonState.Pressed && IsSimpleClick())
             {
-                Logger.Log.Debug("Clicked in Startegic view!");
-                _PlacingUnit();
+                if (_CanStartWave() && StartWaveBtn.rectangle.Contains(new Point(Mouse.GetState().X, Mouse.GetState().Y)))
+                {
+                    Level.GetCurrentLevel().WaveController.StartRound();
+                }
+                else
+                {
+                    Logger.Log.Debug("Clicked in Startegic view!");
+                    _PlacingUnit();
+                }
             }
 
             //Secret combination to switch  to god mode
@@ -100,6 +118,10 @@ namespace ToylandSiege.GameState
                     default:
                         throw new ArgumentException("Unsupported unit type " + (_currentWave.AvailableUnits[i].UnitType));
                 }
+            }
+            if (_CanStartWave() && !UnitSelected)
+            {
+                StartWaveBtn.Draw(_spriteBatch);
             }
             _spriteBatch.End();
         }
@@ -168,7 +190,7 @@ namespace ToylandSiege.GameState
                     return;
                 if (SelectedField.HasUnit())
                     SelectedField = null;
-                if (SelectedUnit.Field == null )
+                if (SelectedUnit.Field == null)
                 {
                     if (SelectedField.StartingTile)
                     {
