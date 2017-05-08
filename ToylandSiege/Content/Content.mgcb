@@ -328,3 +328,10 @@
 /processorParam:TextureFormat=Color
 /build:SkyTexture.jpg
 
+#begin MenuFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:MenuFont.spritefont
+

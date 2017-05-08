@@ -14,15 +14,20 @@ namespace ToylandSiege
         public Vector2 coords;
         public Rectangle rectangle;
 
-        bool isClicked = false;
-        bool isHovered = false;
-
-        public Menubutton(Texture2D textur, int X, int Y, int width, int heihgt)
+        private string text;
+        private SpriteFont font;
+        private int heigth;
+        private int width;
+        public Menubutton(Texture2D textur, int X, int Y, int width, int heihgt, string text)
         {
             this.texture = textur;
             this.coords.X = X;
             this.coords.Y = Y;
+            this.text = text;
+            this.heigth = heihgt;
+            this.width = width;
             rectangle  = new Rectangle(X, Y, width, heihgt);
+            font = ToylandSiege.GetInstance().Content.Load<SpriteFont>("MenuFont");
 
         }
 
@@ -35,6 +40,8 @@ namespace ToylandSiege
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, coords, Color.White);
+            spriteBatch.DrawString(font, text, new Vector2(coords.X+(width / 2) - text.Length*7, coords.Y+ (heigth/2)-25), Color.Black);
+
         }
     }
 }

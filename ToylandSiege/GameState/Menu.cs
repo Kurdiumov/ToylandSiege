@@ -27,9 +27,9 @@ namespace ToylandSiege.GameState
             btn2Texture.SetData(CreateTexture(Color.White));
             btn3Texture.SetData(CreateTexture(Color.Red));
 
-            btn1 = new Menubutton(btn1Texture, (ToylandSiege.GetInstance().GraphicsDevice.DisplayMode.Width / 2) - (btnWidth / 2), 150, btnWidth, btnHeight);
-            btn2 = new Menubutton(btn2Texture, (ToylandSiege.GetInstance().GraphicsDevice.DisplayMode.Width / 2) - (btnWidth / 2), 300, btnWidth, btnHeight);
-            btn3 = new Menubutton(btn3Texture, (ToylandSiege.GetInstance().GraphicsDevice.DisplayMode.Width / 2) - (btnWidth / 2), 450, btnWidth, btnHeight);
+            btn1 = new Menubutton(btn1Texture, (ToylandSiege.GetInstance().GraphicsDevice.DisplayMode.Width / 2) - (btnWidth / 2), 150, btnWidth, btnHeight, "Start Tutorial");
+            btn2 = new Menubutton(btn2Texture, (ToylandSiege.GetInstance().GraphicsDevice.DisplayMode.Width / 2) - (btnWidth / 2), 300, btnWidth, btnHeight, "Start Level 1");
+            btn3 = new Menubutton(btn3Texture, (ToylandSiege.GetInstance().GraphicsDevice.DisplayMode.Width / 2) - (btnWidth / 2), 450, btnWidth, btnHeight, "Exit");
         }
 
         public Color[] CreateTexture(Color color)
@@ -51,8 +51,8 @@ namespace ToylandSiege.GameState
         {
             if (!ToylandSiege.GetInstance().IsActive)
                 return;
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back ==
-             ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            
+            if (IsSimpleKeyPress(Keys.Escape))
                 ToylandSiege.GetInstance().Exit();
 
             if (Mouse.GetState().LeftButton == ButtonState.Pressed && IsSimpleClick())

@@ -11,7 +11,26 @@ namespace ToylandSiege
 {
     public class WavesBuilder
     {
-        public void Build(WaveController WaveController)
+        public void BuildTutorial(WaveController WaveController)
+        {
+            Dictionary<string, string> Wave1 = new Dictionary<string, string>();
+            Wave1.Add("Unit1", "Soldier");
+            WaveController.AddWave(BuildWave(Wave1, 120));
+
+            Dictionary<string, string> Wave2 = new Dictionary<string, string>();
+            Wave2.Add("Unit2", "Scout");
+            WaveController.AddWave(BuildWave(Wave2, 120));
+
+            Dictionary<string, string> Wave3 = new Dictionary<string, string>();
+            Wave3.Add("Unit3", "Tank");
+
+            WaveController.AddWave(BuildWave(Wave3, 120));
+
+            WaveController.SetCurrentWave(WaveController.Waves.First());
+        }
+
+
+        public void BuildLevel1(WaveController WaveController)
         {
             Dictionary<string, string> Wave1 = new Dictionary<string, string>();
             Wave1.Add("Unit1", "Soldier");

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ToylandSiege.GameObjects;
@@ -22,7 +23,12 @@ namespace ToylandSiege
             _currenLevel = this;
 
             var WaveBuilder = new WavesBuilder();
-            WaveBuilder.Build(WaveController);
+            if (Name == "Level1")
+                WaveBuilder.BuildLevel1(WaveController);
+            else if (Name == "TutorialLevel")
+               WaveBuilder.BuildTutorial(WaveController);
+            else
+                throw new InvalidEnumArgumentException("Cant initalize board");
             _sky = new Sky();
         }
 

@@ -48,10 +48,6 @@ namespace ToylandSiege.GameState
                 ToylandSiege.GetInstance().IsMouseVisible = ToylandSiege.GetInstance().configurationManager.IsMouseVisible();
                 _GameStateManager.SetNewGameState(_GameStateManager.GetPreviousGameState());
             }
-
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back ==
-             ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                ToylandSiege.GetInstance().Exit();
         }
     }
 }
