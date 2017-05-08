@@ -17,10 +17,12 @@ namespace ToylandSiege
         public static bool RoundRunning = false;
         public GameTime gameTime;
 
-
+        public static int WawesCount;
+        public static int RoundNumber;
         public WaveController()
         {
-
+            WawesCount = 0;
+            RoundNumber = 0;
         }
 
         public void Update(GameTime gameTime)
@@ -49,11 +51,13 @@ namespace ToylandSiege
 
         public void AddWave(Wave wave)
         {
+            WawesCount++;
             Waves.Add(wave);
         }
 
         public void StartRound()
         {
+            RoundNumber++;
             RoundRunning = true;
             CurrentWave.WaveStartedTime = gameTime.TotalGameTime;
             Camera.SetCurrentCamera(Camera.AvailableCameras["FirstPersonCamera"]);
@@ -105,7 +109,7 @@ namespace ToylandSiege
                 foreach (var field in rows.Childs.Values)
                     if (field is Field)
                         (field as Field).IsPartOfWay = false;
-                    
+
 
             ToylandSiege.GetInstance().gameStateManager.SetNewGameState(ToylandSiege.GetInstance().gameStateManager.AvailableGameStates["Strategic"]);
         }
