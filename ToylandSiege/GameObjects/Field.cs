@@ -21,7 +21,7 @@ namespace ToylandSiege.GameObjects
         public Unit unit;
         public Enemy enemy;
         public bool IsPartOfWay = false;
-
+        
         public Field(string name, int index, Vector3 position, Vector3 scale)
         {
             Name = name;
@@ -37,12 +37,13 @@ namespace ToylandSiege.GameObjects
             IsStatic = false;
             IsCollidable = true;
             CreateTransformationMatrix();
+            
         }
 
         public override void Update(GameTime gameTime)
         {
-            //TODO: Remove line below
             CreateTransformationMatrix();
+
             foreach (var child in Childs.Values)
             {
                 child.Update(gameTime);

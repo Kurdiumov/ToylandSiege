@@ -78,6 +78,12 @@ namespace ToylandSiege
             terrainObj.Type = JSONHelper.GetValue("Type", currentGameObject);
             terrainObj.Parent = parent;
 
+            if (JSONHelper.ValueExist("Texture", currentGameObject))
+                terrainObj.Texture =
+                    ToylandSiege.GetInstance()
+                        .Content.Load<Texture2D>("Textures/" + JSONHelper.GetValue("Texture", currentGameObject));
+            
+
             if (JSONHelper.ValueExist("Position", currentGameObject))
                 terrainObj.Position = JSONHelper.ParseVector3(currentGameObject.GetValue("Position"));
 
@@ -182,6 +188,11 @@ namespace ToylandSiege
             unitObj.IsStatic = false;
             unitObj.IsAnimated = true;
             unitObj.Parent = parent;
+
+            if (JSONHelper.ValueExist("Texture", currentGameObject))
+                unitObj.Texture =
+                    ToylandSiege.GetInstance()
+                        .Content.Load<Texture2D>("Textures/" + JSONHelper.GetValue("Texture", currentGameObject));
 
             if (JSONHelper.ValueExist("Position", currentGameObject))
                 unitObj.Position = JSONHelper.ParseVector3(currentGameObject.GetValue("Position"));

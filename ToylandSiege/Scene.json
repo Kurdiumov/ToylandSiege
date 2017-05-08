@@ -73,6 +73,7 @@
             "Type": "TerrainObject",
             "Model": "Tower",
             "isEnabled": true,
+            "Texture": "Green",
             "Position": [
               60,
               0,
@@ -94,6 +95,7 @@
             "Type": "TerrainObject",
             "Model": "Terrain",
             "isEnabled": true,
+            "Texture": "Green",
             "Position": [
               0,
               0,

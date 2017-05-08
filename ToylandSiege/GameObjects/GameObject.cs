@@ -24,8 +24,11 @@ namespace ToylandSiege.GameObjects
         public bool IsAnimated = false;
 
         public Model Model;
+        public Texture2D Texture;
+        public LightInfo LightInfo;
         public GameObject Parent = null;
         public Dictionary<string, GameObject> Childs = new Dictionary<string, GameObject>();
+
 
         public Matrix TransformationMatrix;
 
@@ -37,6 +40,7 @@ namespace ToylandSiege.GameObjects
         {
             this.Collider = new Collider(this);
             effect = ShaderManager.Get("LightShader");
+            LightInfo = new LightInfo();
         }
 
         protected abstract void Initialize();
@@ -52,28 +56,11 @@ namespace ToylandSiege.GameObjects
                 {
                     if (mesh.Effects.All(e => !(e is SkinnedEffect)))
                     {
-                            DrawModelWithEffect();
-                      /*  
-                        
-                            foreach (BasicEffect effect in mesh.Effects)
-                            {
-                                if (ToylandSiege.GetInstance().configurationManager.LigthningEnabled)
-                                    effect.EnableDefaultLighting();
-                                effect.AmbientLightColor = new Vector3(0, 0.3f, 0.3f);
-                                effect.View = Camera.GetCurrentCamera().ViewMatrix;
-                                effect.PreferPerPixelLighting = true;
-
-                                effect.World = TransformationMatrix;
-                                effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
-                                GlobalLightning.DrawGlobalLightning(effect);
-                            }
-                        */
-
+                        DrawModelWithEffect(mesh);
                     }
                     else if (AnimationPlayer != null && mesh.Effects.All(e => e is SkinnedEffect))
-                    {
+                    { 
                         Matrix[] bones = AnimationPlayer.GetSkinTransforms();
-
                         foreach (SkinnedEffect effect in mesh.Effects)
                         {
                             (effect).SetBoneTransforms(bones);
@@ -96,9 +83,9 @@ namespace ToylandSiege.GameObjects
             }
         }
 
-        private void DrawModelWithEffect()
+        protected void DrawModelWithEffect(ModelMesh mesh)
         {
-            foreach (ModelMesh mesh in Model.Meshes)
+           // foreach (ModelMesh mesh in Model.Meshes)
             {
                 foreach (ModelMeshPart part in mesh.MeshParts)
                 {
@@ -108,17 +95,28 @@ namespace ToylandSiege.GameObjects
                     effect.Parameters["Projection"].SetValue(Camera.GetCurrentCamera().ProjectionMatrix);
                     Matrix worldInverseTransposeMatrix = Matrix.Transpose(Matrix.Invert(mesh.ParentBone.Transform * Camera.GetCurrentCamera().World));
                     effect.Parameters["WorldInverseTranspose"].SetValue(worldInverseTransposeMatrix);
-                    
+                    effect.Parameters["ModelTexture"].SetValue(Texture);
+
+
+                    effect.Parameters["Shininess"].SetValue(LightInfo.Shininess);
+                    effect.Parameters["SpecularColor"].SetValue(LightInfo.SpecularColor);
+                    effect.Parameters["SpecularIntensity"].SetValue(LightInfo.SpecularIntensity);
+                    effect.Parameters["ViewVector"].SetValue(LightInfo.ViewVector);
+                    effect.Parameters["DiffuseLightDirection"].SetValue(LightInfo.DiffuseLightDirection);
+                    effect.Parameters["DiffuseColor"].SetValue(LightInfo.DiffuseColor);
+                    effect.Parameters["DiffuseIntensity"].SetValue(LightInfo.DiffuseIntensity);
+                    effect.Parameters["AmbientColor"].SetValue(LightInfo.AmbientColor);
+                    effect.Parameters["AmbientIntensity"].SetValue(LightInfo.AmbientIntensity);
 
                     var viewVector = Vector3.Transform(Camera.GetCurrentCamera().Direction, Matrix.CreateRotationY(0));
                     viewVector.Normalize();
                     effect.Parameters["ViewVector"].SetValue(viewVector);
 
                 }
-                mesh.Draw();
+          //      mesh.Draw();
             }
         }
-        
+
 
         public AnimationPlayer AnimationPlayer;
         public void AddChild(GameObject obj)

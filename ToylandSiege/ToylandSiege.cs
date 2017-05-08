@@ -84,6 +84,7 @@ namespace ToylandSiege
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            Camera.GetCurrentCamera().Draw();
 
             gameStateManager.Draw(gameTime);
             base.Draw(gameTime);
