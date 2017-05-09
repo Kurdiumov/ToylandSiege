@@ -56,7 +56,6 @@ namespace ToylandSiege
             ToylandSiege.GetInstance().GraphicsDevice.BlendState = BlendState.Opaque;
             ToylandSiege.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             ToylandSiege.GetInstance().GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
-
             Camera.GetCurrentCamera().Draw();
 
             foreach (var child in RootGameObject.Childs.Values)

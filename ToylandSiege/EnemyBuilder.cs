@@ -36,6 +36,7 @@ namespace ToylandSiege
             unit.Type = "Enemy";
             unit.IsEnabled = false;
             unit.Health = 75;
+            unit.MaxHealth = 75;
             unit.Damage = 25;
             unit.ShotDistance = 3;
             unit.TimeBetweeenShoots = 3;
@@ -67,6 +68,7 @@ namespace ToylandSiege
             unit.Type = "Enemy";
             unit.IsEnabled = false;
             unit.Health = 50;
+            unit.MaxHealth = 50;
             unit.Damage = 60;
             unit.ShotDistance = 5;
             unit.TimeBetweeenShoots = 6;
@@ -98,6 +100,7 @@ namespace ToylandSiege
             unit.Type = "Enemy";
             unit.IsEnabled = false;
             unit.Health = 100;
+            unit.MaxHealth = 100;
             unit.Damage = 20;
             unit.ShotDistance = 1;
             unit.TimeBetweeenShoots = 1;

@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.UI.WebControls;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 
 namespace ToylandSiege.GameObjects
 {
     public abstract class UnitBase : GameObject
     {
-        public float Health { get; set; }
+        public float MaxHealth { get; set; }
         public float Damage { get; set; }
         public uint ShotDistance { get; set; }
         public float TimeBetweeenShoots { get; set; }
@@ -18,8 +20,20 @@ namespace ToylandSiege.GameObjects
         protected readonly HashSet<Field> FieldsInRange = new HashSet<Field>();
         protected TimeSpan LastShootTime;
 
-        private Field _field;
+        private Texture2D HealthBar;
 
+        private float _health;
+        public float Health
+        {
+            get { return _health; }
+            set
+            {
+                _health = value;
+                HealthBar = RecreateHealthRectangle();
+            }
+        }
+
+        private Field _field;
         public Field Field
         {
             get { return _field; }
@@ -33,9 +47,19 @@ namespace ToylandSiege.GameObjects
             }
         }
 
+        SpriteBatch spriteBatch;
+        BasicEffect basicEffect;
+        SpriteFont spriteFont;
         public UnitBase()
         {
             Initialize();
+            spriteBatch = new SpriteBatch(ToylandSiege.GetInstance().GraphicsDevice);
+            spriteFont = ToylandSiege.GetInstance().Content.Load<SpriteFont>("Fonts/FPS");
+            basicEffect = new BasicEffect(ToylandSiege.GetInstance().GraphicsDevice)
+            {
+                TextureEnabled = true,
+                VertexColorEnabled = true,
+            };
         }
 
         protected abstract override void Initialize();
@@ -100,6 +124,7 @@ namespace ToylandSiege.GameObjects
         public void GetDamage(float Damage)
         {
             Health -= Damage;
+            HealthBar = RecreateHealthRectangle();
             Logger.Log.Debug(Name + " got" + Damage + " Damage. Health = " + Health);
             if (this.Health <= 0)
                 DestroyItself();
@@ -152,6 +177,47 @@ namespace ToylandSiege.GameObjects
             {
                 Logger.Log.Error(e);
             }
+        }
+
+        public void DrawHealthBar()
+        {
+            Vector3 rectanglePosition = Position + new Vector3(-5f, 7, -1);
+            basicEffect.World = Matrix.CreateConstrainedBillboard(rectanglePosition, rectanglePosition - Camera.GetCurrentCamera().Direction, Vector3.Down, Camera.GetCurrentCamera().Direction, null);
+            basicEffect.View = Camera.GetCurrentCamera().ViewMatrix;
+            basicEffect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
+
+            spriteBatch.Begin(0, null, null, DepthStencilState.Default, RasterizerState.CullCounterClockwise, basicEffect);
+            spriteBatch.Draw(HealthBar, Vector2.Zero, Color.White);
+            spriteBatch.End();
+        }
+
+        private Texture2D RecreateHealthRectangle()
+        {
+            int width = 6;
+            Texture2D texture = new Texture2D(ToylandSiege.GetInstance().GraphicsDevice, width, 1);
+
+            int coef = (int)MaxHealth / width;
+            var data = new Color[width];
+            for (int i = 0; i < data.Length; ++i)
+            {
+                if (i * coef >= Health)
+                    data[i] = Color.Red;
+                else
+                    data[i] = Color.Green;
+            }
+
+            texture.SetData(data);
+            return texture;
+        }
+
+        public override void Draw()
+        {
+            DrawHealthBar();
+            ToylandSiege.GetInstance().GraphicsDevice.BlendState = BlendState.Opaque;
+            ToylandSiege.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            ToylandSiege.GetInstance().GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
+
+            base.Draw();
         }
     }
 }

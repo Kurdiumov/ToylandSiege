@@ -85,7 +85,7 @@ namespace ToylandSiege
 
             gameStateManager.Draw(gameTime);
             base.Draw(gameTime);
-            DrawShadows();
+            //DrawShadows();
 
             //Uncomment to see shadow map
             /*
