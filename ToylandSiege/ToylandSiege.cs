@@ -86,11 +86,11 @@ namespace ToylandSiege
             gameStateManager.Draw(gameTime);
             base.Draw(gameTime);
             DrawShadows();
-            
+
             //Uncomment to see shadow map
             /*
             _spriteBatch.Begin(0, BlendState.Opaque, SamplerState.AnisotropicClamp);
-            _spriteBatch.Draw(shadowMapRenderTarget,  new Rectangle(0, 0, 1366, 768), Color.White);
+            _spriteBatch.Draw(shadowMapRenderTarget,  new Rectangle(0, 0, ToylandSiege.GetInstance().configurationManager.WidthResolution, ToylandSiege.GetInstance().configurationManager.HeightResolution), Color.White);
             _spriteBatch.End();
             */
         }

@@ -10,8 +10,6 @@
       ],
       "StartingGameState": "Menu",
       "IsFullScreen": true,
-      "HeightResolution": 768, //1080
-      "WidthResolution": 1366, //1920
       "FPSEnabled": true,
       "MouseVisible": true,
       "RayPickingEnabled": true,

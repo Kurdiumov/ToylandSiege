@@ -19,8 +19,8 @@ namespace ToylandSiege
         public bool LigthningEnabled;
         public bool DebugDraw;
 
-        public int HeightResolution = 600;
-        public int WidthResolution = 800;
+        public int HeightResolution = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Height;
+        public int WidthResolution = System.Windows.Forms.Screen.PrimaryScreen.Bounds.Width;
 
         public ConfigurationManager()
         {

@@ -77,11 +77,11 @@ namespace ToylandSiege.GameObjects
 
         public void InitializeLevel1()
         {
-            new Spawner(193, this, "Defender");
-            new Spawner(196, this, "Sniper");
+            new Spawner(172, this, "Defender");
+            new Spawner(176, this, "Sniper");
 
             //Create river
-            for (int i = 164; i < 185; i++)
+            for (int i = 144; i < 164; i++)
             {
                 GetByIndex(i).FieldSpeed = 1;
                 GetByIndex(i).ColorVector3 = new Vector3(0, 0.7f, 0.9f);

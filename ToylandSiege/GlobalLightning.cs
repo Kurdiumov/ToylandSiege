@@ -19,7 +19,7 @@ namespace ToylandSiege
                         Vector3.Zero + GlobalLightning.Direction,
                         Vector3.Up);
 
-            LightProjection = Matrix.CreateOrthographic(1366, 768, 1, 1000);
+            LightProjection = Matrix.CreateOrthographic(ToylandSiege.GetInstance().configurationManager.WidthResolution, ToylandSiege.GetInstance().configurationManager.HeightResolution, 1, 1000);
             LightViewProjection = LightView * LightProjection;
 
             if (!ToylandSiege.GetInstance().configurationManager.LigthningEnabled)
