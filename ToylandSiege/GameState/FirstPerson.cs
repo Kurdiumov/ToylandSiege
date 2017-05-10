@@ -14,6 +14,8 @@ namespace ToylandSiege.GameState
         private SpriteFont _SpawnersFont;
         private SpriteFont _TimerSpriteFont;
         private SpriteBatch _TimerSpriteBatch;
+        private SpriteBatch _AimSpriteBatch;
+        private Texture2D _AimTexture;
         private Board _CurrentBorad;
 
         public FirstPerson()
@@ -21,6 +23,9 @@ namespace ToylandSiege.GameState
             _TimerSpriteBatch = new SpriteBatch(ToylandSiege.GetInstance().GraphicsDevice);
             _TimerSpriteFont = ToylandSiege.GetInstance().Content.Load<SpriteFont>("Fonts/TimerFont");
             _SpawnersFont = ToylandSiege.GetInstance().Content.Load<SpriteFont>("Fonts/SpawnersFont");
+
+            _AimTexture = ToylandSiege.GetInstance().Content.Load<Texture2D>("Aim");
+            _AimSpriteBatch = new SpriteBatch(ToylandSiege.GetInstance().GraphicsDevice);
         }
 
         public override void LevelChanged(Level level)
@@ -91,6 +96,12 @@ namespace ToylandSiege.GameState
             if (_CurrentBorad != null)
                 _TimerSpriteBatch.DrawString(_SpawnersFont, "Spawners: " + _CurrentBorad.GetEnabledEnemiesSpawnersCount() + "/" + _CurrentBorad.GetAllEnemiesSpawnersCount(), new Vector2(10, ToylandSiege.GetInstance().GraphicsDevice.DisplayMode.Height - 30), Color.DarkRed);
             _TimerSpriteBatch.End();
+            if (aim)
+            {
+                _AimSpriteBatch.Begin();
+                _AimSpriteBatch.Draw(_AimTexture, new Vector2((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2), (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / 2)), Color.White);
+                _AimSpriteBatch.End();
+            }
         }
     }
 }
