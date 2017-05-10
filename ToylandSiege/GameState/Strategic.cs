@@ -44,7 +44,7 @@ namespace ToylandSiege.GameState
             for (int i = 0; i < data.Length; ++i)
                 data[i] = Color.Green;
             startWaveTexture.SetData(data);
-            StartWaveBtn = new Menubutton(startWaveTexture, (ToylandSiege.GetInstance().GraphicsDevice.DisplayMode.Width / 2) - (btnWidth / 2), ToylandSiege.GetInstance().GraphicsDevice.DisplayMode.Height-70, btnWidth, btnHeight, "Start Wave   ");
+            StartWaveBtn = new Menubutton(startWaveTexture, (ToylandSiege.GetInstance().GraphicsDevice.DisplayMode.Width / 2) - (btnWidth / 2), ToylandSiege.GetInstance().GraphicsDevice.DisplayMode.Height - 70, btnWidth, btnHeight, "Start Wave   ");
         }
 
         public override void Update(GameTime gameTime)
@@ -212,6 +212,49 @@ namespace ToylandSiege.GameState
                         SelectedUnit = null;
                         SelectedField = null;
                     }
+                }
+            }
+            else if (SelectedUnit == null)
+            {
+                SelectedField = (Field)PickObject(new List<Type>() { typeof(Field) });
+                if (SelectedField == null)
+                {
+                    FirstUnitPlacing = false;
+                    UnitSelected = false;
+                    SelectedUnit = null;
+                    SelectedField = null;
+                    return;
+                }
+                else if (SelectedField.StartingTile && SelectedField.HasUnit())
+                {
+                    var unit = SelectedField.unit;
+                    unit.Field.IsPartOfWay = false;
+                    unit.Field = null;
+                    foreach (var field in unit.FieldsInWay)
+                        field.IsPartOfWay = false;
+
+                    unit.FieldsInWay.Clear();
+                    foreach (var field in unit.TargetFields)
+                        field.IsPartOfWay = false;
+
+                    unit.TargetFields.Clear();
+                    SelectedField.unit = null;
+                    unit.Position = Vector3.Zero;
+                    _currentWave.UnitsInWave.Remove(unit);
+                    _currentWave.AvailableUnits.Add(unit);
+                    Level.GetCurrentLevel().RootGameObject.Childs["Units"].Childs.Remove(unit.Name);
+
+                   var  offset = 0;
+                    for (int i = 0; i < sodlierstTextures.Count; i++)
+                        offset += _soldierTexturePadding;
+                    sodlierstTextures.Add(new Rectangle(_soldierTextureOffset + (_soldierTextureSize * sodlierstTextures.Count) + offset, 10, _soldierTextureSize, _soldierTextureSize));
+                }
+                else
+                {
+                    FirstUnitPlacing = false;
+                    UnitSelected = false;
+                    SelectedUnit = null;
+                    SelectedField = null;
                 }
             }
             else
