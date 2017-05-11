@@ -96,7 +96,7 @@ namespace ToylandSiege
         {
             Enemy unit = new Enemy();
             unit.Name = Name;
-            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("12344");
+            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("123445");
             unit.Type = "Enemy";
             unit.IsEnabled = false;
             unit.Health = 100;
@@ -106,13 +106,13 @@ namespace ToylandSiege
             unit.TimeBetweeenShoots = 1;
             unit.UnitType = "Defender";
 
-            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("12344").Tag as SkinningData;
+            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("123445").Tag as SkinningData;
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
             unit.Clips = new Dictionary<string, AnimationClip>()
             {
                 {
-                    "Take 001",
-                    skinningData.AnimationClips["Take 001"]
+                    "walking",
+                    skinningData.AnimationClips["walking"]
                 }
             };
             unit.AnimationPlayer.StartClip(unit.Clips.Values.First());
