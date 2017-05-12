@@ -117,8 +117,9 @@ namespace ToylandSiege
             };
             unit.AnimationPlayer.StartClip(unit.Clips.Values.First());
 
-            unit.Scale = new Vector3(0.08f, 0.08f, 0.08f);
-            unit.Rotation = new Vector3(1.59f, 0, 0);
+            unit.Position = Vector3.Zero;
+            unit.Scale = new Vector3(0.22f, 0.22f, 0.22f);
+            unit.Rotation = new Vector3(0f, 0, 0);
 
             Logger.Log.Debug("Defender enemy created");
             return unit;
