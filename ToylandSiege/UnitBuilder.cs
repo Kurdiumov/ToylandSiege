@@ -29,7 +29,7 @@ namespace ToylandSiege
         {
             Unit unit = new Unit();
             unit.Name = Name;
-            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("1234");
+            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("123445");
             unit.Type = "Unit";
             unit.IsEnabled = false;
             unit.Health = 100;
@@ -40,20 +40,22 @@ namespace ToylandSiege
             unit.Speed = 5;
             unit.UnitType = "Soldier";
 
-            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("1234").Tag as SkinningData;
+            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("123445").Tag as SkinningData;
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
             unit.Clips = new Dictionary<string, AnimationClip>()
             {
-                {
-                    "Take 001",
-                    skinningData.AnimationClips["Take 001"]
-                }
+                { "standing", skinningData.AnimationClips["standing"]},
+                { "standup", skinningData.AnimationClips["standup"]},
+                { "walking", skinningData.AnimationClips["walking"]},
+                { "crouching", skinningData.AnimationClips["crouching"]},
+                { "crouch", skinningData.AnimationClips["crouch"]}
             };
             unit.AnimationPlayer.StartClip(unit.Clips.Values.First());
 
-            unit.Scale = new Vector3(0.08f, 0.08f, 0.08f);
-            unit.Rotation = new Vector3(1.59f, 0, 0);
-            
+            unit.Position = Vector3.Zero;
+            unit.Scale = new Vector3(0.22f, 0.22f, 0.22f);
+            unit.Rotation = new Vector3(0f, 0, 0);
+
             Logger.Log.Debug("Soldier unit created");
             return unit;
         }
@@ -62,7 +64,7 @@ namespace ToylandSiege
         {
             Unit unit = new Unit();
             unit.Name = Name;
-            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("1234");
+            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("123445");
             unit.Type = "Unit";
             unit.IsEnabled = false;
             unit.Health = 50;
@@ -73,19 +75,21 @@ namespace ToylandSiege
             unit.Speed = 8;
             unit.UnitType = "Scout";
 
-            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("1234").Tag as SkinningData;
+            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("123445").Tag as SkinningData;
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
             unit.Clips = new Dictionary<string, AnimationClip>()
             {
-                {
-                    "Take 001",
-                    skinningData.AnimationClips["Take 001"]
-                }
+                { "standing", skinningData.AnimationClips["standing"]},
+                { "standup", skinningData.AnimationClips["standup"]},
+                { "walking", skinningData.AnimationClips["walking"]},
+                { "crouching", skinningData.AnimationClips["crouching"]},
+                { "crouch", skinningData.AnimationClips["crouch"]}
             };
             unit.AnimationPlayer.StartClip(unit.Clips.Values.First());
 
-            unit.Scale = new Vector3(0.08f, 0.08f, 0.08f);
-            unit.Rotation = new Vector3(1.59f, 0, 0);
+            unit.Position = Vector3.Zero;
+            unit.Scale = new Vector3(0.22f, 0.22f, 0.22f);
+            unit.Rotation = new Vector3(0f, 0, 0);
 
             Logger.Log.Debug("Scout unit created");
             return unit;
@@ -95,7 +99,7 @@ namespace ToylandSiege
         {
             Unit unit = new Unit();
             unit.Name = Name;
-            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("1234");
+            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("123445");
             unit.Type = "Unit";
             unit.IsEnabled = false;
             unit.Health = 200;
@@ -106,19 +110,21 @@ namespace ToylandSiege
             unit.Speed = 2;
             unit.UnitType = "Tank";
 
-            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("1234").Tag as SkinningData;
+            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("123445").Tag as SkinningData;
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
             unit.Clips = new Dictionary<string, AnimationClip>()
             {
-                {
-                    "Take 001",
-                    skinningData.AnimationClips["Take 001"]
-                }
+                { "standing", skinningData.AnimationClips["standing"]},
+                { "standup", skinningData.AnimationClips["standup"]},
+                { "walking", skinningData.AnimationClips["walking"]},
+                { "crouching", skinningData.AnimationClips["crouching"]},
+                { "crouch", skinningData.AnimationClips["crouch"]}
             };
             unit.AnimationPlayer.StartClip(unit.Clips.Values.First());
 
-            unit.Scale = new Vector3(0.08f, 0.08f, 0.08f);
-            unit.Rotation = new Vector3(1.59f, 0, 0);
+            unit.Position = Vector3.Zero;
+            unit.Scale = new Vector3(0.22f, 0.22f, 0.22f);
+            unit.Rotation = new Vector3(0f, 0, 0);
 
             Logger.Log.Debug("Tank unit created");
             return unit;

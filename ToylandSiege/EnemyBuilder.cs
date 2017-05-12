@@ -32,7 +32,7 @@ namespace ToylandSiege
         {
             Enemy unit = new Enemy();
             unit.Name = Name;
-            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("1234");
+            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("123445");
             unit.Type = "Enemy";
             unit.IsEnabled = false;
             unit.Health = 75;
@@ -42,19 +42,21 @@ namespace ToylandSiege
             unit.TimeBetweeenShoots = 3;
             unit.UnitType = "Standart";
 
-            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("1234").Tag as SkinningData;
+            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("123445").Tag as SkinningData;
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
             unit.Clips = new Dictionary<string, AnimationClip>()
             {
-                {
-                    "Take 001",
-                    skinningData.AnimationClips["Take 001"]
-                }
+                { "standing", skinningData.AnimationClips["standing"]},
+                { "standup", skinningData.AnimationClips["standup"]},
+                { "walking", skinningData.AnimationClips["walking"]},
+                { "crouching", skinningData.AnimationClips["crouching"]},
+                { "crouch", skinningData.AnimationClips["crouch"]}
             };
             unit.AnimationPlayer.StartClip(unit.Clips.Values.First());
 
-            unit.Scale = new Vector3(0.08f, 0.08f, 0.08f);
-            unit.Rotation = new Vector3(1.59f, 0, 0);
+            unit.Position = Vector3.Zero;
+            unit.Scale = new Vector3(0.22f, 0.22f, 0.22f);
+            unit.Rotation = new Vector3(0f, 0, 0);
 
             Logger.Log.Debug("Standart enemy created");
             return unit;
@@ -64,7 +66,7 @@ namespace ToylandSiege
         {
             Enemy unit = new Enemy();
             unit.Name = Name;
-            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("1234");
+            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("123445");
             unit.Type = "Enemy";
             unit.IsEnabled = false;
             unit.Health = 50;
@@ -74,19 +76,21 @@ namespace ToylandSiege
             unit.TimeBetweeenShoots = 6;
             unit.UnitType = "Sniper";
 
-            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("1234").Tag as SkinningData;
+            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("123445").Tag as SkinningData;
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
             unit.Clips = new Dictionary<string, AnimationClip>()
             {
-                {
-                    "Take 001",
-                    skinningData.AnimationClips["Take 001"]
-                }
+                { "standing",skinningData.AnimationClips["standing"]},
+                { "standup", skinningData.AnimationClips["standup"]},
+                { "walking", skinningData.AnimationClips["walking"]},
+                { "crouching",skinningData.AnimationClips["crouching"]},
+                { "crouch",skinningData.AnimationClips["crouch"]}
             };
             unit.AnimationPlayer.StartClip(unit.Clips.Values.First());
 
-            unit.Scale = new Vector3(0.08f, 0.08f, 0.08f);
-            unit.Rotation = new Vector3(1.59f, 0, 0);
+            unit.Position = Vector3.Zero;
+            unit.Scale = new Vector3(0.22f, 0.22f, 0.22f);
+            unit.Rotation = new Vector3(0f, 0, 0);
 
             Logger.Log.Debug("Sniper enemy created");
             return unit;
@@ -110,10 +114,11 @@ namespace ToylandSiege
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
             unit.Clips = new Dictionary<string, AnimationClip>()
             {
-                {
-                    "walking",
-                    skinningData.AnimationClips["walking"]
-                }
+                { "standing",skinningData.AnimationClips["standing"]},
+                { "standup", skinningData.AnimationClips["standup"]},
+                { "walking", skinningData.AnimationClips["walking"]},
+                { "crouching",skinningData.AnimationClips["crouching"]},
+                { "crouch",skinningData.AnimationClips["crouch"]}
             };
             unit.AnimationPlayer.StartClip(unit.Clips.Values.First());
 
