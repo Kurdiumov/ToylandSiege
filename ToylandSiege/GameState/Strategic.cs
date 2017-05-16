@@ -200,12 +200,19 @@ namespace ToylandSiege.GameState
                         }
                     }
                 }
-                else if (SelectedUnit.TargetFields.Count == 0 && SelectedUnit.Field.GetNearestFields().Contains(SelectedField) || (SelectedUnit.TargetFields.Count != 0 && SelectedUnit.TargetFields.Last().GetNearestFields().Contains(SelectedField)))
+                else if (SelectedUnit.TargetFields.Count == 0 || (SelectedUnit.TargetFields.Count != 0 ) && SelectedUnit.Field.Index != SelectedField.Index && !SelectedUnit.TargetFields.Contains(SelectedField))
                 {
                     if (!SelectedField.CanPlaceUnit())
                         return;
 
-                    SelectedUnit.AddField(SelectedField);
+                    //SelectedUnit.AddField(SelectedField);
+                    List<int> path = Pathfinder.FindPath(SelectedUnit.Field ,SelectedField);
+                    for(int i = 0; i < path.Count; i++)
+                    {
+                        SelectedUnit.AddField(((Board)SelectedUnit.Field.Parent.Parent).GetByIndex(path.ElementAt(i)));
+                        Logger.Log.Debug(i);
+                    }
+                    Logger.Log.Debug("Left!");
                     SelectedField.IsPartOfWay = true;
                     if (SelectedField.FinishingTile)
                     {
