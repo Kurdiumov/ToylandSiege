@@ -53,10 +53,42 @@ namespace ToylandSiege
             }
         }
 
-        
+        public static List<int> FindPath(Field start, Field destination)
+        {
+            Logger.Log.Debug("Pathfinding...");
+            List<int> path = new List<int>();
+            //int[] order = new int[] { 2, 3, 0, 1, 4, 5 };
+            List<State> frontier = new List<State>();
+            HashSet<Field> visited = new HashSet<Field>();
+            frontier.Add(new State(start, path, destination));
 
-        
-
-        
+            State current = null;
+            return path;
+            while (frontier.Count > 0)
+            {
+                current = frontier.Last();
+                frontier.Remove(frontier.Last());
+                //frontier.RemoveAt(0);
+                visited.Add(current.field);
+                if (current.field.Index == destination.Index)
+                {
+                    return current.solution;
+                }
+                else
+                {
+                    List<Field> near = current.field.GetNearestFields();
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (near.ElementAt(i) != null && destination.CanPlaceUnit())
+                        {
+                            State s = new State(near.ElementAt(i), current.solution, destination);
+                            frontier.Add(s);
+                            frontier.Sort();
+                        }
+                    }
+                }
+            }
+            return path;
+        }
     }
 }
