@@ -37,6 +37,11 @@ namespace ToylandSiege
         {
             if (_state != state)
             {
+                if (_state == this.AvailableGameStates["Paused"])
+                {
+                    Logger.Log.Debug("PAUSED");
+                    
+                }
                 _previousState = _state;
                 _state = state;
                 _state.GameStateChanged();
@@ -57,6 +62,11 @@ namespace ToylandSiege
         public void LevelChanged(Level level)
         {
             AvailableGameStates["FirstPerson"].LevelChanged(level);
+        }
+
+        public bool IsPaused()
+        {
+            return (GetCurrentGameState() == AvailableGameStates["Paused"]);
         }
     }
 }

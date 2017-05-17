@@ -26,16 +26,16 @@ namespace ToylandSiege
         }
 
         public void Update(GameTime gameTime)
-        {
+        {          
             this.gameTime = gameTime;
-            if (CurrentWave != null)
-            {
-                //TODO: Fix pause time
-                CurrentWave.TimeLeft = CurrentWave.WaveTime - (gameTime.TotalGameTime - CurrentWave.WaveStartedTime).TotalSeconds;
-            }
 
-            if (RoundRunning)
+            if (CurrentWave != null && RoundRunning)
             {
+                if (!ToylandSiege.GetInstance().gameStateManager.IsPaused())
+                {
+                    CurrentWave.TimeLeft -= gameTime.ElapsedGameTime.TotalSeconds;
+                }
+
                 CurrentWave.RefreshLists();
                 if (CurrentWave.TimeLeft <= 0.0 || CurrentWave.UnitsInWave.Count == 0 || CurrentWave.UnitsInWave.All(unit => unit.Field.FinishingTile))
                 {

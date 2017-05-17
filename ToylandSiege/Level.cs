@@ -43,10 +43,14 @@ namespace ToylandSiege
 
         public void Update(GameTime gameTime)
         {
-            Camera.GetCurrentCamera().Update(gameTime);
-            WaveController.Update(gameTime);
-            foreach (var child  in RootGameObject.Childs.Values)
-                child.Update(gameTime);
+            // disable everything during pause
+            if (!ToylandSiege.GetInstance().gameStateManager.IsPaused())
+            {
+                Camera.GetCurrentCamera().Update(gameTime);
+                WaveController.Update(gameTime);
+                foreach (var child in RootGameObject.Childs.Values)
+                    child.Update(gameTime);
+            }
         }
 
         public void Draw()
