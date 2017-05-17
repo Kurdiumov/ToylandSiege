@@ -83,13 +83,13 @@ namespace ToylandSiege.GameObjects
             }
             else if (Field != null)
             {
-                if (TargetFields.Count > 0)
+                //if (TargetFields.Count > 0)
                 {
-                    if (TargetFields.Last().GetNearestFields().Contains(field))
+                    //if (TargetFields.Last().GetNearestFields().Contains(field))
                         addTargetField(field);
                 }
-                else if (Field.GetNearestFields().Contains(field))
-                    addTargetField(field);
+                //else if (Field.GetNearestFields().Contains(field))
+                    //addTargetField(field);
             }
         }
 

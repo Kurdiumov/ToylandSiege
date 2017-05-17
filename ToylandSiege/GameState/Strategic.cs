@@ -202,15 +202,16 @@ namespace ToylandSiege.GameState
                 }
                 else if (SelectedUnit.TargetFields.Count == 0 || (SelectedUnit.TargetFields.Count != 0 ) && SelectedUnit.Field.Index != SelectedField.Index && !SelectedUnit.TargetFields.Contains(SelectedField))
                 {
+                    Logger.Log.Debug("Pathfin run");
                     if (!SelectedField.CanPlaceUnit())
                         return;
 
                     //SelectedUnit.AddField(SelectedField);
-                    List<int> path = Pathfinder.FindPath(SelectedUnit.Field ,SelectedField);
+                    List<int> path = Pathfinder.FindPath(SelectedUnit.Field, SelectedField);
                     for(int i = 0; i < path.Count; i++)
                     {
                         SelectedUnit.AddField(((Board)SelectedUnit.Field.Parent.Parent).GetByIndex(path.ElementAt(i)));
-                        Logger.Log.Debug(i);
+                        Logger.Log.Debug(path.ElementAt(i));
                     }
                     Logger.Log.Debug("Left!");
                     SelectedField.IsPartOfWay = true;

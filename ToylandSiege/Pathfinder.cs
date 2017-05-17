@@ -18,9 +18,10 @@ namespace ToylandSiege
             public State(Field f, List<int> s, Field d)
             {
                 field = f;
-                solution = s;
+                solution = new List<int>(s);
                 solution.Add(field.Index);
                 priority = getF(d);
+                Logger.Log.Debug("F wynosi:" + priority);
             }
 
             public void addStep(int x)
@@ -30,13 +31,15 @@ namespace ToylandSiege
 
             private float getF(Field destination)
             {
-                return Heuristic(this.field.Position, destination.Position) + (solution.Count * 7.2f);
+                float x = solution.Count * 13.198f;
+                return (Heuristic(this.field.Position, destination.Position) + x);
             }
 
             private float Heuristic(Vector3 curr, Vector3 destiny)
             {
-                Vector3 dif = destiny - curr;
-                return abs(destiny.X) + abs(destiny.Y);
+                float x = abs(destiny.X) + abs(destiny.Y);
+                Logger.Log.Debug("Heurystyka: "+x);
+                return x;
             }
 
             private float abs(float x)
@@ -48,8 +51,8 @@ namespace ToylandSiege
             public int CompareTo(object x)
             {
                 if (x == null) return 0;
-                State s = x as State;
-                return s.priority.CompareTo(this.priority);
+                State s = (State)x;
+                return this.priority.CompareTo(s.priority);
             }
         }
 
@@ -61,14 +64,16 @@ namespace ToylandSiege
             List<State> frontier = new List<State>();
             HashSet<Field> visited = new HashSet<Field>();
             frontier.Add(new State(start, path, destination));
-
+            int a = 0;
             State current = null;
-            return path;
             while (frontier.Count > 0)
             {
-                current = frontier.Last();
-                frontier.Remove(frontier.Last());
-                //frontier.RemoveAt(0);
+                a++;
+                Logger.Log.Debug("powtorzenie " + a);
+                current = frontier.ElementAt(0);
+                frontier.RemoveAt(0);
+                //current = frontier.Last();
+                //frontier.Remove(frontier.Last());
                 visited.Add(current.field);
                 if (current.field.Index == destination.Index)
                 {
@@ -77,18 +82,21 @@ namespace ToylandSiege
                 else
                 {
                     List<Field> near = current.field.GetNearestFields();
-                    for (int i = 0; i < 6; i++)
+                    for (int i = 0; i < near.Count; i++)
                     {
-                        if (near.ElementAt(i) != null && destination.CanPlaceUnit())
+                        if (near.ElementAt(i) != null)
                         {
-                            State s = new State(near.ElementAt(i), current.solution, destination);
-                            frontier.Add(s);
-                            frontier.Sort();
+                            if (near.ElementAt(i).CanPlaceUnit() && !visited.Contains(near.ElementAt(i)))
+                            {
+                                State s = new State(near.ElementAt(i), current.solution, destination);
+                                frontier.Add(s);
+                                frontier.Sort();
+                            }
                         }
                     }
                 }
             }
-            return path;
+            return null;
         }
     }
 }
