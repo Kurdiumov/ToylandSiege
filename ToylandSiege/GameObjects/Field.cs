@@ -172,5 +172,10 @@ namespace ToylandSiege.GameObjects
                 AmbientVector3 = new Vector3(0.3f, 0.3f, 0.3f);
             }
         }
+
+        public override int GetHashCode()
+        {
+            return Index.GetHashCode();
+        }
     }
 }

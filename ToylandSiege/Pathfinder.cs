@@ -21,7 +21,7 @@ namespace ToylandSiege
                 solution = new List<int>(s);
                 solution.Add(field.Index);
                 priority = getF(d);
-                Logger.Log.Debug("F wynosi:" + priority);
+                //Logger.Log.Debug("F wynosi:" + priority);
             }
 
             public void addStep(int x)
@@ -31,16 +31,21 @@ namespace ToylandSiege
 
             private float getF(Field destination)
             {
-                float x = solution.Count * 13.198f;
-                return (Heuristic(this.field.Position, destination.Position) + x);
+                //float x = solution.Count * 13.198f;
+                //Logger.Log.Debug("Droga :" + x);
+
+                // Odleglosc od srodkow fieldow: 13.198
+                return (Heuristic(this.field.Position, destination.Position) + solution.Count * 12.5381f);
             }
 
             private float Heuristic(Vector3 curr, Vector3 destiny)
             {
-                float x = abs(destiny.X) + abs(destiny.Y);
-                Logger.Log.Debug("Heurystyka: "+x);
+                float x = (float)Math.Sqrt( ((destiny.X - curr.X) * (destiny.X - curr.X)) + ((destiny.Y - curr.Y) * (destiny.Y - curr.Y)) );
+                //Logger.Log.Debug("Heurystyka: "+x);
                 return x;
             }
+            
+
 
             private float abs(float x)
             {
@@ -58,6 +63,7 @@ namespace ToylandSiege
 
         public static List<int> FindPath(Field start, Field destination)
         {
+            DateTime begin = DateTime.Now;
             Logger.Log.Debug("Pathfinding...");
             List<int> path = new List<int>();
             //int[] order = new int[] { 2, 3, 0, 1, 4, 5 };
@@ -68,34 +74,51 @@ namespace ToylandSiege
             State current = null;
             while (frontier.Count > 0)
             {
+                DateTime powt = DateTime.Now;
                 a++;
-                Logger.Log.Debug("powtorzenie " + a);
-                current = frontier.ElementAt(0);
-                frontier.RemoveAt(0);
+                int ind = 0;
+                float minPrio = frontier.ElementAt(ind).priority;
+                for(int j = 0; j < frontier.Count; j++)
+                {
+                    if(frontier.ElementAt(j).priority < minPrio)
+                    {
+                        minPrio = frontier.ElementAt(j).priority;
+                        ind = j;
+                    }
+
+                }
+                current = frontier.ElementAt(ind);
+                frontier.RemoveAt(ind);
+
+                Logger.Log.Debug("powtorzenie " + a + " dlugosc: " + current.solution.Count);
                 //current = frontier.Last();
                 //frontier.Remove(frontier.Last());
-                visited.Add(current.field);
+
                 if (current.field.Index == destination.Index)
                 {
+                    Logger.Log.Debug("Czas szukania: " + (DateTime.Now - begin).Milliseconds);
                     return current.solution;
                 }
-                else
+                else if(!visited.Contains(current.field))
                 {
-                    List<Field> near = current.field.GetNearestFields();
-                    for (int i = 0; i < near.Count; i++)
-                    {
-                        if (near.ElementAt(i) != null)
+                    visited.Add(current.field);
+                        List<Field> near = current.field.GetNearestFields();
+                        for (int i = 0; i < near.Count; i++)
                         {
-                            if (near.ElementAt(i).CanPlaceUnit() && !visited.Contains(near.ElementAt(i)))
+                            if (near.ElementAt(i) != null)
                             {
-                                State s = new State(near.ElementAt(i), current.solution, destination);
-                                frontier.Add(s);
-                                frontier.Sort();
+                                if (near.ElementAt(i).CanPlaceUnit() && !visited.Contains(near.ElementAt(i)))
+                                {
+                                    State s = new State(near.ElementAt(i), current.solution, destination);
+                                    frontier.Add(s);
+                                }
                             }
                         }
-                    }
                 }
+                TimeSpan diff = DateTime.Now - powt;
+                Logger.Log.Debug("Czas powtorzenia: " + diff.Milliseconds);
             }
+            Logger.Log.Debug("Not found");
             return null;
         }
     }

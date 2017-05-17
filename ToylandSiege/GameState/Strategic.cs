@@ -207,11 +207,21 @@ namespace ToylandSiege.GameState
                         return;
 
                     //SelectedUnit.AddField(SelectedField);
+                    //Pathfinder p = new Pathfinder();
+                    //List<int> path = p.FindPath(SelectedUnit.Field, SelectedField);
+
                     List<int> path = Pathfinder.FindPath(SelectedUnit.Field, SelectedField);
-                    for(int i = 0; i < path.Count; i++)
+                    if(path != null)
                     {
-                        SelectedUnit.AddField(((Board)SelectedUnit.Field.Parent.Parent).GetByIndex(path.ElementAt(i)));
-                        Logger.Log.Debug(path.ElementAt(i));
+                        for (int i = 0; i < path.Count; i++)
+                        {
+                            SelectedUnit.AddField(((Board)SelectedUnit.Field.Parent.Parent).GetByIndex(path.ElementAt(i)));
+                            Logger.Log.Debug(path.ElementAt(i));
+                        }
+                    }
+                    else
+                    {
+                        Logger.Log.Debug("Path not found");
                     }
                     Logger.Log.Debug("Left!");
                     SelectedField.IsPartOfWay = true;
