@@ -8,9 +8,9 @@ namespace ToylandSiege.GameState
 {
     public class Paused: GameState
     {
+
         private SpriteFont _spritePausedFont;
-        private SpriteBatch _spriteBatch;
-        
+        private SpriteBatch _spriteBatch;   
         
         public Paused()
         {

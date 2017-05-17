@@ -59,6 +59,7 @@ namespace ToylandSiege
             Wave wave = new Wave();
 
             wave.WaveTime = time;
+            wave.TimeLeft = time;
             foreach (var unit in units)
                 wave.AddUnit(UnitBuilder.BuildUnit(unit.Key, unit.Value));
             
