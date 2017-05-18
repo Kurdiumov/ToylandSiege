@@ -35,7 +35,7 @@ namespace ToylandSiege
                 //Logger.Log.Debug("Droga :" + x);
 
                 // Odleglosc od srodkow fieldow: 13.198
-                return (Heuristic(this.field.Position, destination.Position) + solution.Count);
+                return (Heuristic(this.field.Position, destination.Position));
             }
 
             private float Heuristic(Vector3 curr, Vector3 destiny)
@@ -66,7 +66,6 @@ namespace ToylandSiege
             DateTime begin = DateTime.Now;
             Logger.Log.Debug("Pathfinding...");
             List<int> path = new List<int>();
-            //int[] order = new int[] { 2, 3, 0, 1, 4, 5 };
             List<State> frontier = new List<State>();
             HashSet<Field> visited = new HashSet<Field>();
             frontier.Add(new State(start, path, destination));
@@ -103,7 +102,7 @@ namespace ToylandSiege
                     if (current.field.Index == destination.Index)
                     {
                         Logger.Log.Debug("Pathfinding time: " + (DateTime.Now - begin).Milliseconds);
-                        //Logger.Log.Debug("Wygenerowane " + wygenerowane + " Przetworzone: " + przetworzone);
+                        Logger.Log.Debug("Wygenerowane " + wygenerowane + " Przetworzone: " + przetworzone);
                         return current.solution;
                     }
                     else {
@@ -112,7 +111,7 @@ namespace ToylandSiege
                         {
                             if (near.ElementAt(i) != null)
                             {
-                                if (near.ElementAt(i).CanPlaceUnit() && !visited.Contains(near.ElementAt(i)))
+                                if (near.ElementAt(i).CanPlaceUnit() && !visited.Contains(near.ElementAt(i)) && !near.ElementAt(i).StartingTile)
                                 {
                                     State s = new State(near.ElementAt(i), current.solution, destination);
                                     frontier.Add(s);
