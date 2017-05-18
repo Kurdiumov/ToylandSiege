@@ -136,6 +136,9 @@ namespace SkinnedModelPipeline
             foreach (KeyValuePair<string, AnimationChannel> channel in
                 animation.Channels)
             {
+
+                if (!channel.Key.StartsWith("Bone"))
+                    continue;
                 // Look up what bone this channel is controlling.
                 int boneIndex;
 
