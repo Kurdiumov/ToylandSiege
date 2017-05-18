@@ -188,8 +188,8 @@ namespace ToylandSiege.GameState
                 SelectedField = (Field)PickObject(new List<Type>() { typeof(Field) });
                 if (SelectedField == null)
                     return;
-                if (SelectedField.HasUnit())
-                    SelectedField = null;
+                //if (SelectedField.HasUnit())
+                    //SelectedField = null;
                 if (SelectedUnit.Field == null)
                 {
                     if (SelectedField.StartingTile)
@@ -200,9 +200,12 @@ namespace ToylandSiege.GameState
                         }
                     }
                 }
-                else if (SelectedUnit.TargetFields.Count == 0 || (SelectedUnit.TargetFields.Count != 0 ) && SelectedUnit.Field.Index != SelectedField.Index && !SelectedUnit.TargetFields.Contains(SelectedField))
+                else if (/*SelectedUnit.TargetFields.Count == 0 
+                    || (SelectedUnit.TargetFields.Count != 0 ) 
+                    && */SelectedUnit.Field.Index != SelectedField.Index 
+                    && !SelectedUnit.TargetFields.Contains(SelectedField))
                 {
-                    Logger.Log.Debug("Pathfin run");
+                    //Logger.Log.Debug("Pathfinding run");
                     if (!SelectedField.CanPlaceUnit())
                         return;
 
