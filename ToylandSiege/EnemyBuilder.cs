@@ -100,7 +100,7 @@ namespace ToylandSiege
         {
             Enemy unit = new Enemy();
             unit.Name = Name;
-            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("123445");
+            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("12344556");
             unit.Type = "Enemy";
             unit.IsEnabled = false;
             unit.Health = 100;
@@ -110,15 +110,16 @@ namespace ToylandSiege
             unit.TimeBetweeenShoots = 1;
             unit.UnitType = "Defender";
 
-            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("123445").Tag as SkinningData;
+            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("12344556").Tag as SkinningData;
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
             unit.Clips = new Dictionary<string, AnimationClip>()
             {
+                { "Take 001",skinningData.AnimationClips["Take 001"]}/*
                 { "standing",skinningData.AnimationClips["standing"]},
                 { "standup", skinningData.AnimationClips["standup"]},
                 { "walking", skinningData.AnimationClips["walking"]},
                 { "crouching",skinningData.AnimationClips["crouching"]},
-                { "crouch",skinningData.AnimationClips["crouch"]}
+                { "crouch",skinningData.AnimationClips["crouch"]}*/
             };
             unit.AnimationPlayer.StartClip(unit.Clips.Values.First());
 
