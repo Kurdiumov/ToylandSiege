@@ -15,13 +15,15 @@ namespace ToylandSiege
             public Field field;
             public float priority;
             public List<int> solution;
+            public float distance;
             public State(Field f, List<int> s, Field d)
             {
                 field = f;
                 solution = new List<int>(s);
                 solution.Add(field.Index);
+
+                distance = Distance(this.field.Position, d.Position);
                 priority = getF(d);
-                //Logger.Log.Debug("F wynosi:" + priority);
             }
 
             public void addStep(int x)
@@ -31,26 +33,13 @@ namespace ToylandSiege
 
             private float getF(Field destination)
             {
-                //float x = solution.Count * 13.198f;
-                //Logger.Log.Debug("Droga :" + x);
-
-                // Odleglosc od srodkow fieldow: 13.198
-                return (Heuristic(this.field.Position, destination.Position) + solution.Count * 13 );
+                // Odleglosc od srodkow fieldow: 13.198??
+                return (distance + ((solution.Count - 1) * 2.5f) );
             }
 
-            private float Heuristic(Vector3 curr, Vector3 destiny)
+            public float Distance(Vector3 curr, Vector3 destiny)
             {
-                float x = (float)Math.Sqrt( ((destiny.X - curr.X) * (destiny.X - curr.X)) + ((destiny.Y - curr.Y) * (destiny.Y - curr.Y)) );
-                //Logger.Log.Debug("Heurystyka: "+x);
-                return x;
-            }
-            
-
-
-            private float abs(float x)
-            {
-                if (x < 0) return -x;
-                else return x;
+                return (float)Math.Sqrt(((destiny.X - curr.X) * (destiny.X - curr.X)) + ((destiny.Y - curr.Y) * (destiny.Y - curr.Y)));
             }
 
             public int CompareTo(object x)
@@ -59,7 +48,8 @@ namespace ToylandSiege
                 State s = (State)x;
                 return this.priority.CompareTo(s.priority);
             }
-        }
+        } 
+
 
         public static List<int> FindPath(Field start, Field destination)
         {
@@ -72,8 +62,10 @@ namespace ToylandSiege
             int a = 0;
             int wygenerowane = 1;
             int przetworzone = 0;
+            float StartF = frontier.First().priority;
             State current = null;
-            while (frontier.Count > 0)
+            bool failedFinding = false;
+            while (frontier.Count > 0 && !failedFinding)
             {
                 a++;
                 int ind = 0;
@@ -90,10 +82,8 @@ namespace ToylandSiege
                 current = frontier.ElementAt(ind);
                 frontier.RemoveAt(ind);
 
-                //Logger.Log.Debug("powtorzenie " + a + " dlugosc: " + current.solution.Count);
-                //current = frontier.Last();
-                //frontier.Remove(frontier.Last());
-
+                if (current.priority > StartF * 4)
+                    failedFinding = true;
                 
                 if(!visited.Contains(current.field))
                 {
