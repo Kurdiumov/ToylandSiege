@@ -33,8 +33,10 @@ namespace ToylandSiege.GameState
         {
             Default,
             SelectedUnit,
-            PlacedUnit
+            NavigatingUnit
         }
+
+        StrategicState state = StrategicState.Default;
 
         private int btnWidth = 250, btnHeight = 60;
         private Menubutton StartWaveBtn;
@@ -92,7 +94,8 @@ namespace ToylandSiege.GameState
                 else
                 {
                     Logger.Log.Debug("Clicked in Startegic view!");
-                    _PlacingUnit();
+                    //_PlacingUnit();
+                    _StrategicClick();
                 }
             }
 
@@ -188,6 +191,8 @@ namespace ToylandSiege.GameState
             }
         }
 
+
+        // TO DO:  fix it, list is  bugged
         private void _removeUnitFromField(Unit unit)
         {
             foreach (Field f in unit.FieldsInWay)
@@ -204,168 +209,128 @@ namespace ToylandSiege.GameState
 
             _currentWave.AvailableUnits.Add(SelectedUnit);
             _currentWave.UnitsInWave.Remove(SelectedUnit);
-            unit.IsEnabled = false;
+            Level.GetCurrentLevel().RootGameObject.Childs["Units"].RemoveChild(unit);
+            //unit.IsEnabled = false;
             _updateUI();
         }
 
-        private void _PlacingUnit()
+        private void _selectUnitFromList()
+        {
+            if (sodlierstTextures.Any(rectangle => rectangle.Contains(Mouse.GetState().Position)))
+            {
+                FirstUnitPlacing = true;
+                int UnitIndex = 0;
+                for (int i = 0; i < sodlierstTextures.Count; i++)
+                {
+                    if (sodlierstTextures[i].Contains(Mouse.GetState().Position))
+                    {
+                        UnitIndex = i;
+                        break;
+                    }
+                }
+                SelectedUnit = _currentWave.AvailableUnits[UnitIndex];
+                if (SelectedUnit != null)
+                {
+                    Logger.Log.Debug("Unit selected:  " + SelectedUnit);
+                    state = StrategicState.SelectedUnit;
+                }
+            }
+        }
+
+        private void _StrategicClick()
         {
             FirstUnitPlacing = false;
             UnitSelected = true;
-
-            // Selecting unit on list
-            if (sodlierstTextures.Any(rectangle => rectangle.Contains(Mouse.GetState().Position)))
+            SelectedField = (Field)PickObject(new List<Type>() { typeof(Field) });
+            switch (state)
             {
-                if(SelectedUnit != null)
-                {
-                    if(SelectedUnit.Field != null)
-                    {
-                        if(SelectedUnit.TargetFields.Count > 0)
-                        {
-                            if (!SelectedUnit.TargetFields.Last().FinishingTile)
-                                _removeUnitFromField(SelectedUnit);
-                        }
-                        else _removeUnitFromField(SelectedUnit);
-                    }
-                }
-                else
-                {
-                    FirstUnitPlacing = true;
-                    int UnitIndex = 0;
-                    for (int i = 0; i < sodlierstTextures.Count; i++)
-                    {
-                        if (sodlierstTextures[i].Contains(Mouse.GetState().Position))
-                        {
-                            UnitIndex = i;
-                            break;
-                        }
-                    }
-                    SelectedUnit = _currentWave.AvailableUnits[UnitIndex];
-                    if (SelectedUnit != null)
-                    {
-                        Logger.Log.Debug("Unit selected:  " + SelectedUnit);
-                    }
-                }
-            }
-            //  Selecting field when unit not null
-            else if (SelectedUnit != null) 
-            {
-                SelectedField = (Field)PickObject(new List<Type>() { typeof(Field) });
-                if (SelectedField == null)
-                {
-                    if(SelectedUnit.Field != null && !SelectedUnit.FieldsInWay.Last().FinishingTile)
-                    {
-                        _removeUnitFromField(SelectedUnit);
+                case StrategicState.Default:
+                    _selectUnitFromList();
+                    break;
 
-                    }
 
-                    _unselectPath(SelectedUnit);
-                    return;
-                }
-
-                // Placing unit on starting tile
-                else if (SelectedUnit.Field == null)
-                {
-                    if (SelectedField.StartingTile)
+                case StrategicState.SelectedUnit:
+                    if (SelectedUnit == null)
                     {
-                        if (SelectedUnit != null && SelectedField != null)
-                        {
-                            _placeUnitOnField(SelectedUnit, SelectedField);
-                        }
-                    }
-                    else
-                    {
-                        _unselectPath(SelectedUnit);
+                        state = StrategicState.Default;
                         return;
                     }
-                }
-                else if (SelectedUnit.Field.StartingTile && SelectedField.StartingTile)
-                {
-                    _unselectPath(SelectedUnit);
-                    _replaceUnit(SelectedUnit, SelectedField);
-                }
-
-                //  Finding path for selected unit
-                else if (SelectedUnit.Field.Index != SelectedField.Index && !SelectedUnit.TargetFields.Contains(SelectedField))
-                {
-                    //Logger.Log.Debug("Pathfinding run");
-                    if (!SelectedField.CanPlaceUnit())
-                        return;
-                    List<int> path;
-                    if (SelectedUnit.TargetFields.Count > 0)
-                        path = Pathfinder.FindPath(SelectedUnit.TargetFields.Last(), SelectedField);
-                    else
-                        path = Pathfinder.FindPath(SelectedUnit.Field, SelectedField);
-
-                    if(path != null)
-                    {
-                        for (int i = 0; i < path.Count; i++)
-                        {
-                            SelectedUnit.AddField(((Board)SelectedUnit.Field.Parent.Parent).GetByIndex(path.ElementAt(i)));
-                            Logger.Log.Debug(path.ElementAt(i));
-                        }
-                    }
-                    else
-                    {
-                        Logger.Log.Debug("Path not found");
-                    }
-                    Logger.Log.Debug("Pathfinding done");
-                    if (SelectedUnit.FieldsInWay.Last().FinishingTile)
+                    _selectUnitFromList();
+                    if (SelectedField == null)
                     {
                         SelectedUnit = null;
-                        SelectedField = null;
+                        state = StrategicState.Default;
+                        return;
                     }
-                }
-            }
-            else if (SelectedUnit == null)
-            {
-                SelectedField = (Field)PickObject(new List<Type>() { typeof(Field) });
-                if (SelectedField == null)
-                {
-                    FirstUnitPlacing = false;
-                    UnitSelected = false;
-                    SelectedUnit = null;
-                    SelectedField = null;
-                    return;
-                }
-                else if (SelectedField.StartingTile && SelectedField.HasUnit())
-                {
-                    var unit = SelectedField.unit;
-                    unit.Field.IsPartOfWay = false;
-                    unit.Field = null;
-                    foreach (var field in unit.FieldsInWay)
-                        field.IsPartOfWay = false;
+                    else if(SelectedField.StartingTile && SelectedField.CanPlaceUnit())
+                    {
+                        _placeUnitOnField(SelectedUnit, SelectedField);
+                        state = StrategicState.NavigatingUnit;
+                        return;
+                    }
+                    else
+                    {
+                        SelectedUnit = null;
+                        state = StrategicState.Default;
+                    }
+                    break;
 
-                    unit.FieldsInWay.Clear();
-                    foreach (var field in unit.TargetFields)
-                        field.IsPartOfWay = false;
 
-                    unit.TargetFields.Clear();
-                    SelectedField.unit = null;
-                    unit.Position = Vector3.Zero;
-                    _currentWave.UnitsInWave.Remove(unit);
-                    _currentWave.AvailableUnits.Add(unit);
-                    Level.GetCurrentLevel().RootGameObject.Childs["Units"].Childs.Remove(unit.Name);
+                case StrategicState.NavigatingUnit:
+                    if (SelectedUnit == null)
+                    {
+                        state = StrategicState.Default;
+                        return;
+                    }
+                    if (sodlierstTextures.Any(rectangle => rectangle.Contains(Mouse.GetState().Position)))
+                    {
+                        _unselectPath(SelectedUnit);
+                        _removeUnitFromField(SelectedUnit);
+                        _selectUnitFromList();
+                        state = StrategicState.SelectedUnit;
+                        return;
+                    }
+                    else if (SelectedField == null)
+                    {
+                        _unselectPath(SelectedUnit);
+                        _removeUnitFromField(SelectedUnit);
+                        state = StrategicState.Default;
+                        return;
+                    }
+                    if (SelectedUnit.Field.StartingTile && SelectedField.StartingTile)
+                    {
+                        _unselectPath(SelectedUnit);
+                        _replaceUnit(SelectedUnit, SelectedField);
+                    }
+                    else if(SelectedUnit.Field.Index != SelectedField.Index && !SelectedUnit.TargetFields.Contains(SelectedField) && SelectedField.CanPlaceUnit())
+                    {
+                        List<int> path;
+                        if (SelectedUnit.TargetFields.Count > 0)
+                            path = Pathfinder.FindPath(SelectedUnit.TargetFields.Last(), SelectedField);
+                        else
+                            path = Pathfinder.FindPath(SelectedUnit.Field, SelectedField);
 
-                   var  offset = 0;
-                    for (int i = 0; i < sodlierstTextures.Count; i++)
-                        offset += _soldierTexturePadding;
-                    sodlierstTextures.Add(new Rectangle(_soldierTextureOffset + (_soldierTextureSize * sodlierstTextures.Count) + offset, 10, _soldierTextureSize, _soldierTextureSize));
-                }
-                else
-                {
-                    FirstUnitPlacing = false;
-                    UnitSelected = false;
-                    SelectedUnit = null;
-                    SelectedField = null;
-                }
-            }
-            else
-            {
-                FirstUnitPlacing = false;
-                UnitSelected = false;
-                SelectedUnit = null;
-                SelectedField = null;
+                        if (path != null)
+                        {
+                            for (int i = 0; i < path.Count; i++)
+                            {
+                                SelectedUnit.AddField(((Board)SelectedUnit.Field.Parent.Parent).GetByIndex(path.ElementAt(i)));
+                                Logger.Log.Debug(path.ElementAt(i));
+                            }
+                        }
+                        else
+                        {
+                            Logger.Log.Debug("Path not found");
+                        }
+                        Logger.Log.Debug("Pathfinding done");
+                        if (SelectedUnit.FieldsInWay.Last().FinishingTile)
+                        {
+                            SelectedUnit = null;
+                            SelectedField = null;
+                            state = StrategicState.Default;
+                        }
+                    }
+                    break;
             }
         }
 
