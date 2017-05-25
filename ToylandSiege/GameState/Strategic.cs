@@ -165,6 +165,7 @@ namespace ToylandSiege.GameState
         {
             Logger.Log.Debug("Replaced unit");
             SelectedUnit.FieldsInWay.Clear();
+            SelectedUnit.TargetFields.Clear();
             SelectedUnit.FieldsInWay.Add(field);
             field.SetUnit(SelectedUnit);
             this.SelectedUnit.Field = field;
@@ -191,8 +192,12 @@ namespace ToylandSiege.GameState
                 unit.Field.unit = null;
             }
 
+            unit.FieldsInWay.Clear();
+            unit.TargetFields.Clear();
+
             _currentWave.AvailableUnits.Add(SelectedUnit);
             _currentWave.UnitsInWave.Remove(SelectedUnit);
+            _updateUI();
         }
 
         private void _PlacingUnit()
@@ -228,6 +233,7 @@ namespace ToylandSiege.GameState
                     if(SelectedUnit.Field != null && !SelectedUnit.FieldsInWay.Last().FinishingTile)
                     {
                         _removeUnitFromField(SelectedUnit);
+
                     }
 
                     _unselectPath(SelectedUnit);
@@ -257,14 +263,17 @@ namespace ToylandSiege.GameState
                 }
 
                 //  Finding path for selected unit
-                else if (SelectedUnit.Field.Index != SelectedField.Index 
-                    && !SelectedUnit.TargetFields.Contains(SelectedField))
+                else if (SelectedUnit.Field.Index != SelectedField.Index && !SelectedUnit.TargetFields.Contains(SelectedField))
                 {
                     //Logger.Log.Debug("Pathfinding run");
                     if (!SelectedField.CanPlaceUnit())
                         return;
+                    List<int> path;
+                    if (SelectedUnit.TargetFields.Count > 0)
+                        path = Pathfinder.FindPath(SelectedUnit.TargetFields.Last(), SelectedField);
+                    else
+                        path = Pathfinder.FindPath(SelectedUnit.Field, SelectedField);
 
-                    List<int> path = Pathfinder.FindPath(SelectedUnit.Field, SelectedField);
                     if(path != null)
                     {
                         for (int i = 0; i < path.Count; i++)
@@ -278,10 +287,9 @@ namespace ToylandSiege.GameState
                         Logger.Log.Debug("Path not found");
                     }
                     Logger.Log.Debug("Left!");
-                    SelectedField.IsPartOfWay = true;
-                    if (SelectedField.FinishingTile)
+                    if (SelectedUnit.FieldsInWay.Last().FinishingTile)
                     {
-                        SelectedUnit = null;
+                        //SelectedUnit = null;
                         SelectedField = null;
                     }
                 }
