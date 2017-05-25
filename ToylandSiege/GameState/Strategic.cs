@@ -294,7 +294,7 @@ namespace ToylandSiege.GameState
                     if (sodlierstTextures.Any(rectangle => rectangle.Contains(Mouse.GetState().Position)))
                     {
                         _unselectPath(SelectedUnit);
-                        if (IsPathFinished(SelectedUnit))
+                        if (!IsPathFinished(SelectedUnit))
                             _removeUnitFromField(SelectedUnit);
                         _selectUnitFromList();
                         state = StrategicState.SelectedUnit;
