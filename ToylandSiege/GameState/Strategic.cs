@@ -29,6 +29,13 @@ namespace ToylandSiege.GameState
         public static bool FirstUnitPlacing = false;
         public static bool UnitSelected = false;
 
+        enum StrategicState
+        {
+            Default,
+            SelectedUnit,
+            PlacedUnit
+        }
+
         private int btnWidth = 250, btnHeight = 60;
         private Menubutton StartWaveBtn;
         public Strategic()
@@ -197,6 +204,7 @@ namespace ToylandSiege.GameState
 
             _currentWave.AvailableUnits.Add(SelectedUnit);
             _currentWave.UnitsInWave.Remove(SelectedUnit);
+            unit.IsEnabled = false;
             _updateUI();
         }
 
@@ -206,22 +214,37 @@ namespace ToylandSiege.GameState
             UnitSelected = true;
 
             // Selecting unit on list
-            if (SelectedUnit == null && sodlierstTextures.Any(rectangle => rectangle.Contains(Mouse.GetState().Position)))
+            if (sodlierstTextures.Any(rectangle => rectangle.Contains(Mouse.GetState().Position)))
             {
-                FirstUnitPlacing = true;
-                int UnitIndex = 0;
-                for (int i = 0; i < sodlierstTextures.Count; i++)
+                if(SelectedUnit != null)
                 {
-                    if (sodlierstTextures[i].Contains(Mouse.GetState().Position))
+                    if(SelectedUnit.Field != null)
                     {
-                        UnitIndex = i;
-                        break;
+                        if(SelectedUnit.TargetFields.Count > 0)
+                        {
+                            if (!SelectedUnit.TargetFields.Last().FinishingTile)
+                                _removeUnitFromField(SelectedUnit);
+                        }
+                        else _removeUnitFromField(SelectedUnit);
                     }
                 }
-                SelectedUnit = _currentWave.AvailableUnits[UnitIndex];
-                if (SelectedUnit != null)
+                else
                 {
-                    Logger.Log.Debug("Unit selected:  " + SelectedUnit);
+                    FirstUnitPlacing = true;
+                    int UnitIndex = 0;
+                    for (int i = 0; i < sodlierstTextures.Count; i++)
+                    {
+                        if (sodlierstTextures[i].Contains(Mouse.GetState().Position))
+                        {
+                            UnitIndex = i;
+                            break;
+                        }
+                    }
+                    SelectedUnit = _currentWave.AvailableUnits[UnitIndex];
+                    if (SelectedUnit != null)
+                    {
+                        Logger.Log.Debug("Unit selected:  " + SelectedUnit);
+                    }
                 }
             }
             //  Selecting field when unit not null
@@ -286,10 +309,10 @@ namespace ToylandSiege.GameState
                     {
                         Logger.Log.Debug("Path not found");
                     }
-                    Logger.Log.Debug("Left!");
+                    Logger.Log.Debug("Pathfinding done");
                     if (SelectedUnit.FieldsInWay.Last().FinishingTile)
                     {
-                        //SelectedUnit = null;
+                        SelectedUnit = null;
                         SelectedField = null;
                     }
                 }
