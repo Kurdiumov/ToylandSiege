@@ -21,6 +21,7 @@ namespace ToylandSiege.GameObjects
         public Unit unit;
         public Enemy enemy;
         public bool IsPartOfWay = false;
+        public bool IsPathOfCurrentWay = false;
 
         public Field(string name, int index, Vector3 position, Vector3 scale)
         {

@@ -85,11 +85,8 @@ namespace ToylandSiege.GameObjects
             {
                 if (!field.StartingTile)
                 {
-                    //if (TargetFields.Last().GetNearestFields().Contains(field))
                         addTargetField(field);
                 }
-                //else if (Field.GetNearestFields().Contains(field))
-                    //addTargetField(field);
             }
         }
 
@@ -123,8 +120,6 @@ namespace ToylandSiege.GameObjects
                         TargetFields.RemoveAt(0);
                     }
                 }
-
-            //TODO: Use pathfinder
         }
 
         public void RotateToTarget(Vector3 direction)

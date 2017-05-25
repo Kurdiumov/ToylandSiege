@@ -33,7 +33,6 @@ namespace ToylandSiege
 
             private float getF(Field destination)
             {
-                // Odleglosc od srodkow fieldow: 13.198??
                 return (distance + ((solution.Count - 1) * 2.5f) );
             }
 

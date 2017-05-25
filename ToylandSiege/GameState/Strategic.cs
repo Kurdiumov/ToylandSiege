@@ -191,8 +191,6 @@ namespace ToylandSiege.GameState
             }
         }
 
-
-        // TO DO:  fix it, list is  bugged
         private void _removeUnitFromField(Unit unit)
         {
             foreach (Field f in unit.FieldsInWay)
@@ -210,7 +208,6 @@ namespace ToylandSiege.GameState
             _currentWave.AvailableUnits.Add(SelectedUnit);
             _currentWave.UnitsInWave.Remove(SelectedUnit);
             Level.GetCurrentLevel().RootGameObject.Childs["Units"].RemoveChild(unit);
-            //unit.IsEnabled = false;
             _updateUI();
         }
 
@@ -325,9 +322,23 @@ namespace ToylandSiege.GameState
                         Logger.Log.Debug("Pathfinding done");
                         if (SelectedUnit.FieldsInWay.Last().FinishingTile)
                         {
+                            _unselectPath(SelectedUnit);
                             SelectedUnit = null;
                             SelectedField = null;
                             state = StrategicState.Default;
+                        }
+                    }
+                    else if(SelectedUnit.TargetFields.Contains(SelectedField))
+                    {
+                        for(int i = SelectedUnit.TargetFields.Count-1 ; i >= 0 && SelectedUnit.TargetFields.ElementAt(i) != SelectedField; i--)
+                        {
+                            SelectedUnit.TargetFields.ElementAt(i).IsPartOfWay = false;
+                            SelectedUnit.TargetFields.RemoveAt(i);
+                        }
+                        if(SelectedUnit.TargetFields.Last() == SelectedField)
+                        {
+                            SelectedField.IsPartOfWay = false;
+                            SelectedUnit.TargetFields.RemoveAt(SelectedUnit.TargetFields.Count - 1);
                         }
                     }
                     break;
