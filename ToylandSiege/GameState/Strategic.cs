@@ -161,10 +161,46 @@ namespace ToylandSiege.GameState
             _updateUI();
         }
 
+        private void _replaceUnit(Unit SelectedUnit, Field field)
+        {
+            Logger.Log.Debug("Replaced unit");
+            SelectedUnit.FieldsInWay.Clear();
+            SelectedUnit.FieldsInWay.Add(field);
+            field.SetUnit(SelectedUnit);
+            this.SelectedUnit.Field = field;
+
+            SelectedUnit.Position = field.Position;
+        }
+
+        private void _unselectPath(Unit SelectedUnit)
+        {
+            foreach(Field f in SelectedUnit.FieldsInWay)
+            {
+                f.IsPartOfWay = false;
+            }
+        }
+
+        private void _removeUnitFromField(Unit unit)
+        {
+            foreach (Field f in unit.FieldsInWay)
+                f.IsPartOfWay = false;
+
+            if (unit.Field != null)
+            {
+                unit.Field.IsPartOfWay = false;
+                unit.Field.unit = null;
+            }
+
+            _currentWave.AvailableUnits.Add(SelectedUnit);
+            _currentWave.UnitsInWave.Remove(SelectedUnit);
+        }
+
         private void _PlacingUnit()
         {
             FirstUnitPlacing = false;
             UnitSelected = true;
+
+            // Selecting unit on list
             if (SelectedUnit == null && sodlierstTextures.Any(rectangle => rectangle.Contains(Mouse.GetState().Position)))
             {
                 FirstUnitPlacing = true;
@@ -183,14 +219,23 @@ namespace ToylandSiege.GameState
                     Logger.Log.Debug("Unit selected:  " + SelectedUnit);
                 }
             }
-            else if (SelectedUnit != null) //Selecting field when unit not null
+            //  Selecting field when unit not null
+            else if (SelectedUnit != null) 
             {
                 SelectedField = (Field)PickObject(new List<Type>() { typeof(Field) });
                 if (SelectedField == null)
+                {
+                    if(SelectedUnit.Field != null && !SelectedUnit.FieldsInWay.Last().FinishingTile)
+                    {
+                        _removeUnitFromField(SelectedUnit);
+                    }
+
+                    _unselectPath(SelectedUnit);
                     return;
-                //if (SelectedField.HasUnit())
-                    //SelectedField = null;
-                if (SelectedUnit.Field == null)
+                }
+
+                // Placing unit on starting tile
+                else if (SelectedUnit.Field == null)
                 {
                     if (SelectedField.StartingTile)
                     {
@@ -199,19 +244,25 @@ namespace ToylandSiege.GameState
                             _placeUnitOnField(SelectedUnit, SelectedField);
                         }
                     }
+                    else
+                    {
+                        _unselectPath(SelectedUnit);
+                        return;
+                    }
                 }
-                else if (/*SelectedUnit.TargetFields.Count == 0 
-                    || (SelectedUnit.TargetFields.Count != 0 ) 
-                    && */SelectedUnit.Field.Index != SelectedField.Index 
+                else if (SelectedUnit.Field.StartingTile && SelectedField.StartingTile)
+                {
+                    _unselectPath(SelectedUnit);
+                    _replaceUnit(SelectedUnit, SelectedField);
+                }
+
+                //  Finding path for selected unit
+                else if (SelectedUnit.Field.Index != SelectedField.Index 
                     && !SelectedUnit.TargetFields.Contains(SelectedField))
                 {
                     //Logger.Log.Debug("Pathfinding run");
                     if (!SelectedField.CanPlaceUnit())
                         return;
-
-                    //SelectedUnit.AddField(SelectedField);
-                    //Pathfinder p = new Pathfinder();
-                    //List<int> path = p.FindPath(SelectedUnit.Field, SelectedField);
 
                     List<int> path = Pathfinder.FindPath(SelectedUnit.Field, SelectedField);
                     if(path != null)

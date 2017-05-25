@@ -83,7 +83,7 @@ namespace ToylandSiege.GameObjects
             }
             else if (Field != null)
             {
-                //if (TargetFields.Count > 0)
+                if (!field.StartingTile)
                 {
                     //if (TargetFields.Last().GetNearestFields().Contains(field))
                         addTargetField(field);

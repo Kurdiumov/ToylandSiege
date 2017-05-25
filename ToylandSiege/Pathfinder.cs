@@ -35,7 +35,7 @@ namespace ToylandSiege
                 //Logger.Log.Debug("Droga :" + x);
 
                 // Odleglosc od srodkow fieldow: 13.198
-                return (Heuristic(this.field.Position, destination.Position));
+                return (Heuristic(this.field.Position, destination.Position) + solution.Count * 13 );
             }
 
             private float Heuristic(Vector3 curr, Vector3 destiny)

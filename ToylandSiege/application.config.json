@@ -9,7 +9,7 @@
          "Paused",
       ],
       "StartingGameState": "Menu",
-      "IsFullScreen": true,
+      "IsFullScreen": false,
       "FPSEnabled": true,
       "MouseVisible": true,
       "RayPickingEnabled": true,
