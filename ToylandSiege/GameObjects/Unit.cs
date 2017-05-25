@@ -85,7 +85,7 @@ namespace ToylandSiege.GameObjects
             {
                 if (!field.StartingTile)
                 {
-                        addTargetField(field);
+                    addTargetField(field);
                 }
             }
         }

@@ -38,7 +38,8 @@ namespace ToylandSiege
 
             public float Distance(Vector3 curr, Vector3 destiny)
             {
-                return (float)Math.Sqrt(((destiny.X - curr.X) * (destiny.X - curr.X)) + ((destiny.Y - curr.Y) * (destiny.Y - curr.Y)));
+                //return (float)Math.Sqrt(((destiny.X - curr.X) * (destiny.X - curr.X)) + ((destiny.Y - curr.Y) * (destiny.Y - curr.Y)));
+                return (float)(abs(destiny.X - curr.X) + abs(destiny.Y - curr.Y) * 1.15);
             }
 
             public int CompareTo(object x)
@@ -46,6 +47,12 @@ namespace ToylandSiege
                 if (x == null) return 0;
                 State s = (State)x;
                 return this.priority.CompareTo(s.priority);
+            }
+
+            private float abs(float a)
+            {
+                if (a > 0) return a;
+                else return -a;
             }
         } 
 
@@ -80,8 +87,8 @@ namespace ToylandSiege
                 }
                 current = frontier.ElementAt(ind);
                 frontier.RemoveAt(ind);
-
-                if (current.priority > StartF * 4)
+                
+                if (current.priority > (StartF * 2 + 23))
                     failedFinding = true;
                 
                 if(!visited.Contains(current.field))

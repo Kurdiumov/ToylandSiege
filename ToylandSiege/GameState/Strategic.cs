@@ -160,6 +160,7 @@ namespace ToylandSiege.GameState
             SelectedUnit.IsEnabled = true;
             SelectedUnit.FieldsInWay.Add(field);
             field.SetUnit(SelectedUnit);
+            field.IsPartOfWay = true;
             this.SelectedUnit.Field = field;
             _currentWave.AvailableUnits.Remove(SelectedUnit);
             _currentWave.UnitsInWave.Add(SelectedUnit);
@@ -177,6 +178,8 @@ namespace ToylandSiege.GameState
             SelectedUnit.FieldsInWay.Clear();
             SelectedUnit.TargetFields.Clear();
             SelectedUnit.FieldsInWay.Add(field);
+            SelectedUnit.Field.unit = null;
+            field.IsPartOfWay = true;
             field.SetUnit(SelectedUnit);
             this.SelectedUnit.Field = field;
 
