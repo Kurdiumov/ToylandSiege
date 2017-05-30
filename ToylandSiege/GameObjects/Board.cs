@@ -59,13 +59,13 @@ namespace ToylandSiege.GameObjects
                     {
                         Model = ToylandSiege.GetInstance().Content.Load<Model>(FieldModel),
                     };
-
-
+                    
+                    /*
                     //Setting starting and finishing fields
                     if (column == 0)
                         field.StartingTile = true;
                     else if (column == _numberOfColumns - 1)
-                        field.FinishingTile = true;
+                        field.FinishingTile = true;*/
 
 
                     Childs["Row" + column].AddChild(field);
@@ -86,11 +86,29 @@ namespace ToylandSiege.GameObjects
                 GetByIndex(i).FieldSpeed = 1;
                 GetByIndex(i).ColorVector3 = new Vector3(0, 0.7f, 0.9f);
             }
+            for(int i = 0; i < 20; i++)
+            {
+                GetByIndex(i).StartingTile = true;
+            }
+            for ( int i = 267; i < 287; i++)
+            {
+                GetByIndex(i).FinishingTile = true;
+            }
         }
 
         public void InitializeTutorialLevel()
         {
             new Spawner(71, this, "Standart");
+            GetByIndex(5).StartingTile = true;
+            GetByIndex(6).StartingTile = true;
+            for(int i = 88; i < 93; i++)
+            {
+                GetByIndex(i).FinishingTile = true;
+            }
+            for(int i = 97; i < 103; i++)
+            {
+                GetByIndex(i).FinishingTile = true;
+            }
         }
 
 

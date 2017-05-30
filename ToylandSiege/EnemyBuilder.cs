@@ -32,7 +32,7 @@ namespace ToylandSiege
         {
             Enemy unit = new Enemy();
             unit.Name = Name;
-            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("123445");
+            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("1234455");
             unit.Type = "Enemy";
             unit.IsEnabled = false;
             unit.Health = 75;
@@ -42,7 +42,7 @@ namespace ToylandSiege
             unit.TimeBetweeenShoots = 3;
             unit.UnitType = "Standart";
 
-            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("123445").Tag as SkinningData;
+            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("1234455").Tag as SkinningData;
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
             unit.Clips = new Dictionary<string, AnimationClip>()
             {
@@ -66,7 +66,7 @@ namespace ToylandSiege
         {
             Enemy unit = new Enemy();
             unit.Name = Name;
-            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("123445");
+            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("1234455");
             unit.Type = "Enemy";
             unit.IsEnabled = false;
             unit.Health = 50;
@@ -76,7 +76,7 @@ namespace ToylandSiege
             unit.TimeBetweeenShoots = 6;
             unit.UnitType = "Sniper";
 
-            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("123445").Tag as SkinningData;
+            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("1234455").Tag as SkinningData;
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
             unit.Clips = new Dictionary<string, AnimationClip>()
             {

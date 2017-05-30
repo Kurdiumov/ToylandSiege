@@ -159,7 +159,7 @@ namespace ToylandSiege.GameObjects
         {
             if (IsSpawner)
             {
-                ColorVector3 = new Vector3(0.9f, 1f, 0.1f);
+                ColorVector3 = new Vector3(0.9f, 0.1f, 0.1f);
                 AmbientVector3 = new Vector3(1, 1, 1);
             }
             else if (FieldSpeed == 3 )
