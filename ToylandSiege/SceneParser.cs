@@ -69,10 +69,16 @@ namespace ToylandSiege
         {
             var name = JSONHelper.GetValue("Name", currentGameObject);
             var model = JSONHelper.GetValue("Model", currentGameObject);
+            if(JSONHelper.ValueExist("Directory", currentGameObject))
+            {
+                var dir = JSONHelper.GetValue("Directory", currentGameObject);
+                ToylandSiege.GetInstance().Content.RootDirectory = dir;
+            }
             var IsEnabled = JSONHelper.ToBool(JSONHelper.GetValue("isEnabled", currentGameObject));
 
 
             var mod = ToylandSiege.GetInstance().Content.Load<Model>(model);
+            ToylandSiege.GetInstance().Content.RootDirectory = "Content";
             var terrainObj = new TerrainObject(name, mod);
             terrainObj.IsEnabled = IsEnabled;
             terrainObj.IsStatic = true;
