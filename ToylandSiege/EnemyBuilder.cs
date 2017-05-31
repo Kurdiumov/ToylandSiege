@@ -110,18 +110,18 @@ namespace ToylandSiege
             unit.TimeBetweeenShoots = 1;
             unit.UnitType = "Defender";
 
-            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("1234455").Tag as SkinningData;
+            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("1234455standing").Tag as SkinningData;
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
             unit.Clips = new Dictionary<string, AnimationClip>()
             {
-                //{ "Take 001",skinningData.AnimationClips["Take 001"]}/*
-                { "walking", skinningData.AnimationClips["walking"]},
-                { "standing",skinningData.AnimationClips["standing"]},
-                { "crouch",skinningData.AnimationClips["crouch"]},
-                { "crouching",skinningData.AnimationClips["crouching"]},
-                { "standup", skinningData.AnimationClips["standup"]}
+                { "Take 001",skinningData.AnimationClips["Take 001"]}/*
+                //{ "walking", skinningData.AnimationClips["walking"]},
+                //{ "standing",skinningData.AnimationClips["standing"]},
+                //{ "crouch",skinningData.AnimationClips["crouch"]},
+                //{ "crouching",skinningData.AnimationClips["crouching"]},*/
+                //{ "standup", skinningData.AnimationClips["standup"]}
             };
-            unit.AnimationPlayer.StartClip(unit.Clips.Values.ElementAt(1));
+            unit.AnimationPlayer.StartClip(unit.Clips.Values.ElementAt(0));
 
             unit.Position = Vector3.Zero;
             unit.Scale = new Vector3(0.22f, 0.22f, 0.22f);
