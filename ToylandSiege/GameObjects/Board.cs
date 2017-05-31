@@ -96,20 +96,52 @@ namespace ToylandSiege.GameObjects
             }
         }
 
+        public void EnableFields(int[] l)
+        {
+            foreach(int i in l)
+            {
+                if (GetByIndex(i) != null)
+                {
+                    GetByIndex(i).IsEnabled = true;
+                }
+            }
+        }
+
         public void InitializeTutorialLevel()
         {
+            for (int i = 0; i < 133; i++)
+            {
+                GetByIndex(i).IsEnabled = false;
+            }
+            int[] enabled = new int[] { 5, 6, 12, 13, 14, 15, 16, 20, 21, 22, 23, 24, 25, 26, 27, 29, 30, 36, 37, 45, 46, 53, 54, 55, 62, 63, 64, 71, 72, 80, 81 };
+            EnableFields(enabled);
             new Spawner(71, this, "Standart");
             GetByIndex(5).StartingTile = true;
             GetByIndex(6).StartingTile = true;
-            for(int i = 88; i < 93; i++)
+            
+            for(int i = 89; i < 92; i++)
             {
                 GetByIndex(i).FinishingTile = true;
+                GetByIndex(i).IsEnabled = true;
             }
-            for(int i = 97; i < 103; i++)
+            /*
+            for (int i = 98; i < 102; i++)
             {
                 GetByIndex(i).FinishingTile = true;
+                GetByIndex(i).IsEnabled = true;
+            }*/
+                /*for (int i = 105; i < 133; i++)
+                    GetByIndex(i).IsEnabled = false;
+                for(int i = 0; i <= 78; )
+                {
+                    GetByIndex(i).IsEnabled = false;
+                    i += 10;
+                    GetByIndex(i).IsEnabled = false;
+                    i += 9;
+                }*/
+                //List<int> enabled = new List<int>( new int[] { 5, 6 });
+
             }
-        }
 
 
         private Vector3 CalculatePosition(int column, int row, int index)

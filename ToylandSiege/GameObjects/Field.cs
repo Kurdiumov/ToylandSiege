@@ -121,12 +121,14 @@ namespace ToylandSiege.GameObjects
 
         public bool CanPlaceUnit()
         {
+            if (!IsEnabled)
+                return false;
             if (IsSpawner)
                 return false;
             if (HasUnit() || HasEnemy())
                 return false;
-            if (IsPartOfWay)
-                return false;
+            //if (IsPartOfWay)
+                //return false;
             return true;
         }
 

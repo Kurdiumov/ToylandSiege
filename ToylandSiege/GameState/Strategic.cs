@@ -350,13 +350,16 @@ namespace ToylandSiege.GameState
                     {
                         for(int i = SelectedUnit.TargetFields.Count-1 ; i >= 0 && SelectedUnit.TargetFields.ElementAt(i) != SelectedField; i--)
                         {
-                            SelectedUnit.TargetFields.ElementAt(i).IsPartOfWay = false;
+                            Field f = SelectedUnit.TargetFields.ElementAt(i);
                             SelectedUnit.TargetFields.RemoveAt(i);
+                            if(!SelectedUnit.TargetFields.Contains(f))
+                                f.IsPartOfWay = false;
                         }
                         if(SelectedUnit.TargetFields.Last() == SelectedField)
                         {
-                            SelectedField.IsPartOfWay = false;
                             SelectedUnit.TargetFields.RemoveAt(SelectedUnit.TargetFields.Count - 1);
+                            if(!SelectedUnit.TargetFields.Contains(SelectedField))
+                                SelectedField.IsPartOfWay = false;
                         }
                     }
                     break;
