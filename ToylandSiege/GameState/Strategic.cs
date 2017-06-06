@@ -305,6 +305,8 @@ namespace ToylandSiege.GameState
                         _unselectPath(SelectedUnit);
                         if (!IsPathFinished(SelectedUnit))
                             _removeUnitFromField(SelectedUnit);
+                        SelectedUnit = null;
+                        UnitSelected = false;
                         state = StrategicState.Default;
                         return;
                     }
@@ -313,11 +315,14 @@ namespace ToylandSiege.GameState
                         _unselectPath(SelectedUnit);
                         _replaceUnit(SelectedUnit, SelectedField);
                     }
+                    // Clicking somewhere to unselect unit
                     else if (IsPathFinished(SelectedUnit) && !SelectedUnit.TargetFields.Contains(SelectedField))
                     {
                         _unselectPath(SelectedUnit);
                         _removeUnitFromField(SelectedUnit);
                         state = StrategicState.Default;
+                        SelectedUnit = null;
+                        UnitSelected = false;
                         return;
                     }
                     else if(SelectedUnit.Field.Index != SelectedField.Index && !SelectedUnit.TargetFields.Contains(SelectedField) && SelectedField.CanPlaceUnit())
