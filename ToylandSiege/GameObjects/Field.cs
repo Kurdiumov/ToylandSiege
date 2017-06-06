@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ToylandSiege.GameState;
@@ -11,6 +13,7 @@ namespace ToylandSiege.GameObjects
         public bool StartingTile = false;
         public bool FinishingTile = false;
         public bool IsSpawner = false;
+        public bool IsWater = false;
         public int FieldSpeed = 3;
 
         public Spawner Spawner { get; set; }
@@ -21,6 +24,8 @@ namespace ToylandSiege.GameObjects
         public Unit unit;
         public Enemy enemy;
         public bool IsPartOfWay = false;
+        private Effect effect;
+
 
         public Field(string name, int index, Vector3 position, Vector3 scale)
         {
@@ -29,6 +34,7 @@ namespace ToylandSiege.GameObjects
             Position = position;
             Scale = scale;
             Type = "Field";
+            effect = new BasicEffect(ToylandSiege.GetInstance().GraphicsDevice);
             Initialize();
         }
 
@@ -95,29 +101,55 @@ namespace ToylandSiege.GameObjects
         {
             if (!IsEnabled)
                 return;
+
             UpdateColors();
             if (Model != null)
             {
                 foreach (ModelMesh mesh in Model.Meshes)
                 {
-                    foreach (BasicEffect effect in mesh.Effects)
+                    if (IsWater)
                     {
-                        if (ToylandSiege.GetInstance().configurationManager.LigthningEnabled)
-                            effect.EnableDefaultLighting();
-                        effect.AmbientLightColor = AmbientVector3;
-                        effect.DiffuseColor = ColorVector3;
+                        _DrawWater(mesh);
+                    }
+                    else
+                    {
+                        foreach (ModelMeshPart part in mesh.MeshParts)
+                        {
+                            part.Effect = effect;
+                           
+                            if (ToylandSiege.GetInstance().configurationManager.LigthningEnabled)
+                                (effect as BasicEffect).EnableDefaultLighting();
+                            (effect as BasicEffect).AmbientLightColor = AmbientVector3;
+                            (effect as BasicEffect).DiffuseColor = ColorVector3;
 
-                        effect.View = Camera.GetCurrentCamera().ViewMatrix;
+                            (effect as BasicEffect).View = Camera.GetCurrentCamera().ViewMatrix;
 
-                        effect.World = TransformationMatrix;
-                        effect.Projection = Camera.GetCurrentCamera().ProjectionMatrix;
-                        effect.Alpha = Alpha;
-                        GlobalLightning.DrawGlobalLightning(effect);
+                            (effect as BasicEffect).World = TransformationMatrix;
+                            (effect as BasicEffect).Projection = Camera.GetCurrentCamera().ProjectionMatrix;
+                            (effect as BasicEffect).Alpha = Alpha;
+                            GlobalLightning.DrawGlobalLightning(effect);
+                        }
                     }
                     mesh.Draw();
                 }
             }
         }
+
+        private void _DrawWater(ModelMesh mesh)
+        {
+            foreach (ModelMeshPart part in mesh.MeshParts)
+            {
+                part.Effect = effect;
+                effect.Parameters["World"].SetValue( TransformationMatrix);
+                effect.Parameters["View"].SetValue(Camera.GetCurrentCamera().ViewMatrix);
+                effect.Parameters["Projection"].SetValue(Camera.GetCurrentCamera().ProjectionMatrix);
+                effect.Parameters["SkyboxTexture"].SetValue(ToylandSiege.GetInstance().Content.Load<Texture2D>("SkyTexture"));
+                effect.Parameters["CameraPosition"].SetValue(Camera.GetCurrentCamera().Position);
+                effect.Parameters["WorldInverseTranspose"].SetValue(
+                                        Matrix.Transpose(TransformationMatrix  * mesh.ParentBone.Transform));
+            }
+        }
+
 
         public bool CanPlaceUnit()
         {
@@ -128,7 +160,7 @@ namespace ToylandSiege.GameObjects
             if (HasUnit() || HasEnemy())
                 return false;
             //if (IsPartOfWay)
-                //return false;
+            //return false;
             return true;
         }
 
@@ -164,7 +196,7 @@ namespace ToylandSiege.GameObjects
                 ColorVector3 = new Vector3(0.9f, 0.1f, 0.1f);
                 AmbientVector3 = new Vector3(1, 1, 1);
             }
-            else if (FieldSpeed == 3 )
+            else if (FieldSpeed == 3)
             {
                 ColorVector3 = new Vector3(0.5f, 0.8f, 0.3f);
                 AmbientVector3 = new Vector3(0.3f, 0.3f, 0.3f);
@@ -178,6 +210,12 @@ namespace ToylandSiege.GameObjects
         public override int GetHashCode()
         {
             return Index.GetHashCode();
+        }
+
+        public void SetWater()
+        {
+            this.IsWater = true;
+            this.effect = ShaderManager.Get("ReflectionShader");
         }
     }
 }
