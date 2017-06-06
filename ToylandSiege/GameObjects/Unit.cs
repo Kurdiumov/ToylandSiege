@@ -99,6 +99,8 @@ namespace ToylandSiege.GameObjects
 
         public void MoveToTarget()
         {
+            if (TargetFields.FirstOrDefault() != null && TargetFields.FirstOrDefault().HasUnit())
+               return;
             float elapsed = 0.01f;
             Vector3 targetPosition = TargetFields.First().Position;
 
