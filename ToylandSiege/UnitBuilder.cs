@@ -29,7 +29,7 @@ namespace ToylandSiege
         {
             Unit unit = new Unit();
             unit.Name = Name;
-            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("1234455");
+            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("Soldier");
             unit.Type = "Unit";
             unit.IsEnabled = false;
             unit.Health = 100;
@@ -39,8 +39,8 @@ namespace ToylandSiege
             unit.TimeBetweeenShoots = 3;
             unit.Speed = 5;
             unit.UnitType = "Soldier";
-
-            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("1234455").Tag as SkinningData;
+            
+            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("Soldier").Tag as SkinningData;
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
             unit.Clips = new Dictionary<string, AnimationClip>()
             {
@@ -64,7 +64,7 @@ namespace ToylandSiege
         {
             Unit unit = new Unit();
             unit.Name = Name;
-            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("1234455");
+            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("Soldier");
             unit.Type = "Unit";
             unit.IsEnabled = false;
             unit.Health = 50;
@@ -74,8 +74,8 @@ namespace ToylandSiege
             unit.TimeBetweeenShoots = 1;
             unit.Speed = 8;
             unit.UnitType = "Scout";
-
-            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("1234455").Tag as SkinningData;
+            
+            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("Soldier").Tag as SkinningData;
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
             unit.Clips = new Dictionary<string, AnimationClip>()
             {
@@ -99,7 +99,7 @@ namespace ToylandSiege
         {
             Unit unit = new Unit();
             unit.Name = Name;
-            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("1234455");
+            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("Soldier");
             unit.Type = "Unit";
             unit.IsEnabled = false;
             unit.Health = 200;
@@ -109,8 +109,8 @@ namespace ToylandSiege
             unit.TimeBetweeenShoots = 3;
             unit.Speed = 2;
             unit.UnitType = "Tank";
-
-            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("1234455").Tag as SkinningData;
+            
+            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("Soldier").Tag as SkinningData;
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
             unit.Clips = new Dictionary<string, AnimationClip>()
             {

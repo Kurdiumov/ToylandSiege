@@ -95,7 +95,14 @@ namespace ToylandSiege.GameObjects
 
         public void DestroyItself()
         {
-            //TODO: Play dying sound her
+            if(this is Unit)
+                SoundManager.PlaySound("UnitDeathSound", 0.8f);
+            else if (this is Enemy)
+                SoundManager.PlaySound("EnemyDeathSound", 0.8f);
+            else
+                Logger.Log.Debug(Name + " Death sound not supported. Unrecognized Unit type");
+            
+
             Logger.Log.Debug(Name + " Destroing itself. Health = " + Health);
             if (this is Unit)
             {

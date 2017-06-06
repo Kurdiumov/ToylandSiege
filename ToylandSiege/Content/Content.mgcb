@@ -335,7 +335,43 @@
 /processorParam:TextureFormat=Color
 /build:Aim.png
 
-#begin 123445.fbx
+#begin Sounds/EnemyDeathSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/EnemyDeathSound.wav
+
+#begin Sounds/ScoutShootSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/ScoutShootSound.wav
+
+#begin Sounds/SoldierShootSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/SoldierShootSound.wav
+
+#begin Sounds/StandartShootSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/StandartShootSound.wav
+
+#begin Sounds/TankShootSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/TankShootSound.wav
+
+#begin Sounds/UnitDeathSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/UnitDeathSound.wav
+
+#begin Soldier.FBX
 /importer:FbxImporter
 /processor:SkinnedModelProcessor
 /processorParam:DefaultEffect=SkinnedEffect
@@ -352,52 +388,9 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:123445.fbx
+/build:Soldier.FBX
 
-#begin 12344556.fbx
-/importer:FbxImporter
-/processor:SkinnedModelProcessor
-/processorParam:DefaultEffect=SkinnedEffect
-/processorParam:ColorKeyColor=15,117,15,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:12344556.fbx
-
-#begin SoldierAmbient Occlusion _MR_.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:SoldierAmbient Occlusion _MR_.png
-
-#begin SoldierDiffuseMap.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:SoldierDiffuseMap.png
-
-#begin 1234455.fbx
+#begin soldier_walking.FBX
 /importer:FbxImporter
 /processor:SkinnedModelProcessor
 /processorParam:DefaultEffect=SkinnedEffect
@@ -414,9 +407,9 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:1234455.fbx
+/build:soldier_walking.FBX
 
-#begin 1234455crouch.FBX
+#begin soldier_standup.FBX
 /importer:FbxImporter
 /processor:SkinnedModelProcessor
 /processorParam:DefaultEffect=SkinnedEffect
@@ -433,9 +426,9 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:1234455crouch.FBX
+/build:soldier_standup.FBX
 
-#begin 1234455crouching.FBX
+#begin soldier_standing.FBX
 /importer:FbxImporter
 /processor:SkinnedModelProcessor
 /processorParam:DefaultEffect=SkinnedEffect
@@ -452,9 +445,9 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:1234455crouching.FBX
+/build:soldier_standing.FBX
 
-#begin 1234455standing.FBX
+#begin soldier_crouching.FBX
 /importer:FbxImporter
 /processor:SkinnedModelProcessor
 /processorParam:DefaultEffect=SkinnedEffect
@@ -471,9 +464,9 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:1234455standing.FBX
+/build:soldier_crouching.FBX
 
-#begin 1234455standup.FBX
+#begin soldier_crouch.FBX
 /importer:FbxImporter
 /processor:SkinnedModelProcessor
 /processorParam:DefaultEffect=SkinnedEffect
@@ -490,48 +483,5 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:1234455standup.FBX
-
-#begin 1234455walking.FBX
-/importer:FbxImporter
-/processor:SkinnedModelProcessor
-/processorParam:DefaultEffect=SkinnedEffect
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:1234455walking.FBX
-
-#begin 1234455.fbm/SoldierDiffuseMap.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:1234455.fbm/SoldierDiffuseMap.png
-
-#begin 1234455.fbm/soldierTexture.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:1234455.fbm/soldierTexture.jpg
+/build:soldier_crouch.FBX
 

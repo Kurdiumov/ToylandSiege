@@ -32,7 +32,7 @@ namespace ToylandSiege
         {
             Enemy unit = new Enemy();
             unit.Name = Name;
-            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("1234455");
+            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("Soldier");
             unit.Type = "Enemy";
             unit.IsEnabled = false;
             unit.Health = 75;
@@ -41,8 +41,8 @@ namespace ToylandSiege
             unit.ShotDistance = 3;
             unit.TimeBetweeenShoots = 3;
             unit.UnitType = "Standart";
-
-            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("1234455").Tag as SkinningData;
+            
+            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("Soldier").Tag as SkinningData;
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
             unit.Clips = new Dictionary<string, AnimationClip>()
             {
@@ -66,7 +66,7 @@ namespace ToylandSiege
         {
             Enemy unit = new Enemy();
             unit.Name = Name;
-            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("1234455");
+            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("Soldier");
             unit.Type = "Enemy";
             unit.IsEnabled = false;
             unit.Health = 50;
@@ -75,8 +75,9 @@ namespace ToylandSiege
             unit.ShotDistance = 5;
             unit.TimeBetweeenShoots = 6;
             unit.UnitType = "Sniper";
+            
+            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("Soldier").Tag as SkinningData;
 
-            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("1234455").Tag as SkinningData;
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
             unit.Clips = new Dictionary<string, AnimationClip>()
             {
@@ -100,7 +101,7 @@ namespace ToylandSiege
         {
             Enemy unit = new Enemy();
             unit.Name = Name;
-            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("1234455");
+            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("1234455standing");
             unit.Type = "Enemy";
             unit.IsEnabled = false;
             unit.Health = 100;
