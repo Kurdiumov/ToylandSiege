@@ -378,3 +378,15 @@
 /processorParam:Quality=Best
 /build:Sounds/TankShootSound.wav
 
+#begin Sounds/EnemyDeathSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/EnemyDeathSound.wav
+
+#begin Sounds/UnitDeathSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/UnitDeathSound.wav
+
