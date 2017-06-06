@@ -354,3 +354,27 @@
 /processorParam:TextureFormat=Compressed
 /build:Soldier.fbx
 
+#begin Sounds/ScoutShootSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/ScoutShootSound.wav
+
+#begin Sounds/SoldierShootSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/SoldierShootSound.wav
+
+#begin Sounds/StandartShootSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/StandartShootSound.wav
+
+#begin Sounds/TankShootSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/TankShootSound.wav
+

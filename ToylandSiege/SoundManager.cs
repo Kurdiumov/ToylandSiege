@@ -18,6 +18,10 @@ namespace ToylandSiege
             LoadedSounds.Add("SniperShootSound", ToylandSiege.GetInstance().Content.Load<SoundEffect>("Sounds/SniperShootSound"));
             LoadedSounds.Add("DefenderShootSound", ToylandSiege.GetInstance().Content.Load<SoundEffect>("Sounds/DefenderShootSound"));
 
+            LoadedSounds.Add("StandartShootSound", ToylandSiege.GetInstance().Content.Load<SoundEffect>("Sounds/StandartShootSound"));
+            LoadedSounds.Add("SoldierShootSound", ToylandSiege.GetInstance().Content.Load<SoundEffect>("Sounds/SoldierShootSound"));
+            LoadedSounds.Add("TankShootSound", ToylandSiege.GetInstance().Content.Load<SoundEffect>("Sounds/TankShootSound"));
+            LoadedSounds.Add("ScoutShootSound", ToylandSiege.GetInstance().Content.Load<SoundEffect>("Sounds/ScoutShootSound"));
         }
 
         public static SoundEffect Get(string soundName)
