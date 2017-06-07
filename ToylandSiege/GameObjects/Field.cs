@@ -141,12 +141,9 @@ namespace ToylandSiege.GameObjects
             {
                 part.Effect = effect;
                 effect.Parameters["World"].SetValue( TransformationMatrix);
-                effect.Parameters["View"].SetValue(Camera.GetCurrentCamera().ViewMatrix);
+                effect.Parameters["View"].SetValue(Matrix.CreateLookAt(Camera.GetCurrentCamera().Position, Camera.GetCurrentCamera().Position + Camera.GetCurrentCamera().Direction, Camera.GetCurrentCamera().Up));
                 effect.Parameters["Projection"].SetValue(Camera.GetCurrentCamera().ProjectionMatrix);
-                effect.Parameters["SkyboxTexture"].SetValue(ToylandSiege.GetInstance().Content.Load<Texture2D>("SkyTexture"));
-                effect.Parameters["CameraPosition"].SetValue(Camera.GetCurrentCamera().Position);
-                effect.Parameters["WorldInverseTranspose"].SetValue(
-                                        Matrix.Transpose(TransformationMatrix  * mesh.ParentBone.Transform));
+                effect.Parameters["Texture"].SetValue(ToylandSiege.GetInstance().Content.Load<Texture2D>("Water"));
             }
         }
 
