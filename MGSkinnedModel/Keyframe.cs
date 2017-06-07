@@ -50,7 +50,7 @@ namespace SkinnedModel
         /// Gets the time offset from the start of the animation to this keyframe.
         /// </summary>
         [ContentSerializer]
-        public TimeSpan Time { get; private set; }
+        public TimeSpan Time { get; set; }
 
 
         /// <summary>

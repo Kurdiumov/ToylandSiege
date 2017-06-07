@@ -390,12 +390,12 @@
 /processorParam:TextureFormat=Compressed
 /build:Soldier.FBX
 
-#begin soldier_walking.FBX
+#begin LumberMill.FBX
 /importer:FbxImporter
-/processor:SkinnedModelProcessor
-/processorParam:DefaultEffect=SkinnedEffect
+/processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
 /processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
 /processorParam:GenerateMipmaps=True
 /processorParam:GenerateTangentFrames=False
 /processorParam:PremultiplyTextureAlpha=True
@@ -407,14 +407,14 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:soldier_walking.FBX
+/build:LumberMill.FBX
 
-#begin soldier_standup.FBX
+#begin Terrain/tutoriallvl.FBX
 /importer:FbxImporter
-/processor:SkinnedModelProcessor
-/processorParam:DefaultEffect=SkinnedEffect
+/processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
 /processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
 /processorParam:GenerateMipmaps=True
 /processorParam:GenerateTangentFrames=False
 /processorParam:PremultiplyTextureAlpha=True
@@ -426,14 +426,14 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:soldier_standup.FBX
+/build:Terrain/tutoriallvl.FBX
 
-#begin soldier_standing.FBX
+#begin Terrain/fortress0.FBX
 /importer:FbxImporter
-/processor:SkinnedModelProcessor
-/processorParam:DefaultEffect=SkinnedEffect
+/processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
 /processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
 /processorParam:GenerateMipmaps=True
 /processorParam:GenerateTangentFrames=False
 /processorParam:PremultiplyTextureAlpha=True
@@ -445,43 +445,5 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:soldier_standing.FBX
-
-#begin soldier_crouching.FBX
-/importer:FbxImporter
-/processor:SkinnedModelProcessor
-/processorParam:DefaultEffect=SkinnedEffect
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:soldier_crouching.FBX
-
-#begin soldier_crouch.FBX
-/importer:FbxImporter
-/processor:SkinnedModelProcessor
-/processorParam:DefaultEffect=SkinnedEffect
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:soldier_crouch.FBX
+/build:Terrain/fortress0.FBX
 

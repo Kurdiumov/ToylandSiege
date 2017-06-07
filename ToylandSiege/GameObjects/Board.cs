@@ -113,13 +113,13 @@ namespace ToylandSiege.GameObjects
             {
                 GetByIndex(i).IsEnabled = false;
             }
-            int[] enabled = new int[] { 5, 6, 12, 13, 14, 15, 16, 20, 21, 22, 23, 24, 25, 26, 27, 29, 30, 36, 37, 45, 46, 53, 54, 55, 62, 63, 64, 71, 72, 80, 81 };
+            int[] enabled = new int[] { 5, 6, 12, 13, 14, 15, 16, 20, 21, 22, 23, 25, 26, 27, 29, 36, 37, 45, 46, 47, 55, 56, 64, 65, 73, 74, 75, 82, 83, 84 };
             EnableFields(enabled);
             new Spawner(71, this, "Standart");
             GetByIndex(5).StartingTile = true;
             GetByIndex(6).StartingTile = true;
             
-            for(int i = 89; i < 92; i++)
+            for(int i = 91; i < 95; i++)
             {
                 GetByIndex(i).FinishingTile = true;
                 GetByIndex(i).IsEnabled = true;

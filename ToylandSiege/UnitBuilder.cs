@@ -42,15 +42,14 @@ namespace ToylandSiege
             
             var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("Soldier").Tag as SkinningData;
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
-            unit.Clips = new Dictionary<string, AnimationClip>()
-            {
-                { "standing", skinningData.AnimationClips["standing"]},
-                { "standup", skinningData.AnimationClips["standup"]},
-                { "walking", skinningData.AnimationClips["walking"]},
-                { "crouching", skinningData.AnimationClips["crouching"]},
-                { "crouch", skinningData.AnimationClips["crouch"]}
-            };
-            unit.AnimationPlayer.StartClip(unit.Clips.Values.First());
+            unit.Clips = new Dictionary<string, AnimationClip>();
+            unit.Clips.Add("walking", skinningData.AnimationClips["walking"]);
+            unit.Clips.Add("standing", new AnimationClip(skinningData.AnimationClips["walking"], skinningData.AnimationClips["standing"]));
+            unit.Clips.Add("crouch", new AnimationClip(skinningData.AnimationClips["standing"], skinningData.AnimationClips["crouch"]));
+            unit.Clips.Add("crouching", new AnimationClip(skinningData.AnimationClips["crouch"], skinningData.AnimationClips["crouching"]));
+            unit.Clips.Add("standup", new AnimationClip(skinningData.AnimationClips["crouching"], skinningData.AnimationClips["standup"]));
+
+            unit.AnimationPlayer.StartClip(unit.Clips.Values.ElementAt(1));
 
             unit.Position = Vector3.Zero;
             unit.Scale = new Vector3(0.22f, 0.22f, 0.22f);
@@ -77,15 +76,14 @@ namespace ToylandSiege
             
             var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("Soldier").Tag as SkinningData;
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
-            unit.Clips = new Dictionary<string, AnimationClip>()
-            {
-                { "standing", skinningData.AnimationClips["standing"]},
-                { "standup", skinningData.AnimationClips["standup"]},
-                { "walking", skinningData.AnimationClips["walking"]},
-                { "crouching", skinningData.AnimationClips["crouching"]},
-                { "crouch", skinningData.AnimationClips["crouch"]}
-            };
-            unit.AnimationPlayer.StartClip(unit.Clips.Values.First());
+            unit.Clips = new Dictionary<string, AnimationClip>();
+            unit.Clips.Add("walking", skinningData.AnimationClips["walking"]);
+            unit.Clips.Add("standing", new AnimationClip(skinningData.AnimationClips["walking"], skinningData.AnimationClips["standing"]));
+            unit.Clips.Add("crouch", new AnimationClip(skinningData.AnimationClips["standing"], skinningData.AnimationClips["crouch"]));
+            unit.Clips.Add("crouching", new AnimationClip(skinningData.AnimationClips["crouch"], skinningData.AnimationClips["crouching"]));
+            unit.Clips.Add("standup", new AnimationClip(skinningData.AnimationClips["crouching"], skinningData.AnimationClips["standup"]));
+
+            unit.AnimationPlayer.StartClip(unit.Clips.Values.ElementAt(1));
 
             unit.Position = Vector3.Zero;
             unit.Scale = new Vector3(0.22f, 0.22f, 0.22f);
@@ -112,15 +110,14 @@ namespace ToylandSiege
             
             var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("Soldier").Tag as SkinningData;
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
-            unit.Clips = new Dictionary<string, AnimationClip>()
-            {
-                { "standing", skinningData.AnimationClips["standing"]},
-                { "standup", skinningData.AnimationClips["standup"]},
-                { "walking", skinningData.AnimationClips["walking"]},
-                { "crouching", skinningData.AnimationClips["crouching"]},
-                { "crouch", skinningData.AnimationClips["crouch"]}
-            };
-            unit.AnimationPlayer.StartClip(unit.Clips.Values.First());
+            unit.Clips = new Dictionary<string, AnimationClip>();
+            unit.Clips.Add("walking", skinningData.AnimationClips["walking"]);
+            unit.Clips.Add("standing", new AnimationClip(skinningData.AnimationClips["walking"], skinningData.AnimationClips["standing"]));
+            unit.Clips.Add("crouch", new AnimationClip(skinningData.AnimationClips["standing"], skinningData.AnimationClips["crouch"]));
+            unit.Clips.Add("crouching", new AnimationClip(skinningData.AnimationClips["crouch"], skinningData.AnimationClips["crouching"]));
+            unit.Clips.Add("standup", new AnimationClip(skinningData.AnimationClips["crouching"], skinningData.AnimationClips["standup"]));
+
+            unit.AnimationPlayer.StartClip(unit.Clips.Values.ElementAt(1));
 
             unit.Position = Vector3.Zero;
             unit.Scale = new Vector3(0.22f, 0.22f, 0.22f);
