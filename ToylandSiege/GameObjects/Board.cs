@@ -85,6 +85,7 @@ namespace ToylandSiege.GameObjects
             {
                 GetByIndex(i).FieldSpeed = 1;
                 GetByIndex(i).ColorVector3 = new Vector3(0, 0.7f, 0.9f);
+                GetByIndex(i).SetWater();
             }
             for(int i = 0; i < 20; i++)
             {

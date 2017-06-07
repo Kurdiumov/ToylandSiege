@@ -73,6 +73,7 @@
     <Compile Include="GameObjects\RootGameObject.cs" />
     <Compile Include="MenuButton.cs" />
     <Compile Include="Pathfinder.cs" />
+    <Compile Include="ShaderManager.cs" />
     <Compile Include="Sky.cs" />
     <Compile Include="GameObjects\Spawner.cs" />
     <Compile Include="GameObjects\Unit.cs" />

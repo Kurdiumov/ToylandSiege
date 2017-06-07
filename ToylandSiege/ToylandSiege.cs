@@ -35,7 +35,7 @@ namespace ToylandSiege
             Graphics.PreferredBackBufferHeight = configurationManager.HeightResolution;
             Graphics.PreferredBackBufferWidth = configurationManager.WidthResolution;
             Graphics.GraphicsProfile = GraphicsProfile.HiDef;
-
+            
             Content.RootDirectory = "Content";
             SoundManager SoundManager = new SoundManager();
             SoundManager.Initialize();
@@ -45,6 +45,14 @@ namespace ToylandSiege
         {
             Logger.Log.Debug("Initializing");
             base.Initialize();
+            IsMouseVisible = configurationManager.MouseVisible;
+
+            shadowMapRenderTarget = new RenderTarget2D(GraphicsDevice, 2048, 2048, false, SurfaceFormat.Single, DepthFormat.Depth24, 0, RenderTargetUsage.PlatformContents);
+            _ShadowMapGenerate = Content.Load<Effect>("Shaders/ShadowShader");
+
+            ShaderManager shaderManager = new ShaderManager();
+            shaderManager.Initialize();
+
 
             gameStateManager = new GameStateManager();
             configurationManager.InitGameStates();
@@ -53,14 +61,10 @@ namespace ToylandSiege
 
             SceneParser parser = new SceneParser();
             CurrentLevel.RootGameObject = parser.Parse("Level1");
-            
+
             DebugUtilities.ShowAllGameObjects(CurrentLevel.RootGameObject);
-            
-            IsMouseVisible = configurationManager.MouseVisible;
 
 
-            shadowMapRenderTarget = new RenderTarget2D(GraphicsDevice, 2048, 2048, false, SurfaceFormat.Single, DepthFormat.Depth24, 0, RenderTargetUsage.PlatformContents);
-            _ShadowMapGenerate = Content.Load<Effect>("Shaders/ShadowShader");
             _spriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
