@@ -29,8 +29,31 @@ namespace SkinnedModel
         {
             Duration = duration;
             Keyframes = keyframes;
+            startTime = new TimeSpan(0, 0, 0);
         }
 
+        public AnimationClip(AnimationClip prev, AnimationClip c)
+        {
+            Duration = c.Duration - prev.Duration;
+            Keyframes = c.Keyframes;
+            startTime = prev.startTime + prev.Duration;
+            List<TimeSpan> frames = new List<TimeSpan>();
+            if(Keyframes.Count > 0)
+            {
+                frames.Add(new TimeSpan(0, 0, 0));
+                for (int i = 1; i < Keyframes.Count; i++)
+                {
+                    frames.Add(Keyframes[i].Time - Keyframes[i - 1].Time);
+                }
+                Keyframes[0].Time = new TimeSpan(0, 0, 0);
+                for (int i = 1; i < Keyframes.Count; i++)
+                {
+                    Keyframes[i].Time = Keyframes[i - 1].Time + frames[i];
+                }
+
+            }
+            
+        }
 
         /// <summary>
         /// Private constructor for use by the XNB deserializer.
@@ -53,5 +76,7 @@ namespace SkinnedModel
         /// </summary>
         [ContentSerializer]
         public List<Keyframe> Keyframes { get; private set; }
+        
+        public TimeSpan startTime;
     }
 }

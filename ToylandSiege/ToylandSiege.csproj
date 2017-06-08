@@ -67,11 +67,13 @@
     <Compile Include="FPSCounter.cs" />
     <Compile Include="GameObjects\Board.cs" />
     <Compile Include="GameObjects\Camera.cs" />
+    <Compile Include="GameObjects\Cannonball.cs" />
     <Compile Include="GameObjects\Enemy.cs" />
     <Compile Include="GameObjects\Field.cs" />
     <Compile Include="GameObjects\Group.cs" />
     <Compile Include="GameObjects\RootGameObject.cs" />
     <Compile Include="MenuButton.cs" />
+    <Compile Include="ParabolicCurveHelper.cs" />
     <Compile Include="Pathfinder.cs" />
     <Compile Include="ShaderManager.cs" />
     <Compile Include="Sky.cs" />
