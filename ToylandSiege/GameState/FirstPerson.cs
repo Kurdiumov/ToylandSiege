@@ -9,7 +9,10 @@ namespace ToylandSiege.GameState
 {
     public class FirstPerson : GameState
     {
+        public double ReloadTime = 1.0;
+
         private bool aim;
+        private double _ReloadLeft = 0.0;
 
         private SpriteFont _SpawnersFont;
         private SpriteFont _TimerSpriteFont;
@@ -36,13 +39,25 @@ namespace ToylandSiege.GameState
         public override void Update(GameTime gameTime)
         {
             Camera.GetCurrentCamera().RotateCamera(_previousMouseState);
-            CollisionHelper.CalculateCollisions(); //TODO: Ensure if is in good order?
             Level.GetCurrentLevel().Update(gameTime);
+            if (_ReloadLeft < 0)
+                _ReloadLeft = 0;
+            else if (_ReloadLeft > 0)
+                _ReloadLeft -= gameTime.ElapsedGameTime.TotalSeconds;
+            CollisionHelper.CalculateCollisions(); //TODO: Ensure if is in good order?
             ProcessInput();
             _previousKeyboardState = Keyboard.GetState();
             _previousMouseState = Mouse.GetState();
         }
 
+        public void SpawnCannonball()
+        {
+            Cannonball ball = new Cannonball();
+            ball.Position = Camera.GetCurrentCamera().Position;
+
+            //Level.GetCurrentLevel().RootGameObject.Childs["Cannonballs"].AddChild(ball);
+            Level.GetCurrentLevel().RootGameObject.AddChild(ball);
+        }
 
         public override void ProcessInput()
         {
@@ -65,14 +80,19 @@ namespace ToylandSiege.GameState
                 Camera.GetCurrentCamera().Zoom(false);
                 aim = false;
             }
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed && IsSimpleClick() && aim)
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed && aim && _ReloadLeft < 0.1f)
             {
                 Logger.Log.Debug("Shot");
+                /*
                 var PickedObject = PickObject();
                 if (PickedObject != null)
                 {
                     Logger.Log.Debug("Shot picked: " + PickedObject.ToString());
                 }
+                */
+                SpawnCannonball();
+
+                _ReloadLeft = ReloadTime;
             }
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back ==
              ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
