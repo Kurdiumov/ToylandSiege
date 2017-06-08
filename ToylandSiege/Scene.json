@@ -27,16 +27,39 @@
           {
             "Name": "Fortress",
             "Type": "TerrainObject",
-            "Model": "Fortress",
+            "Model": "Terrain/fortress0",
             "isEnabled": true,
             "Position": [
+              60,
               0,
-              0,
-              -160
+              -170
             ],
             "Rotation": [
               0,
+              -1.57,
+              -1.57
+            ],
+            "Scale": [
+              1.7,
+              1.7,
+              1.7
+            ],
+            "Child": [
+            ]
+          },
+          {
+            "Name": "LumberMill",
+            "Type": "TerrainObject",
+            "Model": "LumberMill",
+            "isEnabled": true,
+            "Position": [
+              -145,
+              15,
+              -50
+            ],
+            "Rotation": [
               0,
+              -1.57,
               0
             ],
             "Scale": [
@@ -44,28 +67,28 @@
               1.2,
               1.2
             ],
-            "Child": [              
+            "Child": [
             ]
-          },          
+          },
           {
             "Name": "Terrain",
             "Type": "TerrainObject",
-            "Model": "Terrain",
+            "Model": "Terrain/tutoriallvl",
             "isEnabled": true,
             "Position": [
               0,
-              0,
+              -5,
               0
             ],
             "Rotation": [
               0,
-              0,
+              -1.57079632679,
               0
             ],
             "Scale": [
-              1,
-              1,
-              1
+              0.5,
+              0.5,
+              0.5
             ]
           }
         ]
@@ -159,9 +182,9 @@
         "FieldModel": "Field",
         "Step": 5,
         "Position": [
-          12.5,
+          13,
           0.25,
-          0
+          2
         ],
         "StartingPosition": [
           -35,
