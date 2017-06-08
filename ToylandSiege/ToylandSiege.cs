@@ -35,7 +35,7 @@ namespace ToylandSiege
             Graphics.PreferredBackBufferHeight = configurationManager.HeightResolution;
             Graphics.PreferredBackBufferWidth = configurationManager.WidthResolution;
             Graphics.GraphicsProfile = GraphicsProfile.HiDef;
-            
+
             Content.RootDirectory = "Content";
             SoundManager SoundManager = new SoundManager();
             SoundManager.Initialize();
@@ -79,24 +79,38 @@ namespace ToylandSiege
 
         protected override void Update(GameTime gameTime)
         {
-            gameStateManager.Update(gameTime);
-            base.Update(gameTime);
+            try
+            {
+                gameStateManager.Update(gameTime);
+                base.Update(gameTime);
+            }
+            catch (Exception e)
+            {
+                Logger.Log.Error(e);
+            }
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            try
+            {
+                GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            gameStateManager.Draw(gameTime);
-            base.Draw(gameTime);
-            //DrawShadows();
+                gameStateManager.Draw(gameTime);
+                base.Draw(gameTime);
+                //DrawShadows();
 
-            //Uncomment to see shadow map
-            /*
-            _spriteBatch.Begin(0, BlendState.Opaque, SamplerState.AnisotropicClamp);
-            _spriteBatch.Draw(shadowMapRenderTarget,  new Rectangle(0, 0, ToylandSiege.GetInstance().configurationManager.WidthResolution, ToylandSiege.GetInstance().configurationManager.HeightResolution), Color.White);
-            _spriteBatch.End();
-            */
+                //Uncomment to see shadow map
+                /*
+                _spriteBatch.Begin(0, BlendState.Opaque, SamplerState.AnisotropicClamp);
+                _spriteBatch.Draw(shadowMapRenderTarget,  new Rectangle(0, 0, ToylandSiege.GetInstance().configurationManager.WidthResolution, ToylandSiege.GetInstance().configurationManager.HeightResolution), Color.White);
+                _spriteBatch.End();
+                */
+            }
+            catch (Exception e)
+            {
+                Logger.Log.Error(e);
+            }
         }
 
         //Used in scene parser and in inputHelper
