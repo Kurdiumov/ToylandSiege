@@ -26,6 +26,8 @@ namespace ToylandSiege.GameObjects
         public bool IsPartOfWay = false;
         private Effect effect;
 
+        public bool isNeutralObject = false;
+
 
         public Field(string name, int index, Vector3 position, Vector3 scale)
         {

@@ -5,12 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using MonoGame.Framework.Content.Pipeline.Builder;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ToylandSiege.GameObjects
 {
     public class Enemy:UnitBase
     {
+        Effect effect;
         protected readonly HashSet<Unit> UnitsInRange = new HashSet<Unit>();
+
+        public Enemy()
+        {
+            effect = ToylandSiege.GetInstance().Content.Load<Effect>("Shaders/Plastic");
+        }
 
         protected override void Initialize()
         {
@@ -61,5 +68,25 @@ namespace ToylandSiege.GameObjects
                 }
             }
         }
+        /*
+        public override void Draw()
+        {
+            DrawHealthBar();
+            ToylandSiege.GetInstance().GraphicsDevice.BlendState = BlendState.Opaque;
+            ToylandSiege.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            ToylandSiege.GetInstance().GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
+            foreach (ModelMesh mesh in Model.Meshes)
+            {
+                foreach (ModelMeshPart part in mesh.MeshParts)
+                {
+                    part.Effect = effect;
+                    effect.Parameters["World"].SetValue(TransformationMatrix * mesh.ParentBone.Transform);
+                    effect.Parameters["View"].SetValue(Camera.GetCurrentCamera().ViewMatrix);
+                    effect.Parameters["Projection"].SetValue(Camera.GetCurrentCamera().ProjectionMatrix);
+                    Matrix worldInverseTransposeMatrix = Matrix.Transpose(Matrix.Invert(mesh.ParentBone.Transform * TransformationMatrix * mesh.ParentBone.Transform));
+                    effect.Parameters["WorldInverseTranspose"].SetValue(worldInverseTransposeMatrix);
+                }
+            }
+        }*/
     }
 }

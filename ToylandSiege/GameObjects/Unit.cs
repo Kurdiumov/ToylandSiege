@@ -16,6 +16,7 @@ namespace ToylandSiege.GameObjects
         public List<Field> TargetFields { get; set; }
         public List<Field> FieldsInWay { get; set; }
         protected readonly HashSet<Enemy> EnemiesInRange = new HashSet<Enemy>();
+        bool Walking = false;
 
         protected override void Initialize()
         {
@@ -101,6 +102,13 @@ namespace ToylandSiege.GameObjects
         {
             if (TargetFields.FirstOrDefault() != null && TargetFields.FirstOrDefault().HasUnit())
                return;
+
+            if(!Walking)
+            {
+                this.AnimationPlayer.StartClip(this.Clips["walking"]);
+                Walking = true;
+            }
+
             float elapsed = 0.01f;
             Vector3 targetPosition = TargetFields.First().Position;
 
@@ -120,6 +128,18 @@ namespace ToylandSiege.GameObjects
                         Field = TargetFields.First();
                         Field.unit = this;
                         TargetFields.RemoveAt(0);
+                        if (TargetFields.First().FinishingTile)
+                        {
+                            Walking = false;
+                            this.AnimationPlayer.StartClip(this.Clips["standing"]);
+                            if (TargetFields.First().isNeutralObject)
+                            {
+                                Level.GetCurrentLevel().RootGameObject.Childs["TerrainObjectsGroup"].RemoveChild(Level.GetCurrentLevel().RootGameObject.Childs["TerrainObjectsGroup"].Childs["FallenTree"]);
+                                ((Board)Field.Parent.Parent).GetByIndex(55).IsEnabled = true;
+                                ((Board)Field.Parent.Parent).GetByIndex(56).IsEnabled = true;
+                            }
+                        }
+                        
                     }
                 }
         }

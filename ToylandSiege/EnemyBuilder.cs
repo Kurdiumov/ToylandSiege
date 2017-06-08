@@ -32,7 +32,7 @@ namespace ToylandSiege
         {
             Enemy unit = new Enemy();
             unit.Name = Name;
-            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("Soldier");
+            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("EnemyUnits/BlockmanDefender");
             unit.Type = "Enemy";
             unit.IsEnabled = false;
             unit.Health = 75;
@@ -42,16 +42,17 @@ namespace ToylandSiege
             unit.TimeBetweeenShoots = 3;
             unit.UnitType = "Standart";
             
-            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("Soldier").Tag as SkinningData;
+            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("EnemyUnits/BlockmanDefender").Tag as SkinningData;
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
-            unit.Clips = new Dictionary<string, AnimationClip>();
+            unit.Clips = new Dictionary<string, AnimationClip>() { {"shoot", skinningData.AnimationClips["Take 001"]} };
+            /*
             unit.Clips.Add("walking", skinningData.AnimationClips["walking"]);
             unit.Clips.Add("standing", new AnimationClip(skinningData.AnimationClips["walking"], skinningData.AnimationClips["standing"]));
             unit.Clips.Add("crouch", new AnimationClip(skinningData.AnimationClips["standing"], skinningData.AnimationClips["crouch"]));
             unit.Clips.Add("crouching", new AnimationClip(skinningData.AnimationClips["crouch"], skinningData.AnimationClips["crouching"]));
             unit.Clips.Add("standup", new AnimationClip(skinningData.AnimationClips["crouching"], skinningData.AnimationClips["standup"]));
-
-            unit.AnimationPlayer.StartClip(unit.Clips.Values.ElementAt(1));
+            */
+            unit.AnimationPlayer.StartClip(unit.Clips.Values.ElementAt(0));
 
             unit.Position = Vector3.Zero;
             unit.Scale = new Vector3(0.22f, 0.22f, 0.22f);
@@ -65,7 +66,7 @@ namespace ToylandSiege
         {
             Enemy unit = new Enemy();
             unit.Name = Name;
-            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("Soldier");
+            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("Units/Soldier");
             unit.Type = "Enemy";
             unit.IsEnabled = false;
             unit.Health = 50;
@@ -75,7 +76,7 @@ namespace ToylandSiege
             unit.TimeBetweeenShoots = 6;
             unit.UnitType = "Sniper";
             
-            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("Soldier").Tag as SkinningData;
+            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("Units/Soldier").Tag as SkinningData;
 
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
             unit.Clips = new Dictionary<string, AnimationClip>();
@@ -99,7 +100,7 @@ namespace ToylandSiege
         {
             Enemy unit = new Enemy();
             unit.Name = Name;
-            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("Soldier");
+            unit.Model = ToylandSiege.GetInstance().Content.Load<Model>("Units/Soldier");
             unit.Type = "Enemy";
             unit.IsEnabled = false;
             unit.Health = 100;
@@ -109,7 +110,7 @@ namespace ToylandSiege
             unit.TimeBetweeenShoots = 1;
             unit.UnitType = "Defender";
 
-            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("Soldier").Tag as SkinningData;
+            var skinningData = ToylandSiege.GetInstance().Content.Load<Model>("Units/Soldier").Tag as SkinningData;
             unit.AnimationPlayer = new AnimationPlayer(skinningData);
             unit.Clips = new Dictionary<string, AnimationClip>();
             unit.Clips.Add("walking", skinningData.AnimationClips["walking"]);

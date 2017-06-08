@@ -114,9 +114,9 @@ namespace ToylandSiege.GameObjects
             {
                 GetByIndex(i).IsEnabled = false;
             }
-            int[] enabled = new int[] { 5, 6, 12, 13, 14, 15, 16, 20, 21, 22, 23, 25, 26, 27, 29, 36, 37, 45, 46, 47, 55, 56, 64, 65, 73, 74, 75, 82, 83, 84 };
+            int[] enabled = new int[] { 5, 6, 12, 13, 14, 15, 16, 20, 21, 22, 23, 25, 26, 27, 36, 37, 45, 46, 47, 64, 65, 73, 74, 75, 82, 83, 84 };
             EnableFields(enabled);
-            new Spawner(71, this, "Standart");
+            new Spawner(83, this, "Standart");
             GetByIndex(5).StartingTile = true;
             GetByIndex(6).StartingTile = true;
             
@@ -125,24 +125,26 @@ namespace ToylandSiege.GameObjects
                 GetByIndex(i).FinishingTile = true;
                 GetByIndex(i).IsEnabled = true;
             }
+            GetByIndex(20).FinishingTile = true;
+            GetByIndex(20).isNeutralObject = true;
             /*
             for (int i = 98; i < 102; i++)
             {
                 GetByIndex(i).FinishingTile = true;
                 GetByIndex(i).IsEnabled = true;
             }*/
-                /*for (int i = 105; i < 133; i++)
-                    GetByIndex(i).IsEnabled = false;
-                for(int i = 0; i <= 78; )
-                {
-                    GetByIndex(i).IsEnabled = false;
-                    i += 10;
-                    GetByIndex(i).IsEnabled = false;
-                    i += 9;
-                }*/
-                //List<int> enabled = new List<int>( new int[] { 5, 6 });
+            /*for (int i = 105; i < 133; i++)
+                GetByIndex(i).IsEnabled = false;
+            for(int i = 0; i <= 78; )
+            {
+                GetByIndex(i).IsEnabled = false;
+                i += 10;
+                GetByIndex(i).IsEnabled = false;
+                i += 9;
+            }*/
+            //List<int> enabled = new List<int>( new int[] { 5, 6 });
 
-            }
+        }
 
 
         private Vector3 CalculatePosition(int column, int row, int index)

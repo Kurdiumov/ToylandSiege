@@ -71,6 +71,29 @@
             ]
           },
           {
+            "Name": "FallenTree",
+            "Type": "TerrainObject",
+            "Model": "Terrain/tree2",
+            "isEnabled": true,
+            "Position": [
+              50,
+              5,
+              -50
+            ],
+            "Rotation": [
+              1.5,
+              0,
+              0
+            ],
+            "Scale": [
+              25,
+              25,
+              25
+            ],
+            "Child": [
+            ]
+          },
+          {
             "Name": "Terrain",
             "Type": "TerrainObject",
             "Model": "Terrain/tutoriallvl",
