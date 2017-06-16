@@ -158,15 +158,13 @@ namespace ToylandSiege.GameState
         {
             Logger.Log.Debug("Placing unit to field");
             SelectedUnit.IsEnabled = true;
+            SelectedUnit.PlaceToField(field);
             SelectedUnit.FieldsInWay.Add(field);
-            field.SetUnit(SelectedUnit);
-            field.IsPartOfWay = true;
-            this.SelectedUnit.Field = field;
             _currentWave.AvailableUnits.Remove(SelectedUnit);
             _currentWave.UnitsInWave.Add(SelectedUnit);
 
             //Add unit to level
-            SelectedUnit.Position = field.Position;
+            //SelectedUnit.Position = field.Position;
             Level.GetCurrentLevel().RootGameObject.Childs["Units"].AddChild(SelectedUnit);
 
             _updateUI();
@@ -179,11 +177,9 @@ namespace ToylandSiege.GameState
             SelectedUnit.TargetFields.Clear();
             SelectedUnit.FieldsInWay.Add(field);
             SelectedUnit.Field.unit = null;
-            field.IsPartOfWay = true;
-            field.SetUnit(SelectedUnit);
-            this.SelectedUnit.Field = field;
 
-            SelectedUnit.Position = field.Position;
+            SelectedUnit.PlaceToField(field);
+            field.IsPartOfWay = true;;
         }
 
         private void _unselectPath(Unit SelectedUnit)

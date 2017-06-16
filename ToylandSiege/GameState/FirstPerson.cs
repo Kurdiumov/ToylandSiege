@@ -98,7 +98,11 @@ namespace ToylandSiege.GameState
              ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 ToylandSiege.GetInstance().gameStateManager.SetNewGameState(ToylandSiege.GetInstance().gameStateManager.AvailableGameStates["Menu"]);
 
-
+            //Secret combination to switch  to god mode
+            if (IsSimpleKeyPress(Keys.G) && Keyboard.GetState().IsKeyDown(Keys.LeftAlt))
+            {
+                ToylandSiege.GetInstance().gameStateManager.SetNewGameState(ToylandSiege.GetInstance().gameStateManager.AvailableGameStates["GodMode"]);
+            }
 
             //Secret combination to finish wave immediately
             if (IsSimpleKeyPress(Keys.F) && Keyboard.GetState().IsKeyDown(Keys.LeftAlt))
