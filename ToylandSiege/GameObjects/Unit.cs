@@ -27,7 +27,7 @@ namespace ToylandSiege.GameObjects
         public override void Update(GameTime gameTime)
         {
             CreateTransformationMatrix();
-            AnimationPlayer.Update(gameTime.ElapsedGameTime, true, TransformationMatrix);
+            AnimationPlayer.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
             UpdateFieldsInRange();
             UpdatEnemiesInRange();
             if (!WaveController.RoundRunning)

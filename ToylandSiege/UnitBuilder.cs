@@ -52,8 +52,8 @@ namespace ToylandSiege
             unit.AnimationPlayer.StartClip(unit.Clips.Values.ElementAt(1));
 
             unit.Position = Vector3.Zero;
-            unit.Scale = new Vector3(0.22f, 0.22f, 0.22f);
-            unit.Rotation = new Vector3(0f, 0, 0);
+            unit.Scale = new Vector3(0.05f, 0.05f, 0.05f);
+            unit.Rotation = new Vector3(3.14f, 0, 0);
 
             Logger.Log.Debug("Soldier unit created");
             return unit;
@@ -86,8 +86,8 @@ namespace ToylandSiege
             unit.AnimationPlayer.StartClip(unit.Clips.Values.ElementAt(1));
 
             unit.Position = Vector3.Zero;
-            unit.Scale = new Vector3(0.22f, 0.22f, 0.22f);
-            unit.Rotation = new Vector3(0f, 0, 0);
+            unit.Scale = new Vector3(0.05f, 0.05f, 0.05f);
+            unit.Rotation = new Vector3(3.14f, 0, 0);
 
             Logger.Log.Debug("Scout unit created");
             return unit;
@@ -120,8 +120,8 @@ namespace ToylandSiege
             unit.AnimationPlayer.StartClip(unit.Clips.Values.ElementAt(1));
 
             unit.Position = Vector3.Zero;
-            unit.Scale = new Vector3(0.22f, 0.22f, 0.22f);
-            unit.Rotation = new Vector3(0f, 0, 0);
+            unit.Scale = new Vector3(0.05f, 0.05f, 0.05f);
+            unit.Rotation = new Vector3(3.14f, 0, 0);
 
             Logger.Log.Debug("Tank unit created");
             return unit;

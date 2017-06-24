@@ -55,7 +55,7 @@ namespace ToylandSiege
             unit.AnimationPlayer.StartClip(unit.Clips.Values.ElementAt(0));
 
             unit.Position = Vector3.Zero;
-            unit.Scale = new Vector3(0.22f, 0.22f, 0.22f);
+            unit.Scale = new Vector3(0.05f, 0.05f, 0.05f);
             unit.Rotation = new Vector3(0f, 0, 0);
 
             Logger.Log.Debug("Standart enemy created");
@@ -89,7 +89,7 @@ namespace ToylandSiege
             unit.AnimationPlayer.StartClip(unit.Clips.Values.ElementAt(1));
 
             unit.Position = Vector3.Zero;
-            unit.Scale = new Vector3(0.22f, 0.22f, 0.22f);
+            unit.Scale = new Vector3(0.05f, 0.05f, 0.05f);
             unit.Rotation = new Vector3(0f, 0, 0);
 
             Logger.Log.Debug("Sniper enemy created");
@@ -122,7 +122,7 @@ namespace ToylandSiege
             unit.AnimationPlayer.StartClip(unit.Clips.Values.ElementAt(1));
 
             unit.Position = Vector3.Zero;
-            unit.Scale = new Vector3(0.22f, 0.22f, 0.22f);
+            unit.Scale = new Vector3(0.05f, 0.05f, 0.05f);
             unit.Rotation = new Vector3(0f, 0, 0);
 
             Logger.Log.Debug("Defender enemy created");

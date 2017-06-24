@@ -27,7 +27,7 @@ namespace ToylandSiege.GameObjects
         public override void Update(GameTime gameTime)
         {
             CreateTransformationMatrix();
-            AnimationPlayer.Update(gameTime.ElapsedGameTime, true, TransformationMatrix);
+            AnimationPlayer.Update(gameTime.ElapsedGameTime, true, Matrix.Identity);
 
             if (!WaveController.RoundRunning)
                 return;
@@ -71,6 +71,7 @@ namespace ToylandSiege.GameObjects
         /*
         public override void Draw()
         {
+            
             DrawHealthBar();
             ToylandSiege.GetInstance().GraphicsDevice.BlendState = BlendState.Opaque;
             ToylandSiege.GetInstance().GraphicsDevice.DepthStencilState = DepthStencilState.Default;
@@ -80,12 +81,22 @@ namespace ToylandSiege.GameObjects
                 foreach (ModelMeshPart part in mesh.MeshParts)
                 {
                     part.Effect = effect;
-                    effect.Parameters["World"].SetValue(TransformationMatrix * mesh.ParentBone.Transform);
+
+                    effect.Parameters["World"].SetValue(TransformationMatrix);
                     effect.Parameters["View"].SetValue(Camera.GetCurrentCamera().ViewMatrix);
                     effect.Parameters["Projection"].SetValue(Camera.GetCurrentCamera().ProjectionMatrix);
-                    Matrix worldInverseTransposeMatrix = Matrix.Transpose(Matrix.Invert(mesh.ParentBone.Transform * TransformationMatrix * mesh.ParentBone.Transform));
+                    Matrix worldInverseTransposeMatrix = Matrix.Transpose(Matrix.Invert(mesh.ParentBone.Transform * TransformationMatrix));
                     effect.Parameters["WorldInverseTranspose"].SetValue(worldInverseTransposeMatrix);
+
+                    Texture2D texture;
+                    texture = ToylandSiege.GetInstance().Content.Load<Texture2D>("EnemyUnits/bodyDiffuseMap");
+                    effect.Parameters["ModelTexture"].SetValue(texture);
                 }
+                mesh.Draw();
+            }
+            foreach (var child in Childs.Values)
+            {
+                child.Draw();
             }
         }*/
     }
