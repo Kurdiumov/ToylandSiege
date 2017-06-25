@@ -440,54 +440,6 @@
 /processorParam:TextureFormat=Color
 /build:water.jpg
 
-#begin Units/Simplygon_Proxy_LOD001_Mat_Ambient_7.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Units/Simplygon_Proxy_LOD001_Mat_Ambient_7.png
-
-#begin Units/Simplygon_Proxy_LOD001_Mat_Diffuse_7.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Units/Simplygon_Proxy_LOD001_Mat_Diffuse_7.png
-
-#begin Units/Simplygon_Proxy_LOD001_Mat_Normals_7.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Units/Simplygon_Proxy_LOD001_Mat_Normals_7.png
-
-#begin Units/Simplygon_Proxy_LOD001_Mat_Specular_7.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Units/Simplygon_Proxy_LOD001_Mat_Specular_7.png
-
 #begin Units/Soldier.fbx
 /importer:FbxImporter
 /processor:SkinnedModelProcessor
@@ -581,4 +533,22 @@
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
 /build:Shaders/Plastic.fx
+
+#begin Units/Map__3_Normal_Bump.bmp
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Units/Map__3_Normal_Bump.bmp
+
+#begin Shaders/Blur.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/Blur.fx
 

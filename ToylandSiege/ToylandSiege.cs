@@ -21,7 +21,11 @@ namespace ToylandSiege
         public RenderTarget2D shadowMapRenderTarget;
         public Effect _ShadowMapGenerate;
 
+        public RenderTarget2D _blurrenderTarget;
+        public Effect _blurEffect;
+
         public SpriteBatch _spriteBatch;
+        public Boolean blur = false;
         public ToylandSiege()
         {
             _ts = this;
@@ -49,6 +53,7 @@ namespace ToylandSiege
 
             shadowMapRenderTarget = new RenderTarget2D(GraphicsDevice, 2048, 2048, false, SurfaceFormat.Single, DepthFormat.Depth24, 0, RenderTargetUsage.PlatformContents);
             _ShadowMapGenerate = Content.Load<Effect>("Shaders/ShadowShader");
+            _blurEffect = Content.Load<Effect>("Shaders/Blur");
 
             ShaderManager shaderManager = new ShaderManager();
             shaderManager.Initialize();
@@ -94,10 +99,38 @@ namespace ToylandSiege
         {
             try
             {
+                if(blur)
+                {
+                    _blurrenderTarget = new RenderTarget2D(GraphicsDevice, GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight,
+                                    false, GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
+                    GraphicsDevice.SetRenderTarget(_blurrenderTarget);
+                }
+
+
                 GraphicsDevice.Clear(Color.CornflowerBlue);
 
                 gameStateManager.Draw(gameTime);
+
+
+                if (blur)
+                {
+
+                    GraphicsDevice.SetRenderTarget(null);
+                    GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.CornflowerBlue);
+
+                    _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+                    _blurEffect.CurrentTechnique.Passes[0].Apply();
+                    _spriteBatch.Draw(_blurrenderTarget, new Vector2(0, 0), Color.White);
+                    _spriteBatch.End();
+                }
+
+
                 base.Draw(gameTime);
+
+
+                
+
+
                 //DrawShadows();
 
                 //Uncomment to see shadow map
