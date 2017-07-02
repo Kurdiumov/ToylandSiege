@@ -51,7 +51,11 @@ namespace ToylandSiege
             base.Initialize();
             IsMouseVisible = configurationManager.MouseVisible;
 
+            _blurrenderTarget = new RenderTarget2D(GraphicsDevice, GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight,
+                                    false, GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
+
             shadowMapRenderTarget = new RenderTarget2D(GraphicsDevice, 2048, 2048, false, SurfaceFormat.Single, DepthFormat.Depth24, 0, RenderTargetUsage.PlatformContents);
+            //shadowMapRenderTarget = 
             _ShadowMapGenerate = Content.Load<Effect>("Shaders/ShadowShader");
             _blurEffect = Content.Load<Effect>("Shaders/Blur");
 
@@ -99,10 +103,10 @@ namespace ToylandSiege
         {
             try
             {
-                if(blur)
+
+                //GraphicsDevice.SetRenderTarget(_blurrenderTarget);
+                if (blur)
                 {
-                    _blurrenderTarget = new RenderTarget2D(GraphicsDevice, GraphicsDevice.PresentationParameters.BackBufferWidth, GraphicsDevice.PresentationParameters.BackBufferHeight,
-                                    false, GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
                     GraphicsDevice.SetRenderTarget(_blurrenderTarget);
                 }
 
@@ -116,7 +120,7 @@ namespace ToylandSiege
                 {
 
                     GraphicsDevice.SetRenderTarget(null);
-                    GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.CornflowerBlue);
+                    //GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.CornflowerBlue);
 
                     _spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
                     _blurEffect.CurrentTechnique.Passes[0].Apply();
@@ -124,21 +128,23 @@ namespace ToylandSiege
                     _spriteBatch.End();
                 }
 
-
-                base.Draw(gameTime);
-
-
-                
-
-
+                GraphicsDevice.SetRenderTarget(null);
                 //DrawShadows();
 
                 //Uncomment to see shadow map
                 /*
+                GraphicsDevice.SetRenderTarget(null);
                 _spriteBatch.Begin(0, BlendState.Opaque, SamplerState.AnisotropicClamp);
-                _spriteBatch.Draw(shadowMapRenderTarget,  new Rectangle(0, 0, ToylandSiege.GetInstance().configurationManager.WidthResolution, ToylandSiege.GetInstance().configurationManager.HeightResolution), Color.White);
-                _spriteBatch.End();
-                */
+
+                //_spriteBatch.Draw(_blurrenderTarget, new Vector2(0, 0), Color.White);
+                _spriteBatch.Draw(_blurrenderTarget, new Rectangle(0, 0, ToylandSiege.GetInstance().configurationManager.WidthResolution, ToylandSiege.GetInstance().configurationManager.HeightResolution), Color.White);
+                _spriteBatch.End();*/
+
+
+
+
+                base.Draw(gameTime);
+                
             }
             catch (Exception e)
             {
@@ -158,7 +164,7 @@ namespace ToylandSiege
         private void DrawShadows()
         {
             //Uncomment to see shadow map
-            //GraphicsDevice.SetRenderTarget(shadowMapRenderTarget);
+            GraphicsDevice.SetRenderTarget(shadowMapRenderTarget);
 
             foreach (GameObject gameObject in CurrentLevel.RootGameObject.GetAllChilds(CurrentLevel.RootGameObject))
             {
